@@ -1,8 +1,25 @@
 @import "tailwindcss";
 
+/* Smooth scroll global */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px; /* Offset para o header fixo */
+}
+
+/* Custom smooth scrolling */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --primary: #a259f7;
+  --secondary: #6d28d9;
+  --glass-bg: rgba(30, 0, 60, 0.35);
+  --glass-border: rgba(162, 89, 247, 0.25);
 }
 
 @theme inline {
@@ -12,15 +29,112 @@
   --font-mono: var(--font-geist-mono);
 }
 
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary: #a259f7;
+    --secondary: #6d28d9;
+    --glass-bg: rgba(162, 89, 247, 0.18);
+    --glass-border: rgba(162, 89, 247, 0.25);
   }
 }
+
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+.glassmorphism {
+  background: var(--glass-bg) !important;
+  border: 1.5px solid var(--glass-border) !important;
+  border-radius: 0.75rem !important; /* rounded-xl equivalent */
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+/* Custom animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translateX(0px) translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateX(10px) translateY(-5px) rotate(2deg);
+  }
+  50% {
+    transform: translateX(-5px) translateY(-10px) rotate(-1deg);
+  }
+  75% {
+    transform: translateX(-10px) translateY(-5px) rotate(1deg);
+  }
+  100% {
+    transform: translateX(0px) translateY(0px) rotate(0deg);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 3s ease-in-out infinite;
+}
+
+.animate-drift {
+  animation: drift 20s ease-in-out infinite;
+}
+
+/* Hover effects */
+.group:hover .group-hover\:rotate-12 {
+  transform: rotate(12deg);
+}
+
+.group:hover .group-hover\:scale-125 {
+  transform: scale(1.25);
+}
+
+.group:hover .group-hover\:bounce {
+  animation: bounce 0.5s ease-in-out;
+}
+
+/* Custom utilities */
+.perspective-1000 {
+  perspective: 1000px;
 }
