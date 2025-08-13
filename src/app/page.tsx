@@ -1,25 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { lazy, Suspense } from 'react';
 import { ParallaxProvider, ParallaxBanner } from 'react-scroll-parallax';
 import Image from 'next/image';
 import Header from '../components/Header';
-import AnimatedBackground from '../components/AnimatedBackground';
-import { 
-  SiJavascript, 
-  SiTypescript, 
-  SiReact, 
-  SiNodedotjs, 
-  SiHtml5, 
-  SiCss3, 
-  SiGit, 
-  SiDocker, 
-  SiAmazon, 
-  SiMongodb, 
-  SiPostgresql,
-  SiN8N
-} from 'react-icons/si';
-import { MdSettings } from 'react-icons/md';
+
+// Lazy loading dos componentes pesados
+const ContactForm = lazy(() => import('../components/WhatsAppContactForm'));
+const AnimatedBackground = lazy(() => import('../components/AnimatedBackground'));
+
+// Lazy loading do componente de tecnologias
+const TechnologiesGrid = lazy(() => import('../components/TechnologiesGrid'));
+
+// Apenas ícones utilizados na página principal
+import { SiN8N } from 'react-icons/si';
 import { BsRobot, BsLightning } from 'react-icons/bs';
 import { FaRocket, FaEnvelope, FaUser, FaCode, FaServer, FaCogs, FaLightbulb, FaHeart, FaUsers, FaCog, FaGithub, FaLinkedin, FaFilePdf, FaReact } from 'react-icons/fa';
 
@@ -60,7 +54,9 @@ export default function Home() {
 
   return (
     <ParallaxProvider>
-      <AnimatedBackground />
+      <Suspense fallback={<div className="fixed inset-0 bg-black/50"></div>}>
+        <AnimatedBackground />
+      </Suspense>
       <Header />
       <div className="font-sans bg-gradient-to-br from-purple-900 via-black to-purple-800 min-h-screen relative z-10">
         {/* HERO BANNER FULLSCREEN */}
@@ -155,6 +151,9 @@ export default function Home() {
                         alt="Marcos Felippe" 
                         width={200} 
                         height={200} 
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkbHB0eH/xAAVAQEBAQEAAAAAAAAAAAAAAAAAAQIF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigD"
                         className="w-40 h-40 md:w-48 md:h-48 rounded-full border-4 border-purple-500/50 shadow-2xl object-cover relative z-10 hover:scale-105 transition-transform duration-300" 
                       />
                       <div className="absolute inset-0 w-40 h-40 md:w-48 md:h-48 rounded-full bg-purple-500/20 blur-xl animate-pulse" />
@@ -363,36 +362,15 @@ export default function Home() {
               </div>
               
               <h3 className="text-3xl font-bold mb-12 text-purple-200 text-center relative z-10">Tecnologias que Domino</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10 relative z-10">
-                {[
-                  { name: 'JavaScript', icon: <SiJavascript className="text-yellow-400" />, delay: 'delay-0' },
-                  { name: 'TypeScript', icon: <SiTypescript className="text-blue-400" />, delay: 'delay-100' },
-                  { name: 'React', icon: <SiReact className="text-cyan-400" />, delay: 'delay-200' },
-                  { name: 'Node.js', icon: <SiNodedotjs className="text-green-400" />, delay: 'delay-300' },
-                  { name: 'HTML5', icon: <SiHtml5 className="text-orange-400" />, delay: 'delay-400' },
-                  { name: 'CSS3', icon: <SiCss3 className="text-blue-500" />, delay: 'delay-500' },
-                  { name: 'Git', icon: <SiGit className="text-orange-500" />, delay: 'delay-600' },
-                  { name: 'DevOps', icon: <MdSettings className="text-purple-400" />, delay: 'delay-700' },
-                  { name: 'Docker', icon: <SiDocker className="text-blue-400" />, delay: 'delay-800' },
-                  { name: 'AWS', icon: <SiAmazon className="text-orange-400" />, delay: 'delay-900' },
-                  { name: 'MongoDB', icon: <SiMongodb className="text-green-500" />, delay: 'delay-1000' },
-                  { name: 'PostgreSQL', icon: <SiPostgresql className="text-blue-500" />, delay: 'delay-1100' }
-                ].map((tech, index) => (
-                  <div 
-                    key={index} 
-                    className={`bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-4 text-center hover:border-purple-400/40 transition-all duration-500 group hover:scale-110 hover:-translate-y-2 ${tech.delay} animate-fade-in-up`}
-                  >
-                    <div className="text-4xl mb-2 group-hover:scale-125 group-hover:rotate-12 transition-all duration-300 flex justify-center">
-                      {tech.icon}
-                    </div>
-                    <p className="text-purple-200 font-medium text-sm group-hover:text-white transition-colors">
-                      {tech.name}
-                    </p>
-                    {/* Shine Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-xl" />
-                  </div>
-                ))}
-              </div>
+              <Suspense fallback={
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-10">
+                  {Array(12).fill(0).map((_, i) => (
+                    <div key={i} className="bg-purple-900/30 h-24 rounded-xl animate-pulse"></div>
+                  ))}
+                </div>
+              }>
+                <TechnologiesGrid />
+              </Suspense>
             </div>
           </section>
 
@@ -758,56 +736,16 @@ export default function Home() {
                   </div>
                 </div>
 
-                <form className="space-y-4">
-                  <div>
-                    <input 
-                      type="text" 
-                      placeholder="Seu nome completo" 
-                      className="w-full p-4 rounded-lg border border-purple-700/40 bg-black/30 text-purple-100 placeholder-purple-400 focus:border-purple-400 focus:outline-none transition" 
-                      required 
-                    />
+                <Suspense fallback={
+                  <div className="space-y-4 animate-pulse">
+                    <div className="h-12 bg-purple-900/30 rounded-lg"></div>
+                    <div className="h-12 bg-purple-900/30 rounded-lg"></div>
+                    <div className="h-32 bg-purple-900/30 rounded-lg"></div>
+                    <div className="h-12 bg-purple-900/30 rounded-lg"></div>
                   </div>
-                  <div>
-                    <input 
-                      type="email" 
-                      placeholder="Seu melhor e-mail" 
-                      className="w-full p-4 rounded-lg border border-purple-700/40 bg-black/30 text-purple-100 placeholder-purple-400 focus:border-purple-400 focus:outline-none transition" 
-                      required 
-                    />
-                  </div>
-                  <div>
-                    <input 
-                      type="tel" 
-                      placeholder="WhatsApp (opcional)" 
-                      className="w-full p-4 rounded-lg border border-purple-700/40 bg-black/30 text-purple-100 placeholder-purple-400 focus:border-purple-400 focus:outline-none transition" 
-                    />
-                  </div>
-                  <div>
-                    <select className="w-full p-4 rounded-lg border border-purple-700/40 bg-black/30 text-purple-100 focus:border-purple-400 focus:outline-none transition">
-                      <option value="">Tipo de projeto</option>
-                      <option value="landing">Landing Page</option>
-                      <option value="site">Site Institucional</option>
-                      <option value="ecommerce">E-commerce</option>
-                      <option value="sistema">Sistema Web</option>
-                      <option value="outro">Outro</option>
-                    </select>
-                  </div>
-                  <div>
-                    <textarea 
-                      placeholder="Conte-me sobre seu projeto. Quanto mais detalhes, melhor será minha proposta!" 
-                      className="w-full p-4 rounded-lg border border-purple-700/40 bg-black/30 text-purple-100 placeholder-purple-400 focus:border-purple-400 focus:outline-none transition h-32 resize-none" 
-                      required 
-                    />
-                  </div>
-                  <button 
-                    type="submit" 
-                    className="w-full py-4 bg-purple-700 text-white rounded-lg font-bold text-lg shadow-lg hover:bg-purple-800 transition transform hover:scale-105 flex items-center justify-center gap-2"
-                  >
-                    <FaRocket />
-                    Solicitar Orçamento Gratuito
-                  </button>
-                  <p className="text-center text-purple-300 text-sm">Respondo em até 2 horas!</p>
-                </form>
+                }>
+                  <ContactForm />
+                </Suspense>
               </div>
             </div>
           </section>

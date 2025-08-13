@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { SiN8N } from 'react-icons/si';
-import { BsRobot } from 'react-icons/bs';
 import { FaCode, FaRocket, FaEnvelope } from 'react-icons/fa';
 
 export default function Header() {
@@ -67,13 +66,16 @@ export default function Header() {
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
       isMinimized 
-        ? 'h-16 bg-black/95 backdrop-blur-md border-b border-purple-700/30' 
-        : 'h-20 bg-black/80 backdrop-blur-lg border-b border-purple-700/20'
+        ? 'h-16 bg-gradient-to-r from-black/95 via-purple-950/90 to-black/95 backdrop-blur-xl border-b border-purple-500/40 shadow-lg shadow-purple-500/10' 
+        : 'h-20 bg-gradient-to-r from-black/85 via-purple-900/75 to-black/85 backdrop-blur-2xl border-b border-purple-400/30 shadow-xl shadow-purple-400/20'
     }`}
     onMouseEnter={() => setIsHovered(true)}
     onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="max-w-7xl mx-auto px-4 h-full">
+      {/* Glassmorphism overlay effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 via-transparent to-purple-600/10 backdrop-blur-sm"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 h-full relative z-10">
         <nav className="flex items-center justify-between h-full">
           <div className={`flex items-center gap-4 transition-all duration-500 ${
             isMinimized ? 'transform scale-90' : 'transform scale-100'
