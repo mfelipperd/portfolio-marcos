@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Marcos Felippe 🚀
 
-## Getting Started
+> Portfolio profissional desenvolvido com Next.js 15, React 18 e TailwindCSS 4
 
-First, run the development server:
+## 🌟 Sobre o Projeto
+
+Portfolio moderno e responsivo que apresenta minhas habilidades como Fullstack Developer, projetos reais e experiência em tecnologias de ponta.
+
+## 🚀 Tecnologias
+
+- **Frontend:** Next.js 15, React 18, TypeScript
+- **Styling:** TailwindCSS 4, Glassmorphism
+- **Icons:** React Icons, Simple Icons
+- **Animations:** React Scroll Parallax
+- **Deploy:** Vercel (recomendado)
+
+## 📦 Instalação
 
 ```bash
+# Clone o repositório
+git clone https://github.com/mfelipperd/portfolio-marcos.git
+
+# Entre no diretório
+cd portfolio-marcos
+
+# Instale as dependências
+npm install
+
+# Execute em modo desenvolvimento
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build para produção
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌿 Estratégia de Branching
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Branches Principais:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **`main`** - Versão estável em produção
+- **`develop`** - Branch de desenvolvimento integrado
 
-## Learn More
+### Branches de Feature:
 
-To learn more about Next.js, take a look at the following resources:
+Para cada nova funcionalidade, criar uma branch específica:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Exemplo para nova funcionalidade
+git checkout develop
+git pull origin develop
+git checkout -b feature/nova-funcionalidade
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Convenção de Nomes:
 
-## Deploy on Vercel
+- `feature/nome-da-funcionalidade` - Novas funcionalidades
+- `fix/nome-do-bug` - Correções de bugs
+- `chore/nome-da-tarefa` - Tarefas de manutenção
+- `docs/nome-da-documentacao` - Documentação
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Workflow:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Desenvolvimento:** Trabalhar na branch `feature/`
+2. **Teste:** Merge para `develop` via Pull Request
+3. **Produção:** Merge de `develop` para `main` quando estável
+
+## 📋 Commits Semânticos
+
+```bash
+feat: nova funcionalidade
+fix: correção de bug
+docs: documentação
+style: formatação de código
+refactor: refatoração
+test: testes
+chore: tarefas de manutenção
+```
+
+## 🚀 Deploy
+
+O projeto está configurado para deploy automático:
+
+- **Develop:** Deploy de preview automático
+- **Main:** Deploy de produção automático
+
+## 📱 Funcionalidades
+
+- ✅ Design responsivo e moderno
+- ✅ Navegação suave entre seções
+- ✅ Header com progresso de scroll
+- ✅ Botão voltar ao topo
+- ✅ Seção de projetos expandida
+- ✅ Glassmorphism e animações
+- ✅ Otimizado para SEO
+- ✅ Compatível com SSR
+
+## 🔧 Scripts Disponíveis
+
+```bash
+npm run dev        # Desenvolvimento
+npm run build      # Build de produção
+npm run start      # Executar build
+npm run lint       # Linting
+```
+
+## 📞 Contato
+
+**Marcos Felippe**
+- 🌐 Portfolio: [Em desenvolvimento]
+- 💼 LinkedIn: [linkedin.com/in/marcos-felippe]
+- 🐱 GitHub: [github.com/mfelipperd]
+- 📧 Email: [seu-email@exemplo.com]
+
+---
+
+*Desenvolvido com ❤️ e muita dedicação*
