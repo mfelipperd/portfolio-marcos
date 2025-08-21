@@ -7,8 +7,6 @@ import {
   FaCode,
   FaRocket,
   FaEnvelope,
-  FaBars,
-  FaTimes,
   FaHome,
   FaUser,
   FaCog,

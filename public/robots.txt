@@ -1,0 +1,58 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://marcosfelippe.dev/sitemap.xml
+
+# Crawl-delay para ser respeitoso com o servidor
+Crawl-delay: 1
+
+# Permitir indexação de todas as páginas
+Allow: /sobre
+Allow: /projetos
+Allow: /servicos
+Allow: /contato
+
+# Bloquear arquivos desnecessários
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /*.txt$
+
+# Permitir recursos importantes
+Allow: /favicon.ico
+Allow: /site.webmanifest
+Allow: /og-image-marcos-felippe.jpg
+Allow: /twitter-card-marcos-felippe.jpg
+
+# Otimizações para Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+# Otimizações para Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Otimizações para Facebook
+User-agent: facebookexternalhit
+Allow: /
+Crawl-delay: 2
+
+# Otimizações para Twitter
+User-agent: Twitterbot
+Allow: /
+Crawl-delay: 1
+
+# Otimizações para LinkedIn
+User-agent: LinkedInBot
+Allow: /
+Crawl-delay: 1
+
+# Otimizações para WhatsApp
+User-agent: WhatsApp
+Allow: /
+Crawl-delay: 2
