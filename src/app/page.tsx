@@ -4,6 +4,9 @@ import { lazy, Suspense, useState, useEffect } from "react";
 import { ParallaxProvider, ParallaxBanner } from "react-scroll-parallax";
 import Image from "next/image";
 import Header from "../components/Header";
+import SimpleCookieBanner from "../components/SimpleCookieBanner";
+import ClientOnlyWrapper from "../components/ClientOnlyWrapper";
+import { useNotifications } from "../hooks/useNotifications";
 
 // Lazy loading dos componentes pesados
 const ContactForm = lazy(() => import("../components/WhatsAppContactForm"));
@@ -37,6 +40,14 @@ import {
 export default function Home() {
   // Estado para controlar o slide atual do carrossel
   const [currentSlide, setCurrentSlide] = useState(1);
+  
+  // Hook para notificações
+  const { 
+    requestPermission, 
+    sendNotification, 
+    startPeriodicNotifications,
+    isSupported 
+  } = useNotifications();
 
   // Função ease-in-out para animação suave
   const ease = (t: number, b: number, c: number, d: number) => {
@@ -120,6 +131,25 @@ export default function Home() {
     document.addEventListener('click', handleCarouselClick);
     return () => document.removeEventListener('click', handleCarouselClick);
   }, [currentSlide]);
+
+  // Função para lidar com aceite de cookies e notificações
+  const handleCookieAccept = async () => {
+    console.log('🔄 handleCookieAccept called, isSupported:', isSupported);
+    
+    if (isSupported) {
+      try {
+        // Iniciar notificações periódicas
+        console.log('🚀 Starting periodic notifications...');
+        startPeriodicNotifications();
+        
+        console.log('✅ Sistema de notificações ativado com sucesso!');
+      } catch (error) {
+        console.error('❌ Erro ao ativar notificações:', error);
+      }
+    } else {
+      console.log('❌ Notifications not supported on this device/browser');
+    }
+  };
 
   // Função para scroll suave entre seções
   const scrollToSection = (sectionId: string) => {
@@ -1327,6 +1357,11 @@ export default function Home() {
           </p>
         </div>
       </footer>
+      
+      {/* Cookie Banner & Notificações */}
+      <ClientOnlyWrapper>
+        <SimpleCookieBanner onAccept={handleCookieAccept} />
+      </ClientOnlyWrapper>
     </ParallaxProvider>
   );
 }
