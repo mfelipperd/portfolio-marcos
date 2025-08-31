@@ -153,6 +153,10 @@ export default function Home() {
         <AnimatedBackground />
       </Suspense>
       <Header />
+      
+      {/* Custom Scroll Indicator */}
+      <div className="scroll-indicator"></div>
+      
       <div className="font-sans bg-gradient-to-br from-purple-900 via-black to-purple-800 min-h-screen relative z-10">
         {/* CARROSSEL HERO BANNER */}
         <section className="h-screen relative z-10 overflow-hidden" id="hero">
@@ -378,297 +382,250 @@ export default function Home() {
           </div>
         </section>
 
-        {/* SOBRE MIM */}
+        {/* SOBRE MARCOS FELIPPE - REDESIGN */}
         <section
           className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto"
           id="sobre"
         >
-          <div className="glassmorphism p-6 md:p-8 relative overflow-hidden min-w-[1920px] max-w-[1920px] mx-auto">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-5">
-              <div className="absolute top-4 left-4 text-4xl md:text-6xl text-purple-400">
-                {"<>"}
+          <div className="min-w-[1920px] max-w-[1920px] mx-auto">
+            
+            {/* Título Principal */}
+            <div className="text-center mb-16">
+              <h2 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-purple-200 mb-4">
+                👨‍💻 Sobre Marcos Felippe
+              </h2>
+              <p className="text-xl text-purple-100 max-w-3xl mx-auto">
+                Desenvolvedor Fullstack apaixonado por transformar ideias em realidade digital
+              </p>
+            </div>
+
+            {/* Layout Principal em Cards */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+              
+              {/* Card 1 - Perfil e Estatísticas */}
+              <div className="glassmorphism p-8 text-center hover:scale-105 transition-all duration-300">
+                <div className="relative inline-block mb-6">
+                  <Image
+                    src="https://avatars.githubusercontent.com/u/64865137?v=4"
+                    alt="Marcos Felippe"
+                    width={160}
+                    height={160}
+                    loading="lazy"
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkbHB0eH/xAAVAQEBAQEAAAAAAAAAAAAAAAAAAQIF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigD"
+                    className="w-40 h-40 rounded-full border-4 border-purple-500/50 shadow-2xl object-cover relative z-10 hover:rotate-6 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 w-40 h-40 rounded-full bg-purple-500/20 blur-xl animate-pulse" />
+                </div>
+                
+                <h3 className="text-2xl font-bold text-purple-200 mb-2">Marcos Felippe</h3>
+                <p className="text-purple-300 mb-6 text-lg">Desenvolvedor Fullstack Senior</p>
+                
+                {/* Estatísticas em Grid 2x2 */}
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="bg-black/30 backdrop-blur-sm border border-purple-500/20 rounded-xl p-4 hover:border-purple-400/40 transition-all">
+                    <div className="text-2xl font-bold text-purple-300">3+</div>
+                    <div className="text-sm text-purple-200">Anos Exp.</div>
+                  </div>
+                  <div className="bg-black/30 backdrop-blur-sm border border-green-500/20 rounded-xl p-4 hover:border-green-400/40 transition-all">
+                    <div className="text-2xl font-bold text-green-300">50+</div>
+                    <div className="text-sm text-green-200">Projetos</div>
+                  </div>
+                  <div className="bg-black/30 backdrop-blur-sm border border-blue-500/20 rounded-xl p-4 hover:border-blue-400/40 transition-all">
+                    <div className="text-2xl font-bold text-blue-300">2k+</div>
+                    <div className="text-sm text-blue-200">Commits</div>
+                  </div>
+                  <div className="bg-black/30 backdrop-blur-sm border border-orange-500/20 rounded-xl p-4 hover:border-orange-400/40 transition-all">
+                    <div className="text-2xl font-bold text-orange-300">24/7</div>
+                    <div className="text-sm text-orange-200">Suporte</div>
+                  </div>
+                </div>
+
+                {/* Downloads CV */}
+                <div className="space-y-3">
+                  <p className="text-purple-200 font-semibold mb-3">📄 Download Currículo:</p>
+                  <a
+                    href="/cv/curriculo-marcos-felippe-pt.pdf"
+                    download
+                    className="block w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-purple-800 rounded-xl text-white font-semibold shadow-lg hover:from-purple-700 hover:to-purple-900 transition-all duration-300 transform hover:scale-105"
+                  >
+                    <FaFilePdf className="inline mr-2" />
+                    CV Português
+                  </a>
+                  <a
+                    href="/cv/curriculo-marcos-felippe-en.pdf"
+                    download
+                    className="block w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl text-white font-semibold shadow-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-300 transform hover:scale-105"
+                  >
+                    <FaFilePdf className="inline mr-2" />
+                    CV English
+                  </a>
+                </div>
               </div>
-              <div className="absolute bottom-4 right-4 text-4xl md:text-6xl text-purple-400 rotate-180">
-                {"<>"}
+
+              {/* Card 2 - Sobre Mim */}
+              <div className="glassmorphism p-8 hover:scale-105 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-6">
+                  <FaUser className="text-2xl text-purple-400" />
+                  <h4 className="text-2xl font-bold text-purple-300">Quem Sou Eu</h4>
+                </div>
+                
+                <div className="text-purple-100 space-y-4 leading-relaxed">
+                  <p>
+                    Olá! Sou <span className="text-purple-300 font-bold">Marcos Felippe</span>, 
+                    desenvolvedor Fullstack apaixonado por criar experiências digitais extraordinárias.
+                  </p>
+                  <p>
+                    Com mais de <span className="text-green-300 font-bold">3 anos de experiência</span>, 
+                    especializo-me em transformar ideias complexas em soluções simples, elegantes e altamente performáticas.
+                  </p>
+                  <p>
+                    Minha expertise inclui <span className="text-blue-300 font-bold">React, Next.js, Node.js</span> e 
+                    todo o ecossistema JavaScript/TypeScript moderno.
+                  </p>
+                  <p>
+                    Tenho paixão especial por <span className="text-orange-300 font-bold">automação, DevOps</span> e 
+                    arquiteturas escaláveis que crescem junto com o negócio.
+                  </p>
+                </div>
+
+                {/* Badges de Especialidades */}
+                <div className="flex flex-wrap gap-2 mt-6">
+                  <span className="px-3 py-1 bg-purple-600/30 text-purple-200 rounded-full text-sm">React Expert</span>
+                  <span className="px-3 py-1 bg-blue-600/30 text-blue-200 rounded-full text-sm">Node.js</span>
+                  <span className="px-3 py-1 bg-green-600/30 text-green-200 rounded-full text-sm">DevOps</span>
+                  <span className="px-3 py-1 bg-orange-600/30 text-orange-200 rounded-full text-sm">Automação</span>
+                </div>
               </div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl md:text-8xl text-purple-400/30">
-                {"</>"}
+
+              {/* Card 3 - Minha Abordagem */}
+              <div className="glassmorphism p-8 hover:scale-105 transition-all duration-300">
+                <div className="flex items-center gap-3 mb-6">
+                  <FaHeart className="text-2xl text-purple-400" />
+                  <h4 className="text-2xl font-bold text-purple-300">Minha Abordagem</h4>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="text-center p-4 bg-black/20 rounded-xl border border-purple-500/20 hover:border-purple-400/40 transition-all">
+                    <FaRocket className="text-3xl text-purple-400 mx-auto mb-2" />
+                    <h5 className="font-bold text-purple-300 mb-2">Performance</h5>
+                    <p className="text-purple-200 text-sm">Código otimizado para velocidade e eficiência máxima</p>
+                  </div>
+
+                  <div className="text-center p-4 bg-black/20 rounded-xl border border-green-500/20 hover:border-green-400/40 transition-all">
+                    <FaUsers className="text-3xl text-green-400 mx-auto mb-2" />
+                    <h5 className="font-bold text-green-300 mb-2">UX Focus</h5>
+                    <p className="text-green-200 text-sm">Experiência do usuário sempre em primeiro lugar</p>
+                  </div>
+
+                  <div className="text-center p-4 bg-black/20 rounded-xl border border-blue-500/20 hover:border-blue-400/40 transition-all">
+                    <FaCog className="text-3xl text-blue-400 mx-auto mb-2" />
+                    <h5 className="font-bold text-blue-300 mb-2">Escalabilidade</h5>
+                    <p className="text-blue-200 text-sm">Arquiteturas preparadas para o crescimento</p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 md:mb-12 text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-white">
-                Sobre Marcos Felippe
-              </h2>
-
-              {/* Seção Principal */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-6 lg:mb-8">
-                {/* Foto e Info Básica */}
-                <div className="lg:col-span-1 text-center lg:text-left">
-                  <div className="flex flex-col items-center lg:items-start">
-                    <div className="relative inline-block mb-4 lg:mb-6">
-                      <Image
-                        src="https://avatars.githubusercontent.com/u/64865137?v=4"
-                        alt="Marcos Felippe"
-                        width={200}
-                        height={200}
-                        loading="lazy"
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkbHB0eH/xAAVAQEBAQEAAAAAAAAAAAAAAAAAAQIF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigDEnyJigD"
-                        className="w-40 h-40 md:w-48 md:h-48 rounded-full border-4 border-purple-500/50 shadow-2xl object-cover relative z-10 hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 w-40 h-40 md:w-48 md:h-48 rounded-full bg-purple-500/20 blur-xl animate-pulse" />
-                    </div>
-
-                    <h3 className="text-xl md:text-2xl font-bold text-purple-200 mb-2">
-                      Marcos Felippe
-                    </h3>
-                    <p className="text-purple-300 mb-4 md:mb-6">
-                      Desenvolvedor Fullstack Senior
-                    </p>
-
-                    {/* Stats */}
-                    <div className="grid grid-cols-2 gap-2 md:gap-3 mb-6 w-full max-w-xs">
-                      <div className="bg-black/20 backdrop-blur-sm border border-purple-500/20 rounded-lg p-3 text-center">
-                        <div className="text-xl md:text-2xl font-bold text-purple-300">
-                          3+
-                        </div>
-                        <div className="text-xs md:text-sm text-purple-200">
-                          Anos Exp.
-                        </div>
-                      </div>
-                      <div className="bg-black/20 backdrop-blur-sm border border-purple-500/20 rounded-lg p-3 text-center">
-                        <div className="text-xl md:text-2xl font-bold text-purple-300">
-                          50+
-                        </div>
-                        <div className="text-xs md:text-sm text-purple-200">
-                          Projetos
-                        </div>
-                      </div>
-                      <div className="bg-black/20 backdrop-blur-sm border border-purple-500/20 rounded-lg p-3 text-center">
-                        <div className="text-xl md:text-2xl font-bold text-purple-300">
-                          2k+
-                        </div>
-                        <div className="text-xs md:text-sm text-purple-200">
-                          Commits
-                        </div>
-                      </div>
-                      <div className="bg-black/20 backdrop-blur-sm border border-purple-500/20 rounded-lg p-3 text-center">
-                        <div className="text-xl md:text-2xl font-bold text-purple-300">
-                          24/7
-                        </div>
-                        <div className="text-xs md:text-sm text-purple-200">
-                          Suporte
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Download CV */}
-                    <div className="w-full max-w-xs">
-                      <p className="text-purple-200 font-semibold mb-3 text-center lg:text-left">
-                        Download Currículo:
-                      </p>
-                      <div className="flex flex-col gap-2">
-                        <a
-                          href="/cv/curriculo-marcos-felippe-pt.pdf"
-                          download
-                          className="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-purple-800 rounded-lg text-white font-semibold shadow-lg hover:from-purple-700 hover:to-purple-900 transition-all duration-300 transform hover:scale-105 text-sm"
-                        >
-                          <FaFilePdf className="text-base" />
-                          CV Português
-                        </a>
-                        <a
-                          href="/cv/curriculo-marcos-felippe-en.pdf"
-                          download
-                          className="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg text-white font-semibold shadow-lg hover:from-blue-700 hover:to-blue-900 transition-all duration-300 transform hover:scale-105 text-sm"
-                        >
-                          <FaFilePdf className="text-base" />
-                          CV English
-                        </a>
-                      </div>
-                    </div>
+            {/* Expertise Técnica - Seção Completa */}
+            <div className="glassmorphism p-8 mb-12">
+              <div className="flex items-center gap-3 mb-8 justify-center">
+                <FaCode className="text-3xl text-purple-400" />
+                <h4 className="text-3xl font-bold text-purple-300">Expertise Técnica</h4>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-black/30 backdrop-blur-sm border border-blue-500/20 rounded-xl p-6 hover:border-blue-400/40 transition-all hover:scale-105">
+                  <div className="flex items-center gap-2 mb-4">
+                    <FaReact className="text-2xl text-blue-400" />
+                    <h5 className="font-bold text-blue-300 text-lg">Frontend</h5>
                   </div>
+                  <ul className="text-blue-200 space-y-2">
+                    <li>• React 18 + Next.js 15</li>
+                    <li>• TypeScript & JavaScript ES6+</li>
+                    <li>• TailwindCSS & Styled Components</li>
+                    <li>• State Management (Zustand, Redux)</li>
+                    <li>• Responsive Design & PWA</li>
+                  </ul>
                 </div>
 
-                {/* Descrição - Largura total */}
-                <div className="lg:col-span-2">
-                  {/* Descrição Principal */}
-                  <div className="mb-6">
-                    <h4 className="text-lg md:text-xl font-bold text-purple-300 mb-3 flex items-center gap-2">
-                      <FaUser />
-                      Quem sou eu
-                    </h4>
-                    <div className="text-purple-100 space-y-3 leading-relaxed text-sm md:text-base">
-                      <p>
-                        Olá! Sou{" "}
-                        <strong className="text-purple-300">
-                          Marcos Felippe
-                        </strong>
-                        , desenvolvedor Fullstack apaixonado por criar
-                        experiências digitais extraordinárias. Com mais de 3
-                        anos de experiência, especializo-me em transformar
-                        ideias complexas em soluções simples, elegantes e
-                        altamente performáticas.
-                      </p>
-                      <p>
-                        Minha jornada começou com curiosidade pela tecnologia e
-                        evoluiu para uma expertise sólida em{" "}
-                        <strong className="text-purple-300">
-                          React, Next.js, Node.js
-                        </strong>{" "}
-                        e ecossistema JavaScript/TypeScript. Tenho paixão
-                        especial por automação, DevOps e arquiteturas
-                        escaláveis.
-                      </p>
-                      <p>
-                        Quando não estou codificando, você me encontrará
-                        explorando novas tecnologias, contribuindo para projetos
-                        open source ou ajudando outros desenvolvedores a
-                        crescerem na comunidade tech.
-                      </p>
-                    </div>
+                <div className="bg-black/30 backdrop-blur-sm border border-green-500/20 rounded-xl p-6 hover:border-green-400/40 transition-all hover:scale-105">
+                  <div className="flex items-center gap-2 mb-4">
+                    <FaServer className="text-2xl text-green-400" />
+                    <h5 className="font-bold text-green-300 text-lg">Backend</h5>
                   </div>
+                  <ul className="text-green-200 space-y-2">
+                    <li>• Node.js + Express/Fastify</li>
+                    <li>• NestJS & Clean Architecture</li>
+                    <li>• PostgreSQL, MongoDB, Redis</li>
+                    <li>• Prisma ORM & TypeORM</li>
+                    <li>• RESTful APIs & GraphQL</li>
+                  </ul>
+                </div>
+
+                <div className="bg-black/30 backdrop-blur-sm border border-orange-500/20 rounded-xl p-6 hover:border-orange-400/40 transition-all hover:scale-105">
+                  <div className="flex items-center gap-2 mb-4">
+                    <FaCogs className="text-2xl text-orange-400" />
+                    <h5 className="font-bold text-orange-300 text-lg">DevOps & Tools</h5>
+                  </div>
+                  <ul className="text-orange-200 space-y-2">
+                    <li>• Docker & Kubernetes</li>
+                    <li>• AWS, Vercel, Railway</li>
+                    <li>• GitHub Actions & CI/CD</li>
+                    <li>• n8n & Typebot Automation</li>
+                    <li>• Monitoring & Analytics</li>
+                  </ul>
+                </div>
+
+                <div className="bg-black/30 backdrop-blur-sm border border-purple-500/20 rounded-xl p-6 hover:border-purple-400/40 transition-all hover:scale-105">
+                  <div className="flex items-center gap-2 mb-4">
+                    <FaLightbulb className="text-2xl text-purple-400" />
+                    <h5 className="font-bold text-purple-300 text-lg">Soft Skills</h5>
+                  </div>
+                  <ul className="text-purple-200 space-y-2">
+                    <li>• Resolução de Problemas</li>
+                    <li>• Comunicação Efetiva</li>
+                    <li>• Trabalho em Equipe</li>
+                    <li>• Aprendizado Contínuo</li>
+                    <li>• Mentalidade Ágil</li>
+                  </ul>
                 </div>
               </div>
+            </div>
 
-              {/* Expertise Técnica e Minha Abordagem - Largura total */}
-              <div className="space-y-4 mb-6">
-                {/* Expertise Técnica - 4 colunas */}
-                <div>
-                  <h4 className="text-lg md:text-xl font-bold text-purple-300 mb-4 flex items-center gap-2">
-                    <FaCode />
-                    Expertise Técnica
-                  </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-black/20 backdrop-blur-sm border border-purple-500/20 rounded-lg p-4">
-                      <h5 className="font-semibold text-purple-300 mb-2 flex items-center gap-2 text-sm md:text-base">
-                        <FaReact className="text-blue-400" />
-                        Frontend
-                      </h5>
-                      <ul className="text-purple-200 text-xs md:text-sm space-y-1">
-                        <li>• React 18 + Next.js 14/15</li>
-                        <li>• TypeScript & JavaScript ES6+</li>
-                        <li>• TailwindCSS & Styled Components</li>
-                        <li>• State Management (Zustand, Redux)</li>
-                        <li>• Responsive Design & PWA</li>
-                      </ul>
-                    </div>
-
-                    <div className="bg-black/20 backdrop-blur-sm border border-purple-500/20 rounded-lg p-4">
-                      <h5 className="font-semibold text-purple-300 mb-3 flex items-center gap-2 text-sm md:text-base">
-                        <FaServer className="text-green-400" />
-                        Backend
-                      </h5>
-                      <ul className="text-purple-200 text-xs md:text-sm space-y-1">
-                        <li>• Node.js + Express/Fastify</li>
-                        <li>• NestJS & Clean Architecture</li>
-                        <li>• PostgreSQL, MongoDB, Redis</li>
-                        <li>• Prisma ORM & TypeORM</li>
-                        <li>• RESTful APIs & GraphQL</li>
-                      </ul>
-                    </div>
-
-                    <div className="bg-black/20 backdrop-blur-sm border border-purple-500/20 rounded-lg p-4">
-                      <h5 className="font-semibold text-purple-300 mb-3 flex items-center gap-2 text-sm md:text-base">
-                        <FaCogs className="text-orange-400" />
-                        DevOps & Tools
-                      </h5>
-                      <ul className="text-purple-200 text-xs md:text-sm space-y-1">
-                        <li>• Docker & Kubernetes</li>
-                        <li>• AWS, Vercel, Railway</li>
-                        <li>• GitHub Actions & CI/CD</li>
-                        <li>• n8n & Typebot Automation</li>
-                        <li>• Monitoring & Analytics</li>
-                      </ul>
-                    </div>
-
-                    <div className="bg-black/20 backdrop-blur-sm border border-purple-500/20 rounded-lg p-4">
-                      <h5 className="font-semibold text-purple-300 mb-3 flex items-center gap-2 text-sm md:text-base">
-                        <FaLightbulb className="text-yellow-400" />
-                        Soft Skills
-                      </h5>
-                      <ul className="text-purple-200 text-xs md:text-sm space-y-1">
-                        <li>• Resolução de Problemas</li>
-                        <li>• Comunicação Efetiva</li>
-                        <li>• Trabalho em Equipe</li>
-                        <li>• Aprendizado Contínuo</li>
-                        <li>• Mentalidade Ágil</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Minha Abordagem - 3 colunas */}
-                <div>
-                  <h4 className="text-lg md:text-xl font-bold text-purple-300 mb-4 flex items-center gap-2">
-                    <FaHeart />
-                    Minha Abordagem
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="text-center p-4 bg-black/10 rounded-lg border border-purple-500/10">
-                      <FaRocket className="text-2xl md:text-3xl text-purple-400 mx-auto mb-2" />
-                      <h5 className="font-semibold text-purple-300 mb-1 text-sm md:text-base">
-                        Performance
-                      </h5>
-                      <p className="text-purple-200 text-xs md:text-sm">
-                        Código otimizado para velocidade e eficiência máxima
-                      </p>
-                    </div>
-                    <div className="text-center p-4 bg-black/10 rounded-lg border border-purple-500/10">
-                      <FaUsers className="text-2xl md:text-3xl text-purple-400 mx-auto mb-2" />
-                      <h5 className="font-semibold text-purple-300 mb-1 text-sm md:text-base">
-                        UX Focus
-                      </h5>
-                      <p className="text-purple-200 text-xs md:text-sm">
-                        Experiência do usuário sempre em primeiro lugar
-                      </p>
-                    </div>
-                    <div className="text-center p-4 bg-black/10 rounded-lg border border-purple-500/10">
-                      <FaCog className="text-2xl md:text-3xl text-purple-400 mx-auto mb-2" />
-                      <h5 className="font-semibold text-purple-300 mb-1 text-sm md:text-base">
-                        Escalabilidade
-                      </h5>
-                      <p className="text-purple-200 text-xs md:text-sm">
-                        Arquiteturas preparadas para o crescimento
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Social Links - Uma linha */}
-              <div className="text-center pt-6 border-t border-purple-500/20">
-                <p className="text-purple-200 mb-4 text-sm md:text-base">
-                  Vamos nos conectar!
-                </p>
-                <div className="flex flex-wrap justify-center gap-2">
-                  <a
-                    href="https://github.com/mfelipperd"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 md:px-6 py-3 bg-gray-800 rounded-full text-white font-semibold shadow-lg hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 text-sm md:text-base"
-                  >
-                    <FaGithub className="text-base md:text-lg" />
-                    GitHub
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/mfelipperd/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 md:px-6 py-3 bg-blue-600 rounded-full text-white font-semibold shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 text-sm md:text-base"
-                  >
-                    <FaLinkedin className="text-base md:text-lg" />
-                    LinkedIn
-                  </a>
-                  <button
-                    onClick={() => scrollToSection("contato")}
-                    className="flex items-center gap-2 px-4 md:px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 rounded-full text-white font-semibold shadow-lg hover:from-purple-700 hover:to-purple-900 transition-all duration-300 transform hover:scale-105 text-sm md:text-base"
-                  >
-                    <FaEnvelope className="text-base md:text-lg" />
-                    Contato
-                  </button>
-                </div>
+            {/* Social Links - CTA Final */}
+            <div className="glassmorphism p-8 text-center">
+              <h4 className="text-2xl font-bold text-purple-300 mb-4">🚀 Vamos Nos Conectar!</h4>
+              <p className="text-purple-200 mb-6 text-lg">
+                Pronto para transformar sua ideia em realidade digital?
+              </p>
+              
+              <div className="flex flex-wrap justify-center gap-4">
+                <a
+                  href="https://github.com/mfelipperd"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-6 py-4 bg-gray-800 rounded-xl text-white font-semibold shadow-lg hover:bg-gray-700 transition-all duration-300 transform hover:scale-110"
+                >
+                  <FaGithub className="text-xl" />
+                  GitHub
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/mfelipperd/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-6 py-4 bg-blue-600 rounded-xl text-white font-semibold shadow-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-110"
+                >
+                  <FaLinkedin className="text-xl" />
+                  LinkedIn
+                </a>
+                <button
+                  onClick={() => scrollToSection("contato")}
+                  className="flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-800 rounded-xl text-white font-semibold shadow-lg hover:from-purple-700 hover:to-purple-900 transition-all duration-300 transform hover:scale-110"
+                >
+                  <FaEnvelope className="text-xl" />
+                  Entrar em Contato
+                </button>
               </div>
             </div>
           </div>
@@ -720,8 +677,8 @@ export default function Home() {
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Como Posso Transformar Seu Negócio
             </h3>
-            <div className="flex gap-4 overflow-x-auto pb-4">
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
                   🚀
                 </div>
@@ -739,7 +696,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
                   💼
                 </div>
@@ -757,7 +714,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
                   ⚡
                 </div>
@@ -775,7 +732,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="flex items-center text-4xl mb-4 group-hover:scale-110 transition-transform">
                   <SiN8N className="text-orange-500 mr-2" />
                   <BsLightning className="text-yellow-400" />
@@ -794,7 +751,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="flex items-center text-4xl mb-4 group-hover:scale-110 transition-transform">
                   <BsRobot className="text-blue-500 mr-2" />
                 </div>
@@ -812,7 +769,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
                   🤖
                 </div>
@@ -842,9 +799,9 @@ export default function Home() {
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Projetos Reais
             </h3>
-            <div className="flex gap-4 overflow-x-auto pb-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {/* Sistema de Credenciamento */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     Sistema Credenciamento
@@ -879,7 +836,7 @@ export default function Home() {
               </div>
 
               {/* API de Performance */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     API Alto Performance
@@ -908,7 +865,7 @@ export default function Home() {
               </div>
 
               {/* E-commerce Platform */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     E-commerce Platform
@@ -943,7 +900,7 @@ export default function Home() {
               </div>
 
               {/* Dashboard Analytics */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     Dashboard Analytics
@@ -970,7 +927,7 @@ export default function Home() {
               </div>
 
               {/* Automação N8N */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     Automação N8N
@@ -1000,7 +957,7 @@ export default function Home() {
               </div>
 
               {/* Chat Bot WhatsApp */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     Bot WhatsApp
@@ -1035,7 +992,7 @@ export default function Home() {
               </div>
 
               {/* Sistema de Gestão Escolar */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     Gestão Escolar
@@ -1105,26 +1062,26 @@ export default function Home() {
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Números que Impressionam
             </h3>
-            <div className="flex gap-4 overflow-x-auto pb-4">
-              <div className="text-center min-w-[1920px] max-w-[1920px] bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div className="text-center bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition hover:scale-105">
                 <div className="text-4xl font-bold text-purple-300 mb-2">
                   2.250+
                 </div>
                 <p className="text-purple-200">Contribuições no GitHub</p>
               </div>
-              <div className="text-center min-w-[1920px] max-w-[1920px] bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition">
+              <div className="text-center bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition hover:scale-105">
                 <div className="text-4xl font-bold text-purple-300 mb-2">
                   38
                 </div>
                 <p className="text-purple-200">Repositórios</p>
               </div>
-              <div className="text-center min-w-[1920px] max-w-[1920px] bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition">
+              <div className="text-center bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition hover:scale-105">
                 <div className="text-4xl font-bold text-purple-300 mb-2">
                   3+
                 </div>
                 <p className="text-purple-200">Anos de Experiência</p>
               </div>
-              <div className="text-center min-w-[1920px] max-w-[1920px] bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition">
+              <div className="text-center bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition hover:scale-105">
                 <div className="text-4xl font-bold text-purple-300 mb-2">
                   100%
                 </div>
@@ -1143,8 +1100,8 @@ export default function Home() {
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Sites em Produção
             </h3>
-            <div className="flex gap-4 overflow-x-auto pb-4">
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="relative h-48 bg-gradient-to-br from-blue-600 to-blue-800 overflow-hidden">
                   <iframe
                     src="https://visuallaser.com.br"
@@ -1189,7 +1146,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="relative h-48 bg-gradient-to-br from-green-600 to-green-800 overflow-hidden">
                   <iframe
                     src="https://homeidoc.com.br"
@@ -1233,7 +1190,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
                 <div className="relative h-48 bg-gradient-to-br from-orange-600 to-red-800 overflow-hidden">
                   <iframe
                     src="https://lavaflex.com.br"
