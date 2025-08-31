@@ -133,45 +133,31 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Menu Desktop */}
-            <div
-              className={`flex items-center gap-4 transition-all duration-500 ${
-                isMinimized ? "gap-3" : "gap-4"
-              }`}
-            >
+            {/* Menu Desktop - visível em laptops e desktops */}
+            <div className="hidden lg:flex items-center gap-4 transition-all duration-500">
               <button
                 onClick={() => scrollToSection("sobre")}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:bg-purple-700/30 hover:scale-105 ${
-                  isMinimized ? "text-sm" : "text-base"
-                }`}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:bg-purple-700/30 hover:scale-105 text-base"
               >
                 <FaCode
-                  className={`${
-                    isMinimized ? "text-base" : "text-lg"
-                  } text-purple-400`}
+                  className="text-lg text-purple-400"
                 />
                 <span className="text-purple-100">Sobre</span>
               </button>
 
               <button
                 onClick={() => scrollToSection("projetos")}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:bg-purple-700/30 hover:scale-105 ${
-                  isMinimized ? "text-sm" : "text-base"
-                }`}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:bg-purple-700/30 hover:scale-105 text-base"
               >
                 <FaRocket
-                  className={`${
-                    isMinimized ? "text-base" : "text-lg"
-                  } text-purple-400`}
+                  className="text-lg text-purple-400"
                 />
                 <span className="text-purple-100">Projetos</span>
               </button>
 
               <button
                 onClick={() => scrollToSection("servicos")}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:bg-purple-700/30 hover:scale-105 ${
-                  isMinimized ? "text-sm" : "text-base"
-                }`}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-300 hover:bg-purple-700/30 hover:scale-105 text-base"
               >
                 <SiN8N
                   className={`${

@@ -36,25 +36,15 @@ export default function SimpleCookieBanner({ onAccept }: SimpleCookieBannerProps
 
   return (
     <div 
-      style={{
-        position: 'fixed',
-        bottom: '20px',
-        right: '20px',
-        zIndex: 99999,
-        backgroundColor: 'rgba(0,0,0,0.9)',
-        color: 'white',
-        padding: '20px',
-        borderRadius: '10px',
-        maxWidth: '300px',
-        border: '1px solid #a855f7'
-      }}
+      className="fixed bottom-4 right-4 max-w-xs sm:max-w-sm w-auto p-4 sm:p-5 bg-black/90 text-white rounded-xl border border-purple-500 shadow-2xl"
+      style={{ zIndex: 99999 }}
     >
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
         <FaCookieBite style={{ marginRight: '8px', color: '#ffa500' }} />
         <strong>Cookies & Notificações</strong>
       </div>
       
-      <p style={{ fontSize: '12px', marginBottom: '15px' }}>
+      <p className="text-xs sm:text-sm mb-3 sm:mb-4 text-gray-200">
         Utilizamos cookies e enviamos notificações sobre projetos.
       </p>
       

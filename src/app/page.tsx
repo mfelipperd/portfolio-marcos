@@ -3,7 +3,7 @@
 import { lazy, Suspense, useState, useEffect } from "react";
 import { ParallaxProvider, ParallaxBanner } from "react-scroll-parallax";
 import Image from "next/image";
-import Header from "../components/Header";
+import SimpleHeader from "../components/SimpleHeader";
 import SimpleCookieBanner from "../components/SimpleCookieBanner";
 import ClientOnlyWrapper from "../components/ClientOnlyWrapper";
 import { useNotifications } from "../hooks/useNotifications";
@@ -44,7 +44,6 @@ export default function Home() {
   // Hook para notificações
   const { 
     requestPermission, 
-    sendNotification, 
     startPeriodicNotifications,
     isSupported 
   } = useNotifications();
@@ -182,7 +181,8 @@ export default function Home() {
       <Suspense fallback={<div className="fixed inset-0 bg-black/50"></div>}>
         <AnimatedBackground />
       </Suspense>
-      <Header />
+      
+      <SimpleHeader />
       
       {/* Custom Scroll Indicator */}
       <div className="scroll-indicator"></div>
@@ -201,9 +201,9 @@ export default function Home() {
           <div className="carousel-container h-full relative">
             {/* Slide 1 - Transformação Digital */}
             <div className="carousel-slide absolute inset-0 flex items-center justify-center transition-all duration-1000 opacity-100" id="slide-1">
-              <div className="text-center px-4 min-w-[1920px] max-w-[1920px] mx-auto">
-                <div className="glassmorphism p-12 backdrop-blur-2xl bg-black/20 border border-purple-500/30 rounded-3xl shadow-2xl">
-                  <div className="text-8xl mb-6">🚀</div>
+              <div className="text-center px-4 max-w-7xl mx-auto w-full">
+                <div className="glassmorphism p-6 md:p-12 backdrop-blur-2xl bg-black/20 border border-purple-500/30 rounded-3xl shadow-2xl">
+                  <div className="text-6xl md:text-8xl mb-6">🚀</div>
                   <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-purple-200 mb-6">
                     Transformação <br />
                     <span className="text-purple-400">Digital</span> <br />
@@ -214,7 +214,7 @@ export default function Home() {
                   </p>
                   <button
                     onClick={() => scrollToSection("contato")}
-                    className="px-12 py-6 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-full font-bold text-2xl shadow-2xl hover:from-purple-700 hover:to-purple-900 transition-all duration-300 transform hover:scale-110 flex items-center gap-3 mx-auto"
+                                                className="px-6 md:px-12 py-4 md:py-6 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-full font-bold text-lg md:text-2xl shadow-2xl hover:from-purple-700 hover:to-purple-900 transition-all duration-300 transform hover:scale-110 flex items-center gap-2 md:gap-3 mx-auto"
                   >
                     <FaRocket />
                     Começar Transformação
@@ -225,9 +225,9 @@ export default function Home() {
 
             {/* Slide 2 - Sites que Vendem */}
             <div className="carousel-slide absolute inset-0 flex items-center justify-center transition-all duration-1000 opacity-0" id="slide-2">
-              <div className="text-center px-4 min-w-[1920px] max-w-[1920px] mx-auto">
+              <div className="text-center px-4 max-w-7xl mx-auto w-full">
                 <div className="glassmorphism p-12 backdrop-blur-2xl bg-black/20 border border-green-500/30 rounded-3xl shadow-2xl">
-                  <div className="text-8xl mb-6">💰</div>
+                  <div className="text-6xl md:text-8xl mb-6">💰</div>
                   <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-300 via-white to-green-200 mb-6">
                     Sites que <br />
                     <span className="text-green-400">Vendem</span> <br />
@@ -249,9 +249,9 @@ export default function Home() {
 
             {/* Slide 3 - Tecnologia de Ponta */}
             <div className="carousel-slide absolute inset-0 flex items-center justify-center transition-all duration-1000 opacity-0" id="slide-3">
-              <div className="text-center px-4 min-w-[1920px] max-w-[1920px] mx-auto">
+              <div className="text-center px-4 max-w-7xl mx-auto w-full">
                 <div className="glassmorphism p-12 backdrop-blur-2xl bg-black/20 border border-blue-500/30 rounded-3xl shadow-2xl">
-                  <div className="text-8xl mb-6">⚡</div>
+                  <div className="text-6xl md:text-8xl mb-6">⚡</div>
                   <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-white to-blue-200 mb-6">
                     Tecnologia <br />
                     <span className="text-blue-400">Avançada</span> <br />
@@ -273,9 +273,9 @@ export default function Home() {
 
             {/* Slide 4 - Suporte Premium */}
             <div className="carousel-slide absolute inset-0 flex items-center justify-center transition-all duration-1000 opacity-0" id="slide-4">
-              <div className="text-center px-4 min-w-[1920px] max-w-[1920px] mx-auto">
+              <div className="text-center px-4 max-w-7xl mx-auto w-full">
                 <div className="glassmorphism p-12 backdrop-blur-2xl bg-black/20 border border-orange-500/30 rounded-3xl shadow-2xl">
-                  <div className="text-8xl mb-6">🎯</div>
+                  <div className="text-6xl md:text-8xl mb-6">🎯</div>
                   <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-300 via-white to-orange-200 mb-6">
                     Suporte <br />
                     <span className="text-orange-400">Premium</span> <br />
@@ -314,8 +314,8 @@ export default function Home() {
         </section>
 
         {/* BANNER COM 4 CARDS CHAMATIVOS */}
-        <section className="py-8 px-4 relative z-20 overflow-x-auto">
-          <div className="min-w-[1920px] max-w-[1920px] mx-auto">
+        <section className="py-8 px-4 relative z-20">
+          <div className="max-w-7xl mx-auto">
             <div className="text-center mb-8">
               <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-purple-200 mb-4">
                 🚀 Transforme sua Ideia em Realidade Digital
@@ -414,10 +414,10 @@ export default function Home() {
 
         {/* SOBRE MARCOS FELIPPE - REDESIGN */}
         <section
-          className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto"
+          className="py-8 px-4 relative z-20 mt-8 mb-8"
           id="sobre"
         >
-          <div className="min-w-[1920px] max-w-[1920px] mx-auto">
+          <div className="max-w-7xl mx-auto">
             
             {/* Título Principal */}
             <div className="text-center mb-10">
@@ -662,8 +662,8 @@ export default function Home() {
         </section>
 
         {/* TECNOLOGIAS */}
-        <section className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto">
-          <div className="glassmorphism p-8 relative overflow-hidden min-w-[1920px] max-w-[1920px] mx-auto">
+        <section className="py-8 px-4 relative z-20 mt-8 mb-8">
+          <div className="glassmorphism p-8 relative overflow-hidden max-w-7xl mx-auto">
             {/* Grid Background Pattern */}
             <div className="absolute inset-0 opacity-5">
               <div className="grid grid-cols-8 gap-4 h-full">
@@ -703,7 +703,7 @@ export default function Home() {
           className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto"
           id="servicos"
         >
-          <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
+          <div className="glassmorphism p-8 max-w-7xl mx-auto">
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Como Posso Transformar Seu Negócio
             </h3>
@@ -825,7 +825,7 @@ export default function Home() {
           className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto"
           id="projetos"
         >
-          <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
+          <div className="glassmorphism p-8 max-w-7xl mx-auto">
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Projetos Reais
             </h3>
@@ -1087,8 +1087,8 @@ export default function Home() {
         </section>
 
         {/* ESTATÍSTICAS */}
-        <section className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto">
-          <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
+        <section className="py-8 px-4 relative z-20 mt-8 mb-8">
+          <div className="glassmorphism p-8 max-w-7xl mx-auto">
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Números que Impressionam
             </h3>
@@ -1126,7 +1126,7 @@ export default function Home() {
           className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto"
           id="sites"
         >
-          <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
+          <div className="glassmorphism p-8 max-w-7xl mx-auto">
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Sites em Produção
             </h3>
@@ -1272,7 +1272,7 @@ export default function Home() {
           className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto"
           id="contato"
         >
-          <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
+          <div className="glassmorphism p-8 max-w-7xl mx-auto">
             <div className="text-center mb-8">
               <h3 className="text-3xl font-bold mb-4 text-purple-200">
                 Pronto para Decolar seu Projeto?
@@ -1350,8 +1350,8 @@ export default function Home() {
       </div>
 
       {/* RODAPÉ */}
-      <footer className="py-8 px-4 text-center relative z-20 overflow-x-auto">
-        <div className="min-w-[1920px] max-w-[1920px] mx-auto">
+      <footer className="py-8 px-4 text-center relative z-20">
+        <div className="max-w-7xl mx-auto">
           <p className="text-purple-300 text-sm">
             © 2025 Marcos Felippe. Desenvolvido com ❤️ em Next.js
           </p>
