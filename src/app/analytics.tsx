@@ -27,9 +27,9 @@ export default function Analytics() {
       };
       
       // Rastrear tempo na página
-      let startTime = Date.now();
+      const startTime = Date.now();
       window.addEventListener('beforeunload', function() {
-        let timeOnPage = Math.round((Date.now() - startTime) / 1000);
+        const timeOnPage = Math.round((Date.now() - startTime) / 1000);
         window.trackEvent('time_on_page', {
           value: timeOnPage,
           event_category: 'engagement'
@@ -39,7 +39,7 @@ export default function Analytics() {
       // Rastrear scroll depth
       let maxScroll = 0;
       window.addEventListener('scroll', function() {
-        let scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+        const scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
         if (scrollPercent > maxScroll) {
           maxScroll = scrollPercent;
           if (maxScroll % 25 === 0) { // A cada 25% de scroll
@@ -62,8 +62,10 @@ export default function Analytics() {
 
       // Rastrear cliques em elementos importantes
       document.addEventListener('click', function(e) {
+        const target = e.target as HTMLElement;
+        
         // Botões de contato
-        if (e.target && e.target.closest('[data-analytics="contact"]')) {
+        if (target && target.closest && target.closest('[data-analytics="contact"]')) {
           window.trackEvent('contact_click', {
             event_category: 'engagement',
             event_label: 'contact_button'
@@ -71,7 +73,7 @@ export default function Analytics() {
         }
         
         // Projetos
-        if (e.target && e.target.closest('[data-analytics="project"]')) {
+        if (target && target.closest && target.closest('[data-analytics="project"]')) {
           window.trackEvent('project_view', {
             event_category: 'engagement', 
             event_label: 'project_click'
@@ -79,7 +81,7 @@ export default function Analytics() {
         }
         
         // Serviços
-        if (e.target && e.target.closest('[data-analytics="service"]')) {
+        if (target && target.closest && target.closest('[data-analytics="service"]')) {
           window.trackEvent('service_view', {
             event_category: 'engagement',
             event_label: 'service_click'

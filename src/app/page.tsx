@@ -1,7 +1,7 @@
 "use client";
 
 import { lazy, Suspense, useState, useEffect } from "react";
-import { ParallaxProvider, ParallaxBanner } from "react-scroll-parallax";
+import { ParallaxProvider } from "react-scroll-parallax";
 import Image from "next/image";
 import SimpleHeader from "../components/SimpleHeader";
 import SimpleCookieBanner from "../components/SimpleCookieBanner";
@@ -41,11 +41,10 @@ export default function Home() {
   // Estado para controlar o slide atual do carrossel
   const [currentSlide, setCurrentSlide] = useState(1);
   
-  // Hook para notificações
+    // Hook para notificações
   const { 
-    requestPermission, 
     startPeriodicNotifications,
-    isSupported 
+    isSupported
   } = useNotifications();
 
   // Função ease-in-out para animação suave
@@ -102,7 +101,7 @@ export default function Home() {
     }, 5000); // Muda a cada 5 segundos
 
     return () => clearInterval(interval);
-  }, [currentSlide]);
+  }, [currentSlide, changeSlide]);
 
   // Adicionar event listeners após o componente montar
   useEffect(() => {
@@ -129,7 +128,7 @@ export default function Home() {
 
     document.addEventListener('click', handleCarouselClick);
     return () => document.removeEventListener('click', handleCarouselClick);
-  }, [currentSlide]);
+  }, [currentSlide, changeSlide]);
 
   // Função para lidar com aceite de cookies e notificações
   const handleCookieAccept = async () => {

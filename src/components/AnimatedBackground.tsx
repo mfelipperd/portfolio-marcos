@@ -62,7 +62,7 @@ export default function AnimatedBackground() {
       ))}
 
       {/* Tags adicionais que se movem na direção oposta */}
-      {tags.slice(0, 10).map((tag, index) => (
+      {tags.slice(0, 10).map((tag) => (
         <div
           key={`reverse-${tag.id}`}
           className={`absolute ${tag.size} font-mono text-blue-400 select-none animate-drift`}
