@@ -284,9 +284,9 @@ export default function Home() {
         </section>
 
         {/* BANNER COM 4 CARDS CHAMATIVOS */}
-        <section className="py-16 px-4 relative z-20 overflow-x-auto">
+        <section className="py-8 px-4 relative z-20 overflow-x-auto">
           <div className="min-w-[1920px] max-w-[1920px] mx-auto">
-            <div className="text-center mb-12">
+            <div className="text-center mb-8">
               <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-purple-200 mb-4">
                 🚀 Transforme sua Ideia em Realidade Digital
               </h2>
@@ -384,13 +384,13 @@ export default function Home() {
 
         {/* SOBRE MARCOS FELIPPE - REDESIGN */}
         <section
-          className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto"
+          className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto"
           id="sobre"
         >
           <div className="min-w-[1920px] max-w-[1920px] mx-auto">
             
             {/* Título Principal */}
-            <div className="text-center mb-16">
+            <div className="text-center mb-10">
               <h2 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-purple-200 mb-4">
                 👨‍💻 Sobre Marcos Felippe
               </h2>
@@ -400,7 +400,7 @@ export default function Home() {
             </div>
 
             {/* Layout Principal em Cards */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
               
               {/* Card 1 - Perfil e Estatísticas */}
               <div className="glassmorphism p-8 text-center hover:scale-105 transition-all duration-300">
@@ -528,7 +528,7 @@ export default function Home() {
             </div>
 
             {/* Expertise Técnica - Seção Completa */}
-            <div className="glassmorphism p-8 mb-12">
+            <div className="glassmorphism p-6 mb-8">
               <div className="flex items-center gap-3 mb-8 justify-center">
                 <FaCode className="text-3xl text-purple-400" />
                 <h4 className="text-3xl font-bold text-purple-300">Expertise Técnica</h4>
@@ -632,7 +632,7 @@ export default function Home() {
         </section>
 
         {/* TECNOLOGIAS */}
-        <section className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto">
+        <section className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto">
           <div className="glassmorphism p-8 relative overflow-hidden min-w-[1920px] max-w-[1920px] mx-auto">
             {/* Grid Background Pattern */}
             <div className="absolute inset-0 opacity-5">
@@ -670,7 +670,7 @@ export default function Home() {
 
         {/* SERVIÇOS */}
         <section
-          className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto"
+          className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto"
           id="servicos"
         >
           <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
@@ -792,7 +792,7 @@ export default function Home() {
 
         {/* PROJETOS EM DESTAQUE */}
         <section
-          className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto"
+          className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto"
           id="projetos"
         >
           <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
@@ -1057,7 +1057,7 @@ export default function Home() {
         </section>
 
         {/* ESTATÍSTICAS */}
-        <section className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto">
+        <section className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto">
           <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Números que Impressionam
@@ -1093,7 +1093,7 @@ export default function Home() {
 
         {/* SITES EM PRODUÇÃO */}
         <section
-          className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto"
+          className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto"
           id="sites"
         >
           <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
@@ -1239,7 +1239,7 @@ export default function Home() {
 
         {/* CONTATO */}
         <section
-          className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto"
+          className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto"
           id="contato"
         >
           <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
