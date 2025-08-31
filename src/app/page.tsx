@@ -1,6 +1,6 @@
 "use client";
 
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
 import { ParallaxProvider, ParallaxBanner } from "react-scroll-parallax";
 import Image from "next/image";
 import Header from "../components/Header";
@@ -35,6 +35,9 @@ import {
 } from "react-icons/fa";
 
 export default function Home() {
+  // Estado para controlar o slide atual do carrossel
+  const [currentSlide, setCurrentSlide] = useState(1);
+
   // Função ease-in-out para animação suave
   const ease = (t: number, b: number, c: number, d: number) => {
     t /= d / 2;
@@ -42,6 +45,81 @@ export default function Home() {
     t--;
     return (-c / 2) * (t * (t - 2) - 1) + b;
   };
+
+  // Função para mudar slide do carrossel
+  const changeSlide = (slideNumber: number) => {
+    setCurrentSlide(slideNumber);
+    
+    // Atualizar opacidade dos slides
+    for (let i = 1; i <= 4; i++) {
+      const slide = document.getElementById(`slide-${i}`);
+      if (slide) {
+        slide.style.opacity = i === slideNumber ? '1' : '0';
+      }
+    }
+    
+    // Atualizar indicadores
+    const indicators = document.querySelectorAll('.carousel-indicator');
+    indicators.forEach((indicator, index) => {
+      if (indicator instanceof HTMLElement) {
+        if (index + 1 === slideNumber) {
+          indicator.style.opacity = '1';
+          indicator.style.backgroundColor = getSlideColor(slideNumber);
+        } else {
+          indicator.style.opacity = '0.5';
+          indicator.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+        }
+      }
+    });
+  };
+
+  // Função para obter a cor do slide
+  const getSlideColor = (slideNumber: number) => {
+    const colors = {
+      1: '#a855f7', // purple
+      2: '#22c55e', // green
+      3: '#3b82f6', // blue
+      4: '#f97316'  // orange
+    };
+    return colors[slideNumber as keyof typeof colors] || '#a855f7';
+  };
+
+  // Auto-rotate carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextSlide = currentSlide === 4 ? 1 : currentSlide + 1;
+      changeSlide(nextSlide);
+    }, 5000); // Muda a cada 5 segundos
+
+    return () => clearInterval(interval);
+  }, [currentSlide]);
+
+  // Adicionar event listeners após o componente montar
+  useEffect(() => {
+    const handleCarouselClick = (e: Event) => {
+      const target = e.target as HTMLElement;
+      
+      // Handle indicator clicks
+      if (target.classList.contains('carousel-indicator')) {
+        const slideNumber = parseInt(target.getAttribute('data-slide') || '1');
+        changeSlide(slideNumber);
+      }
+      
+      // Handle navigation arrows
+      if (target.closest('.carousel-prev')) {
+        const prevSlide = currentSlide === 1 ? 4 : currentSlide - 1;
+        changeSlide(prevSlide);
+      }
+      
+      if (target.closest('.carousel-next')) {
+        const nextSlide = currentSlide === 4 ? 1 : currentSlide + 1;
+        changeSlide(nextSlide);
+      }
+    };
+
+    document.addEventListener('click', handleCarouselClick);
+    return () => document.removeEventListener('click', handleCarouselClick);
+  }, [currentSlide]);
 
   // Função para scroll suave entre seções
   const scrollToSection = (sectionId: string) => {
@@ -76,79 +154,236 @@ export default function Home() {
       </Suspense>
       <Header />
       <div className="font-sans bg-gradient-to-br from-purple-900 via-black to-purple-800 min-h-screen relative z-10">
-        {/* HERO BANNER FULLSCREEN */}
-        <ParallaxBanner
-          layers={[
-            {
-              children: (
-                <div className="absolute inset-0 opacity-30">
-                  <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl animate-pulse" />
-                  <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-                  <div className="absolute bottom-1/4 left-1/2 w-48 h-48 bg-purple-300/15 rounded-full blur-2xl animate-pulse delay-500" />
+        {/* CARROSSEL HERO BANNER */}
+        <section className="h-screen relative z-10 overflow-hidden" id="hero">
+          {/* Background Animated Elements */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-purple-500/30 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse delay-1000" />
+            <div className="absolute bottom-1/4 left-1/2 w-48 h-48 bg-purple-300/25 rounded-full blur-2xl animate-pulse delay-500" />
+          </div>
+
+          {/* Carousel Container */}
+          <div className="carousel-container h-full relative">
+            {/* Slide 1 - Transformação Digital */}
+            <div className="carousel-slide absolute inset-0 flex items-center justify-center transition-all duration-1000 opacity-100" id="slide-1">
+              <div className="text-center px-4 min-w-[1920px] max-w-[1920px] mx-auto">
+                <div className="glassmorphism p-12 backdrop-blur-2xl bg-black/20 border border-purple-500/30 rounded-3xl shadow-2xl">
+                  <div className="text-8xl mb-6">🚀</div>
+                  <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-purple-200 mb-6">
+                    Transformação <br />
+                    <span className="text-purple-400">Digital</span> <br />
+                    <span className="text-white">Completa</span>
+                  </h1>
+                  <p className="text-xl sm:text-2xl text-purple-100 mb-8 leading-relaxed">
+                    Do conceito ao lançamento. Criamos soluções digitais que revolucionam seu negócio e multiplicam seus resultados.
+                  </p>
+                  <button
+                    onClick={() => scrollToSection("contato")}
+                    className="px-12 py-6 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-full font-bold text-2xl shadow-2xl hover:from-purple-700 hover:to-purple-900 transition-all duration-300 transform hover:scale-110 flex items-center gap-3 mx-auto"
+                  >
+                    <FaRocket />
+                    Começar Transformação
+                  </button>
                 </div>
-              ),
-              speed: -30,
-            },
-            {
-              children: (
-                <div className="absolute inset-0 flex items-center justify-center z-20">
-                  <div className="text-center px-4 max-w-6xl mx-auto">
-                    <div className="glassmorphism p-12 backdrop-blur-2xl bg-black/20 border border-purple-500/30 rounded-3xl shadow-2xl transform perspective-1000">
-                      <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-purple-200 mb-6 drop-shadow-2xl">
-                        Transforme sua <br />
-                        <span className="text-purple-400">Ideia</span> em <br />
-                        <span className="text-white">Realidade Digital</span>
-                      </h1>
-                      <p className="text-xl sm:text-2xl text-purple-100 mb-8 max-w-4xl mx-auto leading-relaxed">
-                        Sites modernos, rápidos e que convertem. Especialista em
-                        React, Node.js e soluções fullstack que fazem a
-                        diferença no seu negócio.
-                      </p>
-                      <div className="flex gap-4 justify-center flex-wrap">
-                        <button
-                          onClick={() => scrollToSection("projetos")}
-                          className="px-10 py-5 bg-gradient-to-r from-purple-600 to-purple-800 text-white rounded-full font-bold text-xl shadow-2xl hover:from-purple-700 hover:to-purple-900 transition-all duration-300 transform hover:scale-110 hover:shadow-purple-500/25 flex items-center gap-2"
-                        >
-                          <FaRocket />
-                          Ver Projetos
-                        </button>
-                        <button
-                          onClick={() => scrollToSection("contato")}
-                          className="px-10 py-5 bg-transparent border-2 border-purple-400 text-purple-200 rounded-full font-bold text-xl hover:bg-purple-400 hover:text-black transition-all duration-300 transform hover:scale-110 backdrop-blur-sm flex items-center gap-2"
-                        >
-                          <FaEnvelope />
-                          Solicitar Orçamento
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+              </div>
+            </div>
+
+            {/* Slide 2 - Sites que Vendem */}
+            <div className="carousel-slide absolute inset-0 flex items-center justify-center transition-all duration-1000 opacity-0" id="slide-2">
+              <div className="text-center px-4 min-w-[1920px] max-w-[1920px] mx-auto">
+                <div className="glassmorphism p-12 backdrop-blur-2xl bg-black/20 border border-green-500/30 rounded-3xl shadow-2xl">
+                  <div className="text-8xl mb-6">💰</div>
+                  <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-300 via-white to-green-200 mb-6">
+                    Sites que <br />
+                    <span className="text-green-400">Vendem</span> <br />
+                    <span className="text-white">24/7</span>
+                  </h1>
+                  <p className="text-xl sm:text-2xl text-green-100 mb-8 leading-relaxed">
+                    Não apenas bonitos, mas máquinas de conversão. Sites otimizados que trabalham para você enquanto você dorme.
+                  </p>
+                  <button
+                    onClick={() => scrollToSection("projetos")}
+                    className="px-12 py-6 bg-gradient-to-r from-green-600 to-green-800 text-white rounded-full font-bold text-2xl shadow-2xl hover:from-green-700 hover:to-green-900 transition-all duration-300 transform hover:scale-110 flex items-center gap-3 mx-auto"
+                  >
+                    <FaEnvelope />
+                    Ver Cases de Sucesso
+                  </button>
                 </div>
-              ),
-              speed: -10,
-            },
-            {
-              children: (
-                <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20">
-                  <div className="animate-bounce">
-                    <div className="w-6 h-10 border-2 border-purple-400 rounded-full flex justify-center">
-                      <div className="w-1 h-3 bg-purple-400 rounded-full mt-2 animate-pulse"></div>
-                    </div>
-                  </div>
+              </div>
+            </div>
+
+            {/* Slide 3 - Tecnologia de Ponta */}
+            <div className="carousel-slide absolute inset-0 flex items-center justify-center transition-all duration-1000 opacity-0" id="slide-3">
+              <div className="text-center px-4 min-w-[1920px] max-w-[1920px] mx-auto">
+                <div className="glassmorphism p-12 backdrop-blur-2xl bg-black/20 border border-blue-500/30 rounded-3xl shadow-2xl">
+                  <div className="text-8xl mb-6">⚡</div>
+                  <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-white to-blue-200 mb-6">
+                    Tecnologia <br />
+                    <span className="text-blue-400">Avançada</span> <br />
+                    <span className="text-white">Performance</span>
+                  </h1>
+                  <p className="text-xl sm:text-2xl text-blue-100 mb-8 leading-relaxed">
+                    React, Next.js, Node.js e IA. As tecnologias mais modernas do mercado para resultados extraordinários.
+                  </p>
+                  <button
+                    onClick={() => scrollToSection("servicos")}
+                    className="px-12 py-6 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-full font-bold text-2xl shadow-2xl hover:from-blue-700 hover:to-blue-900 transition-all duration-300 transform hover:scale-110 flex items-center gap-3 mx-auto"
+                  >
+                    <FaCogs />
+                    Conhecer Tecnologias
+                  </button>
                 </div>
-              ),
-              speed: 0,
-            },
-          ]}
-          className="h-screen relative z-10"
-          id="hero"
-        />
+              </div>
+            </div>
+
+            {/* Slide 4 - Suporte Premium */}
+            <div className="carousel-slide absolute inset-0 flex items-center justify-center transition-all duration-1000 opacity-0" id="slide-4">
+              <div className="text-center px-4 min-w-[1920px] max-w-[1920px] mx-auto">
+                <div className="glassmorphism p-12 backdrop-blur-2xl bg-black/20 border border-orange-500/30 rounded-3xl shadow-2xl">
+                  <div className="text-8xl mb-6">🎯</div>
+                  <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-300 via-white to-orange-200 mb-6">
+                    Suporte <br />
+                    <span className="text-orange-400">Premium</span> <br />
+                    <span className="text-white">Vitalício</span>
+                  </h1>
+                  <p className="text-xl sm:text-2xl text-orange-100 mb-8 leading-relaxed">
+                    Não te abandonamos após a entrega. Suporte contínuo, atualizações e crescimento junto com seu negócio.
+                  </p>
+                  <button
+                    onClick={() => scrollToSection("contato")}
+                    className="px-12 py-6 bg-gradient-to-r from-orange-600 to-orange-800 text-white rounded-full font-bold text-2xl shadow-2xl hover:from-orange-700 hover:to-orange-900 transition-all duration-300 transform hover:scale-110 flex items-center gap-3 mx-auto"
+                  >
+                    <FaHeart />
+                    Quero Esse Suporte
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Carousel Indicators */}
+          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30 flex gap-3">
+            <button className="carousel-indicator w-4 h-4 rounded-full bg-purple-400 opacity-100 transition-all duration-300" data-slide="1"></button>
+            <button className="carousel-indicator w-4 h-4 rounded-full bg-white/50 opacity-50 transition-all duration-300 hover:opacity-75" data-slide="2"></button>
+            <button className="carousel-indicator w-4 h-4 rounded-full bg-white/50 opacity-50 transition-all duration-300 hover:opacity-75" data-slide="3"></button>
+            <button className="carousel-indicator w-4 h-4 rounded-full bg-white/50 opacity-50 transition-all duration-300 hover:opacity-75" data-slide="4"></button>
+          </div>
+
+          {/* Carousel Navigation Arrows */}
+          <button className="carousel-prev absolute left-8 top-1/2 transform -translate-y-1/2 z-30 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300">
+            <span className="text-2xl">‹</span>
+          </button>
+          <button className="carousel-next absolute right-8 top-1/2 transform -translate-y-1/2 z-30 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-300">
+            <span className="text-2xl">›</span>
+          </button>
+        </section>
+
+        {/* BANNER COM 4 CARDS CHAMATIVOS */}
+        <section className="py-16 px-4 relative z-20 overflow-x-auto">
+          <div className="min-w-[1920px] max-w-[1920px] mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-purple-200 mb-4">
+                🚀 Transforme sua Ideia em Realidade Digital
+              </h2>
+              <p className="text-xl text-purple-100 max-w-3xl mx-auto">
+                Descubra como podemos revolucionar seu negócio com tecnologia de ponta
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Card 1 - Velocidade Extrema */}
+              <div className="glassmorphism p-8 text-center hover:scale-105 transition-all duration-300 group cursor-pointer min-h-[300px] flex flex-col justify-between">
+                <div>
+                  <div className="text-6xl mb-4 group-hover:animate-bounce">⚡</div>
+                  <h3 className="text-xl font-bold text-purple-200 mb-3">
+                    Velocidade Extrema
+                  </h3>
+                  <p className="text-purple-100 text-sm leading-relaxed">
+                    Sites que carregam em <span className="text-purple-300 font-bold">menos de 2 segundos</span>. 
+                    Performance otimizada que mantém seus usuários engajados e aumenta conversões.
+                  </p>
+                </div>
+                <div className="mt-4 py-2 px-4 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-full">
+                  <span className="text-yellow-300 font-semibold text-sm">💨 Ultra Rápido</span>
+                </div>
+              </div>
+
+              {/* Card 2 - Design Irresistível */}
+              <div className="glassmorphism p-8 text-center hover:scale-105 transition-all duration-300 group cursor-pointer min-h-[300px] flex flex-col justify-between">
+                <div>
+                  <div className="text-6xl mb-4 group-hover:animate-pulse">🎨</div>
+                  <h3 className="text-xl font-bold text-purple-200 mb-3">
+                    Design Irresistível
+                  </h3>
+                  <p className="text-purple-100 text-sm leading-relaxed">
+                    Interfaces que <span className="text-purple-300 font-bold">hipnotizam usuários</span>. 
+                    Design moderno, responsivo e otimizado para conversão em todos os dispositivos.
+                  </p>
+                </div>
+                <div className="mt-4 py-2 px-4 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-full">
+                  <span className="text-pink-300 font-semibold text-sm">✨ Visualmente Impactante</span>
+                </div>
+              </div>
+
+              {/* Card 3 - Tecnologia de Ponta */}
+              <div className="glassmorphism p-8 text-center hover:scale-105 transition-all duration-300 group cursor-pointer min-h-[300px] flex flex-col justify-between">
+                <div>
+                  <div className="text-6xl mb-4 group-hover:animate-spin">🔥</div>
+                  <h3 className="text-xl font-bold text-purple-200 mb-3">
+                    Tecnologia de Ponta
+                  </h3>
+                  <p className="text-purple-100 text-sm leading-relaxed">
+                    <span className="text-purple-300 font-bold">React, Next.js, Node.js</span> e as mais 
+                    avançadas ferramentas do mercado. Seu projeto sempre à frente da concorrência.
+                  </p>
+                </div>
+                <div className="mt-4 py-2 px-4 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full">
+                  <span className="text-blue-300 font-semibold text-sm">🚀 Futuro-proof</span>
+                </div>
+              </div>
+
+              {/* Card 4 - ROI Garantido */}
+              <div className="glassmorphism p-8 text-center hover:scale-105 transition-all duration-300 group cursor-pointer min-h-[300px] flex flex-col justify-between">
+                <div>
+                  <div className="text-6xl mb-4 group-hover:animate-bounce">💰</div>
+                  <h3 className="text-xl font-bold text-purple-200 mb-3">
+                    ROI Garantido
+                  </h3>
+                  <p className="text-purple-100 text-sm leading-relaxed">
+                    Investimento que <span className="text-purple-300 font-bold">se paga sozinho</span>. 
+                    Soluções que geram leads, aumentam vendas e impulsionam seu faturamento.
+                  </p>
+                </div>
+                <div className="mt-4 py-2 px-4 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-full">
+                  <span className="text-green-300 font-semibold text-sm">📈 Resultados Reais</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Call to Action */}
+            <div className="text-center mt-12">
+              <button
+                onClick={() => scrollToSection("contato")}
+                className="px-12 py-6 bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 text-white rounded-full font-bold text-2xl shadow-2xl hover:from-purple-700 hover:via-purple-800 hover:to-purple-900 transition-all duration-300 transform hover:scale-110 hover:shadow-purple-500/50 flex items-center gap-3 mx-auto"
+              >
+                <FaRocket className="text-2xl" />
+                Quero Transformar Meu Negócio Agora!
+                <span className="text-yellow-300">⚡</span>
+              </button>
+              <p className="text-purple-300 mt-4 text-lg">
+                💎 <span className="font-semibold">Consultoria gratuita</span> • ⚡ <span className="font-semibold">Resposta em 24h</span> • 🎯 <span className="font-semibold">Orçamento personalizado</span>
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* SOBRE MIM */}
         <section
-          className="py-16 px-4 max-w-4xl mx-auto relative z-20 mt-16 mb-16"
+          className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto"
           id="sobre"
         >
-          <div className="glassmorphism p-6 md:p-8 relative overflow-hidden">
+          <div className="glassmorphism p-6 md:p-8 relative overflow-hidden min-w-[1920px] max-w-[1920px] mx-auto">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-5">
               <div className="absolute top-4 left-4 text-4xl md:text-6xl text-purple-400">
@@ -440,8 +675,8 @@ export default function Home() {
         </section>
 
         {/* TECNOLOGIAS */}
-        <section className="py-16 px-4 max-w-6xl mx-auto relative z-20 mt-16 mb-16">
-          <div className="glassmorphism p-8 relative overflow-hidden">
+        <section className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto">
+          <div className="glassmorphism p-8 relative overflow-hidden min-w-[1920px] max-w-[1920px] mx-auto">
             {/* Grid Background Pattern */}
             <div className="absolute inset-0 opacity-5">
               <div className="grid grid-cols-8 gap-4 h-full">
@@ -478,15 +713,15 @@ export default function Home() {
 
         {/* SERVIÇOS */}
         <section
-          className="py-16 px-4 max-w-6xl mx-auto relative z-20 mt-16 mb-16"
+          className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto"
           id="servicos"
         >
-          <div className="glassmorphism p-8">
+          <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Como Posso Transformar Seu Negócio
             </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group">
+            <div className="flex gap-4 overflow-x-auto pb-4">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
                   🚀
                 </div>
@@ -504,7 +739,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
                   💼
                 </div>
@@ -522,7 +757,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
                   ⚡
                 </div>
@@ -540,7 +775,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="flex items-center text-4xl mb-4 group-hover:scale-110 transition-transform">
                   <SiN8N className="text-orange-500 mr-2" />
                   <BsLightning className="text-yellow-400" />
@@ -559,7 +794,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="flex items-center text-4xl mb-4 group-hover:scale-110 transition-transform">
                   <BsRobot className="text-blue-500 mr-2" />
                 </div>
@@ -577,7 +812,7 @@ export default function Home() {
                 </ul>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
                   🤖
                 </div>
@@ -600,16 +835,16 @@ export default function Home() {
 
         {/* PROJETOS EM DESTAQUE */}
         <section
-          className="py-16 px-4 max-w-4xl mx-auto relative z-20 mt-16 mb-16"
+          className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto"
           id="projetos"
         >
-          <div className="glassmorphism p-8">
+          <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Projetos Reais
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex gap-4 overflow-x-auto pb-4">
               {/* Sistema de Credenciamento */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     Sistema Credenciamento
@@ -644,7 +879,7 @@ export default function Home() {
               </div>
 
               {/* API de Performance */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     API Alto Performance
@@ -673,7 +908,7 @@ export default function Home() {
               </div>
 
               {/* E-commerce Platform */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     E-commerce Platform
@@ -708,7 +943,7 @@ export default function Home() {
               </div>
 
               {/* Dashboard Analytics */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     Dashboard Analytics
@@ -735,7 +970,7 @@ export default function Home() {
               </div>
 
               {/* Automação N8N */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     Automação N8N
@@ -765,7 +1000,7 @@ export default function Home() {
               </div>
 
               {/* Chat Bot WhatsApp */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     Bot WhatsApp
@@ -800,7 +1035,7 @@ export default function Home() {
               </div>
 
               {/* Sistema de Gestão Escolar */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="flex items-center justify-between mb-3">
                   <h4 className="font-bold text-lg text-purple-100">
                     Gestão Escolar
@@ -865,31 +1100,31 @@ export default function Home() {
         </section>
 
         {/* ESTATÍSTICAS */}
-        <section className="py-16 px-4 max-w-4xl mx-auto relative z-20 mt-16 mb-16">
-          <div className="glassmorphism p-8">
+        <section className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto">
+          <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Números que Impressionam
             </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              <div className="text-center">
+            <div className="flex gap-4 overflow-x-auto pb-4">
+              <div className="text-center min-w-[1920px] max-w-[1920px] bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition">
                 <div className="text-4xl font-bold text-purple-300 mb-2">
                   2.250+
                 </div>
                 <p className="text-purple-200">Contribuições no GitHub</p>
               </div>
-              <div className="text-center">
+              <div className="text-center min-w-[1920px] max-w-[1920px] bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition">
                 <div className="text-4xl font-bold text-purple-300 mb-2">
                   38
                 </div>
                 <p className="text-purple-200">Repositórios</p>
               </div>
-              <div className="text-center">
+              <div className="text-center min-w-[1920px] max-w-[1920px] bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition">
                 <div className="text-4xl font-bold text-purple-300 mb-2">
                   3+
                 </div>
                 <p className="text-purple-200">Anos de Experiência</p>
               </div>
-              <div className="text-center">
+              <div className="text-center min-w-[1920px] max-w-[1920px] bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-8 hover:border-purple-400/40 transition">
                 <div className="text-4xl font-bold text-purple-300 mb-2">
                   100%
                 </div>
@@ -901,15 +1136,15 @@ export default function Home() {
 
         {/* SITES EM PRODUÇÃO */}
         <section
-          className="py-16 px-4 max-w-6xl mx-auto relative z-20 mt-16 mb-16"
+          className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto"
           id="sites"
         >
-          <div className="glassmorphism p-8">
+          <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
             <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
               Sites em Produção
             </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group">
+            <div className="flex gap-4 overflow-x-auto pb-4">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="relative h-48 bg-gradient-to-br from-blue-600 to-blue-800 overflow-hidden">
                   <iframe
                     src="https://visuallaser.com.br"
@@ -954,7 +1189,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="relative h-48 bg-gradient-to-br from-green-600 to-green-800 overflow-hidden">
                   <iframe
                     src="https://homeidoc.com.br"
@@ -998,7 +1233,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group">
+              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group h-full flex flex-col min-w-[1920px] max-w-[1920px]">
                 <div className="relative h-48 bg-gradient-to-br from-orange-600 to-red-800 overflow-hidden">
                   <iframe
                     src="https://lavaflex.com.br"
@@ -1047,10 +1282,10 @@ export default function Home() {
 
         {/* CONTATO */}
         <section
-          className="py-16 px-4 max-w-4xl mx-auto relative z-20 mt-16 mb-16"
+          className="py-16 px-4 relative z-20 mt-16 mb-16 overflow-x-auto"
           id="contato"
         >
-          <div className="glassmorphism p-8">
+          <div className="glassmorphism p-8 min-w-[1920px] max-w-[1920px] mx-auto">
             <div className="text-center mb-8">
               <h3 className="text-3xl font-bold mb-4 text-purple-200">
                 Pronto para Decolar seu Projeto?
@@ -1128,8 +1363,8 @@ export default function Home() {
       </div>
 
       {/* RODAPÉ */}
-      <footer className="py-8 px-4 text-center relative z-20">
-        <div className="max-w-4xl mx-auto">
+      <footer className="py-8 px-4 text-center relative z-20 overflow-x-auto">
+        <div className="min-w-[1920px] max-w-[1920px] mx-auto">
           <p className="text-purple-300 text-sm">
             © 2025 Marcos Felippe. Desenvolvido com ❤️ em Next.js
           </p>
