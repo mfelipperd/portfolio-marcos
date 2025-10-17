@@ -17,6 +17,14 @@ const AnimatedBackground = lazy(
 // Lazy loading do componente de tecnologias
 const TechnologiesGrid = lazy(() => import("../components/TechnologiesGrid"));
 
+// Lazy loading dos novos componentes de projetos
+const GitHubProjects = lazy(() => import("../components/GitHubProjects"));
+const VercelProjects = lazy(() => import("../components/VercelProjects"));
+const GitHubStats = lazy(() => import("../components/GitHubStats"));
+const InteractiveProjects = lazy(() => import("../components/InteractiveProjects"));
+const ParticleBackground = lazy(() => import("../components/ParticleBackground"));
+const ProductionSites = lazy(() => import("../components/ProductionSites"));
+
 // Apenas ícones utilizados na página principal
 import { SiN8N } from "react-icons/si";
 import { BsRobot, BsLightning } from "react-icons/bs";
@@ -179,6 +187,10 @@ export default function Home() {
     <ParallaxProvider>
       <Suspense fallback={<div className="fixed inset-0 bg-black/50"></div>}>
         <AnimatedBackground />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <ParticleBackground />
       </Suspense>
       
       <SimpleHeader />
@@ -819,268 +831,120 @@ export default function Home() {
           </div>
         </section>
 
-        {/* PROJETOS EM DESTAQUE */}
+        {/* PROJETOS EM DESTAQUE - NOVA SEÇÃO INTERATIVA */}
         <section
           className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto"
           id="projetos"
         >
-          <div className="glassmorphism p-8 max-w-7xl mx-auto">
-            <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
-              Projetos Reais
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {/* Sistema de Credenciamento */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-bold text-lg text-purple-100">
-                    Sistema Credenciamento
-                  </h4>
-                  <span className="text-xs bg-green-700 text-white px-2 py-1 rounded">
-                    Produção
-                  </span>
-                </div>
-                <p className="text-purple-200 text-sm mb-3">
-                  Sistema enterprise para gestão de credenciamentos com React e
-                  NestJS.
-                </p>
-                <div className="flex flex-wrap gap-1 mb-3">
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    React
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    NestJS
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    PostgreSQL
-                  </span>
-                </div>
-                <a
-                  href="https://github.com/mfelipperd/credenciamento-frontend"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-purple-400 hover:text-purple-200 transition text-sm"
-                >
-                  Ver GitHub →
-                </a>
-              </div>
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-purple-200 mb-4">
+                🚀 Meus Projetos
+              </h2>
+              <p className="text-xl text-purple-100 max-w-3xl mx-auto">
+                Conheça os projetos que desenvolvi, desde aplicações enterprise até soluções inovadoras
+              </p>
+            </div>
 
-              {/* API de Performance */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-bold text-lg text-purple-100">
-                    API Alto Performance
-                  </h4>
-                  <span className="text-xs bg-blue-700 text-white px-2 py-1 rounded">
-                    Backend
-                  </span>
-                </div>
-                <p className="text-purple-200 text-sm mb-3">
-                  API REST otimizada com cache Redis e paginação inteligente.
-                </p>
-                <div className="flex flex-wrap gap-1 mb-3">
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    NestJS
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    Redis
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    Prisma
-                  </span>
-                </div>
-                <span className="text-purple-400 text-sm">
-                  Código proprietário
-                </span>
-              </div>
+            {/* Componente Interativo de Projetos */}
+            <div className="glassmorphism p-8 mb-8">
+              <Suspense
+                fallback={
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {Array(6)
+                      .fill(0)
+                      .map((_, i) => (
+                        <div
+                          key={i}
+                          className="bg-purple-900/30 h-64 rounded-xl animate-pulse"
+                        ></div>
+                      ))}
+                  </div>
+                }
+              >
+                <InteractiveProjects />
+              </Suspense>
+            </div>
+          </div>
+        </section>
 
-              {/* E-commerce Platform */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-bold text-lg text-purple-100">
-                    E-commerce Platform
-                  </h4>
-                  <span className="text-xs bg-green-700 text-white px-2 py-1 rounded">
-                    Produção
-                  </span>
+        {/* GITHUB STATS E CONTRIBUIÇÕES */}
+        <section className="py-8 px-4 relative z-20 mt-8 mb-8">
+          <div className="max-w-7xl mx-auto">
+            <Suspense
+              fallback={
+                <div className="glassmorphism p-8">
+                  <div className="h-64 bg-purple-900/30 rounded-xl animate-pulse"></div>
                 </div>
-                <p className="text-purple-200 text-sm mb-3">
-                  Plataforma completa de e-commerce com carrinho, pagamentos e
-                  gestão de produtos.
-                </p>
-                <div className="flex flex-wrap gap-1 mb-3">
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    Next.js
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    Stripe
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    MongoDB
-                  </span>
-                </div>
-                <a
-                  href="https://github.com/mfelipperd"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-purple-400 hover:text-purple-200 transition text-sm"
-                >
-                  Ver GitHub →
-                </a>
-              </div>
+              }
+            >
+              <GitHubStats />
+            </Suspense>
+          </div>
+        </section>
 
-              {/* Dashboard Analytics */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-bold text-lg text-purple-100">
-                    Dashboard Analytics
-                  </h4>
-                  <span className="text-xs bg-green-700 text-white px-2 py-1 rounded">
-                    Ativo
-                  </span>
-                </div>
-                <p className="text-purple-200 text-sm mb-3">
-                  Dashboard com gráficos ApexCharts e métricas em tempo real.
-                </p>
-                <div className="flex flex-wrap gap-1 mb-3">
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    React
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    ApexCharts
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    Tailwind
-                  </span>
-                </div>
-                <span className="text-purple-400 text-sm">Sistema interno</span>
-              </div>
+        {/* REPOSITÓRIOS DO GITHUB */}
+        <section className="py-8 px-4 relative z-20 mt-8 mb-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-purple-200 mb-4">
+                💻 Repositórios GitHub
+              </h2>
+              <p className="text-xl text-purple-100 max-w-3xl mx-auto">
+                Explore meu código open-source e contribuições na comunidade
+              </p>
+            </div>
 
-              {/* Automação N8N */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-bold text-lg text-purple-100">
-                    Automação N8N
-                  </h4>
-                  <span className="text-xs bg-orange-700 text-white px-2 py-1 rounded">
-                    Workflow
-                  </span>
-                </div>
-                <p className="text-purple-200 text-sm mb-3">
-                  Workflows complexos de automação integrando APIs e bancos de
-                  dados.
-                </p>
-                <div className="flex flex-wrap gap-1 mb-3">
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    N8N
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    Webhooks
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    APIs
-                  </span>
-                </div>
-                <span className="text-purple-400 text-sm">
-                  Projetos diversos
-                </span>
-              </div>
+            <div className="glassmorphism p-8">
+              <Suspense
+                fallback={
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {Array(6)
+                      .fill(0)
+                      .map((_, i) => (
+                        <div
+                          key={i}
+                          className="bg-purple-900/30 h-64 rounded-xl animate-pulse"
+                        ></div>
+                      ))}
+                  </div>
+                }
+              >
+                <GitHubProjects />
+              </Suspense>
+            </div>
+          </div>
+        </section>
 
-              {/* Chat Bot WhatsApp */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-bold text-lg text-purple-100">
-                    Bot WhatsApp
-                  </h4>
-                  <span className="text-xs bg-green-700 text-white px-2 py-1 rounded">
-                    Ativo
-                  </span>
-                </div>
-                <p className="text-purple-200 text-sm mb-3">
-                  Chatbot inteligente para WhatsApp com integração de IA e
-                  atendimento automatizado.
-                </p>
-                <div className="flex flex-wrap gap-1 mb-3">
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    Node.js
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    WhatsApp API
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    OpenAI
-                  </span>
-                </div>
-                <a
-                  href="https://github.com/mfelipperd"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-purple-400 hover:text-purple-200 transition text-sm"
-                >
-                  Ver GitHub →
-                </a>
-              </div>
+        {/* PROJETOS NA VERCEL */}
+        <section className="py-8 px-4 relative z-20 mt-8 mb-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-purple-200 mb-4">
+                ⚡ Projetos em Produção
+              </h2>
+              <p className="text-xl text-purple-100 max-w-3xl mx-auto">
+                Aplicações deployadas e rodando em produção na Vercel
+              </p>
+            </div>
 
-              {/* Sistema de Gestão Escolar */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-bold text-lg text-purple-100">
-                    Gestão Escolar
-                  </h4>
-                  <span className="text-xs bg-blue-700 text-white px-2 py-1 rounded">
-                    Enterprise
-                  </span>
-                </div>
-                <p className="text-purple-200 text-sm mb-3">
-                  Sistema completo para gestão escolar com controle de alunos,
-                  notas e relatórios.
-                </p>
-                <div className="flex flex-wrap gap-1 mb-3">
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    React
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    Express
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    MySQL
-                  </span>
-                </div>
-                <span className="text-purple-400 text-sm">
-                  Sistema proprietário
-                </span>
-              </div>
-
-              {/* Call to Action - Seu Projeto */}
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl p-6 hover:border-purple-400/40 transition group border-dashed">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-bold text-lg text-purple-100">
-                    Seu Projeto
-                  </h4>
-                  <span className="text-xs bg-yellow-700 text-white px-2 py-1 rounded">
-                    Próximo
-                  </span>
-                </div>
-                <p className="text-purple-200 text-sm mb-3">
-                  Vamos criar algo incrível juntos? Entre em contato!
-                </p>
-                <div className="flex flex-wrap gap-1 mb-3">
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    Sua Ideia
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    Nossa Expertise
-                  </span>
-                  <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                    Sucesso
-                  </span>
-                </div>
-                <button
-                  onClick={() => scrollToSection("contato")}
-                  className="text-purple-400 hover:text-purple-200 transition text-sm"
-                >
-                  Vamos Conversar →
-                </button>
-              </div>
+            <div className="glassmorphism p-8">
+              <Suspense
+                fallback={
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {Array(3)
+                      .fill(0)
+                      .map((_, i) => (
+                        <div
+                          key={i}
+                          className="bg-purple-900/30 h-64 rounded-xl animate-pulse"
+                        ></div>
+                      ))}
+                  </div>
+                }
+              >
+                <VercelProjects />
+              </Suspense>
             </div>
           </div>
         </section>
@@ -1122,146 +986,36 @@ export default function Home() {
 
         {/* SITES EM PRODUÇÃO */}
         <section
-          className="py-8 px-4 relative z-20 mt-8 mb-8 overflow-x-auto"
+          className="py-8 px-4 relative z-20 mt-8 mb-8"
           id="sites"
         >
-          <div className="glassmorphism p-8 max-w-7xl mx-auto">
-            <h3 className="text-3xl font-bold mb-8 text-purple-200 text-center">
-              Sites em Produção
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
-                <div className="relative h-48 bg-gradient-to-br from-blue-600 to-blue-800 overflow-hidden">
-                  <iframe
-                    src="https://visuallaser.com.br"
-                    className="w-full h-96 scale-50 origin-top-left pointer-events-none"
-                    title="VisuaLlaser Preview"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute top-4 right-4">
-                    <span className="text-xs bg-green-700 text-white px-2 py-1 rounded">
-                      ATIVO
-                    </span>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h4 className="font-bold text-xl text-purple-100 mb-2">
-                    VisuaLlaser
-                  </h4>
-                  <p className="text-purple-200 text-sm mb-4">
-                    Clínica de estética avançada com sistema de agendamento
-                    online, galeria de tratamentos e interface moderna
-                    responsiva.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                      WordPress
-                    </span>
-                    <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                      PHP
-                    </span>
-                    <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                      MySQL
-                    </span>
-                  </div>
-                  <a
-                    href="https://visuallaser.com.br"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-purple-400 hover:text-purple-200 transition"
-                  >
-                    Visitar Site →
-                  </a>
-                </div>
-              </div>
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-white to-purple-200 mb-4">
+                🌐 Sites em Produção
+              </h2>
+              <p className="text-xl text-purple-100 max-w-3xl mx-auto">
+                Navegue pelos sites que desenvolvi e que estão ativos em produção
+              </p>
+            </div>
 
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
-                <div className="relative h-48 bg-gradient-to-br from-green-600 to-green-800 overflow-hidden">
-                  <iframe
-                    src="https://homeidoc.com.br"
-                    className="w-full h-96 scale-50 origin-top-left pointer-events-none"
-                    title="HomeIdoc Preview"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute top-4 right-4">
-                    <span className="text-xs bg-green-700 text-white px-2 py-1 rounded">
-                      ATIVO
-                    </span>
+            <div className="glassmorphism p-8">
+              <Suspense
+                fallback={
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {Array(3)
+                      .fill(0)
+                      .map((_, i) => (
+                        <div
+                          key={i}
+                          className="bg-purple-900/30 h-96 rounded-xl animate-pulse"
+                        ></div>
+                      ))}
                   </div>
-                </div>
-                <div className="p-6">
-                  <h4 className="font-bold text-xl text-purple-100 mb-2">
-                    HomeIdoc
-                  </h4>
-                  <p className="text-purple-200 text-sm mb-4">
-                    Plataforma de telemedicina com consultas online, prescrições
-                    digitais e sistema de agendamento integrado.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                      React
-                    </span>
-                    <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                      Node.js
-                    </span>
-                    <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                      PostgreSQL
-                    </span>
-                  </div>
-                  <a
-                    href="https://homeidoc.com.br"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-purple-400 hover:text-purple-200 transition"
-                  >
-                    Visitar Site →
-                  </a>
-                </div>
-              </div>
-
-              <div className="bg-black/30 backdrop-blur-lg border border-purple-700/20 rounded-xl overflow-hidden hover:border-purple-400/40 transition group h-full flex flex-col hover:scale-105">
-                <div className="relative h-48 bg-gradient-to-br from-orange-600 to-red-800 overflow-hidden">
-                  <iframe
-                    src="https://lavaflex.com.br"
-                    className="w-full h-96 scale-50 origin-top-left pointer-events-none"
-                    title="LavaFlex Preview"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                  <div className="absolute top-4 right-4">
-                    <span className="text-xs bg-green-700 text-white px-2 py-1 rounded">
-                      ATIVO
-                    </span>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h4 className="font-bold text-xl text-purple-100 mb-2">
-                    LavaFlex
-                  </h4>
-                  <p className="text-purple-200 text-sm mb-4">
-                    Lava-jato premium com sistema de agendamento, controle de
-                    serviços e interface moderna para gestão de clientes.
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                      HTML5
-                    </span>
-                    <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                      CSS3
-                    </span>
-                    <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded">
-                      JavaScript
-                    </span>
-                  </div>
-                  <a
-                    href="https://lavaflex.com.br"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-purple-400 hover:text-purple-200 transition"
-                  >
-                    Visitar Site →
-                  </a>
-                </div>
-              </div>
+                }
+              >
+                <ProductionSites />
+              </Suspense>
             </div>
           </div>
         </section>

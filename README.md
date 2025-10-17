@@ -181,6 +181,31 @@
 - **Melhorias constantes** - sempre buscando otimizar
 - **Comunicação clara** - você sempre sabe o que está acontecendo
 
+## 🔗 **Integrações Automáticas**
+
+### **Este portfólio possui integrações em tempo real:**
+
+- ✅ **GitHub API** - Busca automática de todos os repositórios
+- ✅ **Vercel API** - Projetos em produção atualizados automaticamente
+- ✅ **GitHub Stats** - Gráfico de contribuições e estatísticas
+
+### **Como configurar as integrações:**
+
+1. **Crie um arquivo `.env.local`** na raiz do projeto
+2. **Adicione seu token da Vercel:**
+   ```env
+   VERCEL_TOKEN=seu_token_aqui
+   ```
+3. **Obtenha seu token em:** https://vercel.com/account/tokens
+
+📖 **Guia completo:** Veja [VERCEL_INTEGRATION.md](./VERCEL_INTEGRATION.md)
+
+## 📚 **Documentação Técnica**
+
+- [CHANGELOG.md](./CHANGELOG.md) - Histórico de versões e atualizações
+- [FEATURES.md](./FEATURES.md) - Guia completo de funcionalidades
+- [VERCEL_INTEGRATION.md](./VERCEL_INTEGRATION.md) - Integração com Vercel API
+
 ## 📈 **Próximos Passos**
 
 1. **Entre em contato** via WhatsApp ou email
