@@ -25,6 +25,23 @@ interface Project {
 
 const projects: Project[] = [
   {
+    id: "portfolio-marcos",
+    title: "Portfolio Marcos Felippe v2.0",
+    description: "Portfólio profissional com integrações GitHub e Vercel em tempo real",
+    longDescription: "Portfólio moderno e interativo desenvolvido com Next.js 15 e React 19, com integrações automáticas das APIs do GitHub e Vercel. Inclui sistema completo de animações, visualização de projetos em modal, filtros por categoria, gráfico de contribuições, e muito mais. Um showcase completo de habilidades técnicas e design.",
+    technologies: ["Next.js 15", "React 19", "TypeScript", "TailwindCSS 4", "GitHub API", "Vercel API"],
+    category: "Portfolio",
+    githubUrl: "https://github.com/mfelipperd/portfolio-marcos",
+    liveUrl: "https://marcosfelippe.dev",
+    stats: {
+      stars: 25,
+      forks: 5,
+      views: 1000
+    },
+    featured: true,
+    status: "production",
+  },
+  {
     id: "credenciamento",
     title: "Sistema de Credenciamento",
     description: "Sistema enterprise para gestão de credenciamentos com React e NestJS",
@@ -129,9 +146,23 @@ const projects: Project[] = [
     featured: true,
     status: "production",
   },
+  {
+    id: "oficina-di-deias",
+    title: "Oficina d'Ideias",
+    description: "Plataforma criativa para gestão de ideias e projetos",
+    longDescription: "Aplicação web moderna desenvolvida para facilitar a gestão e organização de ideias criativas e projetos. Interface intuitiva e responsiva, desenvolvida com as tecnologias mais recentes do mercado, oferecendo uma experiência fluida e agradável para os usuários.",
+    technologies: ["Next.js", "React", "TypeScript", "TailwindCSS", "Vercel"],
+    category: "Web App",
+    liveUrl: "https://oficina-di-deias.vercel.app",
+    stats: {
+      views: 350
+    },
+    featured: false,
+    status: "production",
+  },
 ];
 
-const categories = ["Todos", "Enterprise", "Healthcare", "E-commerce", "Services", "Analytics", "Automation", "AI"];
+const categories = ["Todos", "Portfolio", "Enterprise", "Healthcare", "E-commerce", "Services", "Web App", "Analytics", "Automation", "AI"];
 
 export default function InteractiveProjects() {
   const [selectedCategory, setSelectedCategory] = useState("Todos");

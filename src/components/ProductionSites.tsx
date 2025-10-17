@@ -21,6 +21,17 @@ interface Site {
 // Sites manuais (fallback)
 const manualSites: Site[] = [
   {
+    id: "portfolio-marcos",
+    name: "Portfolio Marcos Felippe",
+    url: "https://marcosfelippe.dev",
+    description: "Portfólio profissional e interativo com integrações automáticas do GitHub e Vercel, animações suaves e design moderno.",
+    technologies: ["Next.js 15", "React 19", "TypeScript", "TailwindCSS"],
+    category: "Portfolio",
+    gradient: "from-purple-600 to-pink-600",
+    framework: "Next.js",
+    githubUrl: "https://github.com/mfelipperd/portfolio-marcos"
+  },
+  {
     id: "visuallaser",
     name: "VisuaLlaser",
     url: "https://visuallaser.com.br",
@@ -49,6 +60,17 @@ const manualSites: Site[] = [
     category: "Services",
     gradient: "from-orange-600 to-red-800",
     framework: "HTML"
+  },
+  {
+    id: "oficina-di-deias",
+    name: "Oficina d'Ideias",
+    url: "https://oficina-di-deias.vercel.app",
+    description: "Plataforma criativa e inovadora para gestão de ideias e projetos, com interface moderna e intuitiva.",
+    technologies: ["Next.js", "React", "TypeScript", "TailwindCSS"],
+    category: "Creative",
+    gradient: "from-indigo-600 to-purple-600",
+    framework: "Next.js",
+    githubUrl: "https://github.com/mfelipperd"
   }
 ];
 

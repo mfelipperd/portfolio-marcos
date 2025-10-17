@@ -54,8 +54,8 @@ export default function VercelProjects() {
   // Projetos manuais conhecidos (caso a API não esteja configurada)
   const manualProjects: ProjectWithDeployment[] = [
     {
-      id: "portfolio-1",
-      name: "Portfolio Marcos Felippe",
+      id: "portfolio-marcos-felippe",
+      name: "Portfolio Marcos Felippe v2.0",
       accountId: "",
       createdAt: Date.now(),
       updatedAt: Date.now(),
@@ -113,6 +113,28 @@ export default function VercelProjects() {
         type: "github",
         repo: "mfelipperd/credenciamento-frontend",
         repoId: 54321,
+        productionBranch: "main"
+      }
+    },
+    {
+      id: "oficina-di-deias",
+      name: "Oficina d'Ideias",
+      accountId: "",
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      framework: "nextjs",
+      devCommand: null,
+      installCommand: null,
+      buildCommand: null,
+      outputDirectory: null,
+      directoryListing: false,
+      nodeVersion: "18.x",
+      productionUrl: "https://oficina-di-deias.vercel.app",
+      lastDeploymentState: "READY",
+      link: {
+        type: "github",
+        repo: "mfelipperd/oficina-di-deias",
+        repoId: 67890,
         productionBranch: "main"
       }
     }
