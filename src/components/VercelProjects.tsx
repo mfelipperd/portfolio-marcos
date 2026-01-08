@@ -159,7 +159,7 @@ export default function VercelProjects() {
       
       // Se houver projetos da API, usar eles
       if (data.projects && data.projects.length > 0) {
-        const formattedProjects = data.projects.map((project: any) => ({
+        const formattedProjects = data.projects.map((project: VercelProject & { productionUrl?: string | null; latestDeployment?: { state?: string }; githubUrl?: string | null }) => ({
           id: project.id,
           name: project.name,
           accountId: project.accountId,

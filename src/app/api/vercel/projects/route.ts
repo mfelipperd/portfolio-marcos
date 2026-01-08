@@ -27,7 +27,7 @@ interface VercelDeployment {
   type: string;
   target: string;
   aliasAssigned: number | null;
-  aliasError: any;
+  aliasError: unknown;
   meta: {
     githubCommitMessage?: string;
     githubCommitRef?: string;
@@ -35,6 +35,11 @@ interface VercelDeployment {
     githubOrg?: string;
     githubRepo?: string;
   };
+}
+
+interface VercelDomain {
+  name: string;
+  [key: string]: unknown;
 }
 
 export async function GET() {
@@ -105,8 +110,8 @@ export async function GET() {
             const domains = domainsData.domains || [];
             
             // Priorizar domínio customizado
-            const customDomain = domains.find((d: any) => !d.name.includes('.vercel.app'));
-            const vercelDomain = domains.find((d: any) => d.name.includes('.vercel.app'));
+            const customDomain = domains.find((d: VercelDomain) => !d.name.includes('.vercel.app'));
+            const vercelDomain = domains.find((d: VercelDomain) => d.name.includes('.vercel.app'));
             
             const primaryDomain = customDomain || vercelDomain;
             if (primaryDomain) {

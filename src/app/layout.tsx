@@ -15,18 +15,14 @@ export const metadata: Metadata = {
     default: 'Marcos Felippe - Desenvolvedor Fullstack Senior | React, Node.js, Automação',
     template: '%s | Marcos Felippe - Fullstack Developer'
   },
-  description: 'Transforme sua ideia em realidade digital! Desenvolvedor Fullstack Senior especializado em React, Node.js, automação com n8n e soluções que convertem. Sites modernos, rápidos e que geram resultados reais para seu negócio.',
+  description: 'Portfólio de Marcos Felippe - Desenvolvedor Fullstack Senior especializado em React, Node.js, TypeScript e tecnologias modernas. Explore meus projetos, habilidades técnicas e contribuições open-source.',
   keywords: [
     'desenvolvedor fullstack',
     'React developer',
     'Node.js developer',
     'desenvolvimento web',
     'automação n8n',
-    'landing page',
-    'site institucional',
-    'e-commerce',
     'aplicação web',
-    'chatbot WhatsApp',
     'Typebot',
     'Next.js',
     'TypeScript',
@@ -36,8 +32,10 @@ export const metadata: Metadata = {
     'AWS',
     'Vercel',
     'portfolio desenvolvedor',
-    'freelancer programador',
-    'desenvolvimento de software'
+    'desenvolvimento de software',
+    'fullstack developer',
+    'react developer',
+    'nodejs developer'
   ],
   authors: [{ name: 'Marcos Felippe', url: 'https://marcosfelippe.dev' }],
   creator: 'Marcos Felippe',
@@ -56,8 +54,8 @@ export const metadata: Metadata = {
     locale: 'pt_BR',
     url: 'https://marcosfelippe.dev',
     siteName: 'Marcos Felippe - Fullstack Developer',
-    title: 'Marcos Felippe - Desenvolvedor Fullstack Senior | Transforme sua Ideia em Realidade Digital',
-    description: '🚀 Desenvolvedor Fullstack Senior especializado em React, Node.js e automação. Crio sites modernos, rápidos e que convertem visitantes em clientes. Sua ideia + minha expertise = Sucesso garantido!',
+    title: 'Marcos Felippe - Desenvolvedor Fullstack Senior | Portfólio',
+    description: '👨‍💻 Portfólio de Marcos Felippe - Desenvolvedor Fullstack Senior. Especializado em React, Node.js, TypeScript e tecnologias modernas. Explore projetos, habilidades e contribuições.',
     images: [
       {
         url: '/og-image-marcos-felippe.jpg',
@@ -78,7 +76,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Marcos Felippe - Desenvolvedor Fullstack Senior 🚀',
-    description: 'Transforme sua ideia em realidade digital! Sites modernos, rápidos e que convertem. React, Node.js, automação n8n. Sua ideia + minha expertise = Sucesso!',
+    description: 'Portfólio de Marcos Felippe - Desenvolvedor Fullstack Senior. React, Node.js, TypeScript e tecnologias modernas. Projetos, habilidades e contribuições open-source.',
     images: ['/twitter-card-marcos-felippe.jpg'],
     creator: '@mfelipperd',
     site: '@mfelipperd',
@@ -175,44 +173,6 @@ export default function RootLayout({
                 "@type": "PostalAddress",
                 "addressCountry": "BR"
               },
-              "hasOfferCatalog": {
-                "@type": "OfferCatalog",
-                "name": "Serviços de Desenvolvimento",
-                "itemListElement": [
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Landing Pages de Alto Impacto",
-                      "description": "Páginas que convertem visitantes em clientes"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Sites Institucionais",
-                      "description": "Presença digital profissional"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Aplicações Web",
-                      "description": "Sistemas web completos e dashboards"
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Automação com n8n",
-                      "description": "Automatize processos e integre sistemas"
-                    }
-                  }
-                ]
-              }
             })
           }}
         />

@@ -260,7 +260,7 @@ export default function Header() {
             <span className="text-xs font-medium">Projetos</span>
           </button>
 
-          {/* Serviços */}
+          {/* Habilidades */}
           <button
             onClick={() => scrollToSection("servicos")}
             className={`flex flex-col items-center gap-1 p-2 rounded-lg transition-all duration-200 ${
@@ -270,7 +270,7 @@ export default function Header() {
             }`}
           >
             <FaCog className="text-xl" />
-            <span className="text-xs font-medium">Serviços</span>
+            <span className="text-xs font-medium">Habilidades</span>
           </button>
 
           {/* Contato */}

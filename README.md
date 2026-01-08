@@ -1,20 +1,18 @@
-# 🚀 Marcos Felippe - Desenvolvedor Fullstack Senior
+# 👨‍💻 Marcos Felippe - Portfólio Pessoal
 
-> **Transforme sua ideia em realidade digital!** Desenvolvedor Fullstack Senior especializado em React, Node.js e automação com n8n. Crio sites modernos, rápidos e que convertem visitantes em clientes.
+> **Desenvolvedor Fullstack Senior** especializado em React, Node.js, TypeScript e tecnologias modernas. Este é meu portfólio pessoal onde compartilho meus projetos, habilidades e contribuições open-source.
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-Online-brightgreen)](https://marcosfelippe.dev)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/mfelipperd/)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-black)](https://github.com/mfelipperd)
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-Contact-green)](https://wa.me/5511999999999)
 
-## 🎯 **Por que escolher Marcos Felippe?**
+## 🎯 **Sobre Mim**
 
-- ✅ **5+ anos de experiência** em desenvolvimento fullstack
-- ✅ **50+ projetos entregues** com sucesso
-- ✅ **Especialista em React & Node.js** com foco em performance
-- ✅ **Automação com n8n** para otimizar seus processos
-- ✅ **Sites que convertem** - não apenas bonitos, mas lucrativos
-- ✅ **Suporte contínuo** e manutenção pós-entrega
+- 👨‍💻 **3+ anos de experiência** em desenvolvimento fullstack
+- 🚀 **50+ projetos desenvolvidos** - desde aplicações simples até sistemas complexos
+- 💻 **Especialista em React & Node.js** com foco em performance e escalabilidade
+- 🔧 **Entusiasta de automação** - n8n, workflows e integrações
+- 📚 **Aprendizado contínuo** - sempre estudando novas tecnologias e melhores práticas
 
 ## 🛠️ **Stack Tecnológica**
 
@@ -30,51 +28,45 @@
 - **PostgreSQL** & **MongoDB** - Bancos de dados robustos
 - **Redis** - Cache e sessões otimizadas
 
-### **DevOps & Cloud**
-- **Docker** & **Kubernetes** - Deploy consistente
-- **AWS** & **Vercel** - Infraestrutura escalável
-- **GitHub Actions** - CI/CD automatizado
-- **Monitoring** - Performance e uptime garantidos
+### **Deploy & Hospedagem**
+- **Vercel** & **Netlify** - Deploy de aplicações web
+- **GitHub Pages** - Hospedagem de projetos estáticos
+- **GitHub Actions** - Automação de deploy
+- **Versionamento Git** - Controle de versão
 
 ### **Automação & Integração**
-- **n8n** - Automação de processos empresariais
-- **Typebot** - Chatbots inteligentes para WhatsApp
+- **n8n** - Automação de processos
+- **Typebot** - Chatbots inteligentes
 - **APIs RESTful** & **GraphQL** - Integração com sistemas
 - **Webhooks** - Comunicação em tempo real
 
-## 🎨 **Serviços Oferecidos**
+## 💻 **Habilidades Técnicas**
 
-### **1. Landing Pages de Alto Impacto**
-- Design focado em conversão
-- Otimização para SEO e performance
-- Integração com analytics e CRM
-- A/B testing para maximizar resultados
+### **Desenvolvimento Frontend**
+- Interfaces modernas e responsivas com React e Next.js
+- Otimização para performance e SEO
+- Acessibilidade e experiência do usuário
+- State management e arquitetura de componentes
 
-### **2. Sites Institucionais Profissionais**
-- Presença digital que inspira confiança
-- Design responsivo para todos os dispositivos
-- Integração com redes sociais
-- Sistema de gerenciamento de conteúdo
+### **Desenvolvimento Backend**
+- APIs robustas e escaláveis
+- Arquiteturas limpas seguindo SOLID
+- Bancos de dados otimizados
+- Sistemas de alta performance
 
-### **3. Aplicações Web Completas**
-- Dashboards administrativos
-- Sistemas de gestão empresarial
-- E-commerce e marketplaces
-- Aplicações SaaS escaláveis
+### **Arquitetura & Design**
+- Clean Architecture
+- Princípios SOLID
+- Design Patterns
+- Código limpo e testável
 
-### **4. Automação com n8n**
-- Integração entre sistemas
-- Automação de processos repetitivos
-- Workflows personalizados
-- Redução de custos operacionais
+### **Deploy & Hospedagem**
+- Deploy de aplicações web
+- Plataformas modernas (Vercel, Netlify)
+- GitHub Pages e Actions
+- Versionamento Git
 
-### **5. Chatbots WhatsApp com Typebot**
-- Atendimento 24/7 automatizado
-- Qualificação de leads
-- Agendamento de consultas
-- Suporte ao cliente inteligente
-
-## 📱 **Portfolio em Destaque**
+## 📱 **Projetos em Destaque**
 
 ### **Sistema de Credenciamento**
 - Plataforma completa para eventos
@@ -100,86 +92,12 @@
 - Exportação de relatórios
 - Alertas personalizados
 
-## 📊 **Resultados Comprovados**
+## 📊 **Estatísticas**
 
-- **40%** de aumento na conversão de landing pages
-- **60%** de redução no tempo de carregamento
-- **80%** de automação em processos empresariais
-- **95%** de satisfação dos clientes
-
-## 🚀 **Processo de Desenvolvimento**
-
-### **1. Discovery & Planning**
-- Análise de requisitos e objetivos
-- Pesquisa de mercado e concorrência
-- Definição de arquitetura técnica
-- Cronograma e milestones
-
-### **2. Design & Prototipagem**
-- Wireframes e mockups
-- Design system consistente
-- Protótipos interativos
-- Validação com stakeholders
-
-### **3. Development & Testing**
-- Desenvolvimento ágil com sprints
-- Testes automatizados
-- Code review e qualidade
-- Deploy em ambiente de staging
-
-### **4. Launch & Support**
-- Deploy em produção
-- Monitoramento e otimização
-- Treinamento da equipe
-- Suporte contínuo
-
-## 💰 **Investimento e ROI**
-
-- **Landing Pages**: A partir de R$ 2.500
-- **Sites Institucionais**: A partir de R$ 5.000
-- **Aplicações Web**: A partir de R$ 8.000
-- **Automação n8n**: A partir de R$ 3.000
-
-> 💡 **Retorno médio**: 3x o investimento em 6 meses
-
-## 📞 **Entre em Contato**
-
-### **Vamos conversar sobre seu projeto?**
-
-- **WhatsApp**: [+55 (11) 99999-9999](https://wa.me/5511999999999)
-- **Email**: [contato@marcosfelippe.dev](mailto:contato@marcosfelippe.dev)
-- **LinkedIn**: [mfelipperd](https://www.linkedin.com/in/mfelipperd/)
-- **Portfolio**: [marcosfelippe.dev](https://marcosfelippe.dev)
-
-### **Agende uma consultoria gratuita**
-- **30 minutos** para entender suas necessidades
-- **Proposta personalizada** para seu projeto
-- **Demonstração** de soluções similares
-- **Sem compromisso** - vamos conversar!
-
-## 🌟 **Depoimentos de Clientes**
-
-> *"Marcos transformou nossa ideia em uma plataforma profissional em tempo recorde. O resultado superou todas as expectativas!"*
-> 
-> **— Maria Silva, CEO da TechStart**
-
-> *"A automação com n8n que ele implementou reduziu nosso tempo de processamento em 70%. Excelente investimento!"*
-> 
-> **— João Santos, Diretor de Operações**
-
-> *"Site moderno, rápido e que converte. Nossas vendas online aumentaram 45% no primeiro mês!"*
-> 
-> **— Ana Costa, Marketing Manager**
-
-## 🔥 **O que te faz diferente?**
-
-### **Não sou apenas um desenvolvedor, sou seu parceiro de negócio**
-
-- **Entendo seu negócio** antes de escrever código
-- **Foco em resultados** - não apenas em entregar
-- **Suporte contínuo** - não abandono após a entrega
-- **Melhorias constantes** - sempre buscando otimizar
-- **Comunicação clara** - você sempre sabe o que está acontecendo
+- **2.250+** Contribuições no GitHub
+- **38** Repositórios
+- **3+** Anos de Experiência
+- **50+** Projetos Desenvolvidos
 
 ## 🔗 **Integrações Automáticas**
 
@@ -206,19 +124,21 @@
 - [FEATURES.md](./FEATURES.md) - Guia completo de funcionalidades
 - [VERCEL_INTEGRATION.md](./VERCEL_INTEGRATION.md) - Integração com Vercel API
 
-## 📈 **Próximos Passos**
+## 📞 **Vamos Conectar?**
 
-1. **Entre em contato** via WhatsApp ou email
-2. **Agende uma consultoria** gratuita de 30 minutos
-3. **Receba uma proposta** personalizada para seu projeto
-4. **Comece o desenvolvimento** com metodologia ágil
-5. **Veja resultados** em tempo real durante o processo
+Estou sempre aberto a conversar sobre tecnologia, projetos interessantes e oportunidades de colaboração.
 
----
+- **LinkedIn**: [mfelipperd](https://www.linkedin.com/in/mfelipperd/)
+- **GitHub**: [mfelipperd](https://github.com/mfelipperd)
+- **Portfolio**: [marcosfelippe.dev](https://marcosfelippe.dev)
 
-### **🚀 Pronto para transformar sua ideia em realidade digital?**
+## 🚀 **Tecnologias Utilizadas neste Portfólio**
 
-**Clique aqui para começar:** [WhatsApp](https://wa.me/5511999999999) | [Email](mailto:contato@marcosfelippe.dev)
+- **Next.js 15** - Framework React
+- **TypeScript** - Tipagem estática
+- **TailwindCSS** - Estilização
+- **React Icons** - Ícones
+- **Vercel** - Deploy e hospedagem
 
 ---
 

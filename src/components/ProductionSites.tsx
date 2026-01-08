@@ -18,6 +18,19 @@ interface Site {
   isVercelProject?: boolean;
 }
 
+interface VercelProjectResponse {
+  id: string;
+  name: string;
+  framework?: string | null;
+  url?: string;
+  productionUrl?: string | null;
+  link?: {
+    repo?: string;
+    [key: string]: unknown;
+  };
+  [key: string]: unknown;
+}
+
 // Sites manuais (fallback)
 const manualSites: Site[] = [
   {
@@ -110,7 +123,7 @@ export default function ProductionSites() {
       
       if (data.projects && data.projects.length > 0) {
         // Mapear projetos da Vercel para o formato de Site
-        const vercelSites: Site[] = data.projects.map((project: any, index: number) => {
+        const vercelSites: Site[] = data.projects.map((project: VercelProjectResponse, index: number) => {
           const framework = project.framework?.toLowerCase() || 'default';
           const gradient = frameworkGradients[framework] || frameworkGradients.default;
           

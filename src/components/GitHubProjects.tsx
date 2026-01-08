@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FaGithub, FaStar, FaCodeBranch, FaEye, FaExternalLinkAlt } from "react-icons/fa";
 import { SiTypescript, SiJavascript, SiPython, SiHtml5, SiCss3 } from "react-icons/si";
 
@@ -31,7 +31,7 @@ interface GitHubStats {
   languages: { [key: string]: number };
 }
 
-const languageIcons: { [key: string]: JSX.Element } = {
+const languageIcons: { [key: string]: React.ReactElement } = {
   TypeScript: <SiTypescript className="text-blue-500" />,
   JavaScript: <SiJavascript className="text-yellow-400" />,
   Python: <SiPython className="text-blue-400" />,

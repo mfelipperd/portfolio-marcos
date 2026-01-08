@@ -257,8 +257,10 @@ const nextConfig: NextConfig = {
   },
 
   // Configurações de webpack para otimização
+  // Nota: Esta configuração é aplicada apenas quando usar Webpack (script padrão: npm run dev)
+  // Quando usar Turbopack (npm run dev:turbo), esta configuração é ignorada automaticamente
   webpack: (config, { dev, isServer }) => {
-    // Otimizações para produção
+    // Otimizações para produção apenas
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
         chunks: 'all',
@@ -317,24 +319,13 @@ const nextConfig: NextConfig = {
   // Configurações de env
   env: {
     CUSTOM_KEY: 'marcos-felippe-portfolio',
-  },
-
-  // Configurações de publicRuntimeConfig
-  publicRuntimeConfig: {
-    siteName: 'Marcos Felippe - Fullstack Developer',
-    siteUrl: 'https://marcosfelippe.dev',
-    contactEmail: 'contato@marcosfelippe.dev',
-    phoneNumber: '+55 (11) 99999-9999',
-    whatsappNumber: '+5511999999999',
-    linkedinUrl: 'https://www.linkedin.com/in/mfelipperd/',
-    githubUrl: 'https://github.com/mfelipperd',
-  },
-
-  // Configurações de serverRuntimeConfig
-  serverRuntimeConfig: {
-    apiUrl: process.env.API_URL || 'https://api.marcosfelippe.dev',
-    databaseUrl: process.env.DATABASE_URL,
-    jwtSecret: process.env.JWT_SECRET,
+    SITE_NAME: 'Marcos Felippe - Fullstack Developer',
+    SITE_URL: 'https://marcosfelippe.dev',
+    CONTACT_EMAIL: 'contato@marcosfelippe.dev',
+    PHONE_NUMBER: '+55 (11) 99999-9999',
+    WHATSAPP_NUMBER: '+5511999999999',
+    LINKEDIN_URL: 'https://www.linkedin.com/in/mfelipperd/',
+    GITHUB_URL: 'https://github.com/mfelipperd',
   },
 };
 

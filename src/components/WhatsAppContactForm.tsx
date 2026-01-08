@@ -37,12 +37,12 @@ export default function ContactForm() {
     const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5511999999999';
     
     // Montar mensagem
-    const message = `🚀 *Novo Contato do Portfólio*
+    const message = `👋 *Novo Contato do Portfólio*
 
 👤 *Nome:* ${formData.name}
 📧 *Email:* ${formData.email}
 📱 *WhatsApp:* ${formData.phone || 'Não informado'}
-💼 *Tipo de Projeto:* ${formData.projectType}
+💼 *Assunto:* ${formData.projectType || 'Não especificado'}
 
 💬 *Mensagem:*
 ${formData.message}
@@ -68,7 +68,7 @@ _Enviado através do portfólio_`;
 
   const sendDirectToWhatsApp = () => {
     const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5511999999999';
-    const defaultMessage = process.env.NEXT_PUBLIC_WHATSAPP_MESSAGE || 'Olá! Vim através do seu portfólio e gostaria de conversar sobre um projeto.';
+    const defaultMessage = process.env.NEXT_PUBLIC_WHATSAPP_MESSAGE || 'Olá! Vim através do seu portfólio e gostaria de conversar.';
     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(defaultMessage)}`;
     window.open(whatsappURL, '_blank');
   };
@@ -117,14 +117,12 @@ _Enviado através do portfólio_`;
             value={formData.projectType}
             onChange={handleInputChange}
             className="w-full p-4 rounded-lg border border-purple-700/40 bg-black/30 text-purple-100 focus:border-purple-400 focus:outline-none transition"
-            required
           >
-            <option value="">Tipo de projeto</option>
-            <option value="Landing Page">Landing Page</option>
-            <option value="Site Institucional">Site Institucional</option>
-            <option value="E-commerce">E-commerce</option>
-            <option value="Sistema Web">Sistema Web</option>
-            <option value="Automação">Automação</option>
+            <option value="">Assunto (opcional)</option>
+            <option value="Oportunidade de Trabalho">Oportunidade de Trabalho</option>
+            <option value="Colaboração em Projeto">Colaboração em Projeto</option>
+            <option value="Dúvida Técnica">Dúvida Técnica</option>
+            <option value="Networking">Networking</option>
             <option value="Outro">Outro</option>
           </select>
         </div>
@@ -134,7 +132,7 @@ _Enviado através do portfólio_`;
             name="message"
             value={formData.message}
             onChange={handleInputChange}
-            placeholder="Conte-me sobre seu projeto. Quanto mais detalhes, melhor será minha proposta!" 
+            placeholder="Conte-me sobre o que você gostaria de conversar..." 
             className="w-full p-4 rounded-lg border border-purple-700/40 bg-black/30 text-purple-100 placeholder-purple-400 focus:border-purple-400 focus:outline-none transition h-32 resize-none" 
             required 
           />
@@ -161,7 +159,7 @@ _Enviado através do portfólio_`;
         </button>
       </div>
       
-      <p className="text-center text-purple-300 text-sm">Respondo em até 2 horas!</p>
+      <p className="text-center text-purple-300 text-sm">Vamos conversar sobre tecnologia e desenvolvimento!</p>
     </div>
   );
 }

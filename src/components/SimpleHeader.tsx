@@ -86,7 +86,7 @@ export default function SimpleHeader() {
                 className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:bg-purple-700/30 text-purple-100 hover:text-white"
               >
                 <FaCog className="text-purple-400" />
-                Serviços
+                <span>Habilidades</span>
               </button>
 
               <button
@@ -133,7 +133,7 @@ export default function SimpleHeader() {
             className="flex flex-col items-center gap-1 p-2 rounded-lg text-purple-300 hover:text-purple-400"
           >
             <FaCog className="text-lg" />
-            <span className="text-xs">Serviços</span>
+            <span className="text-xs">Habilidades</span>
           </button>
 
           <button
