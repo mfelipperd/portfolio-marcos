@@ -10,12 +10,12 @@ import Contato from "../components/SubPages/Contato";
 
 export default function Home() {
   const [activePage, setActivePage] = useState<string | null>(null);
-  const menuItems = ["Sobre", "Projetos", "Contato"];
+  const menuItems = ["Sobre", "Experiências", "Contato"];
 
   const renderContent = () => {
     switch (activePage) {
       case "Sobre": return <Sobre />;
-      case "Projetos": return <Projetos />;
+      case "Experiências": return <Projetos />;
       case "Contato": return <Contato />;
       default: return null;
     }
