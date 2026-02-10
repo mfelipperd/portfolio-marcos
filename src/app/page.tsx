@@ -5,18 +5,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import ThreeDText from "../components/ThreeDText";
 import FlashlightCursor from "../components/FlashlightCursor";
 import Sobre from "../components/SubPages/Sobre";
-import Skills from "../components/SubPages/Skills";
 import Projetos from "../components/SubPages/Projetos";
 import Contato from "../components/SubPages/Contato";
 
 export default function Home() {
   const [activePage, setActivePage] = useState<string | null>(null);
-  const menuItems = ["Sobre", "Skills", "Projetos", "Contato"];
+  const menuItems = ["Sobre", "Projetos", "Contato"];
 
   const renderContent = () => {
     switch (activePage) {
       case "Sobre": return <Sobre />;
-      case "Skills": return <Skills />;
       case "Projetos": return <Projetos />;
       case "Contato": return <Contato />;
       default: return null;
