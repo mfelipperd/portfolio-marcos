@@ -187,12 +187,12 @@ const timelineData: TimelineItem[] = [
 
 export default function TimelineExperience() {
   return (
-    <div className="relative py-12 max-w-4xl mx-auto">
+    <div className="relative py-8 md:py-12 max-w-4xl mx-auto">
       {/* Vertical Line */}
       <div className="absolute left-0 top-0 bottom-0 w-px bg-white/10" />
 
       {/* Timeline Items */}
-      <div className="space-y-16">
+      <div className="space-y-12 md:space-y-16">
         {timelineData.map((item, index) => (
           <motion.div
             key={index}
@@ -200,13 +200,13 @@ export default function TimelineExperience() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="relative pl-12"
+            className="relative pl-8 md:pl-12"
           >
             {/* Dot on timeline */}
             <div className="absolute left-0 top-2 -translate-x-1/2 w-2 h-2 bg-white rounded-full" />
 
             {/* Year */}
-            <div className="text-sm text-zinc-600 uppercase tracking-widest mb-2">
+            <div className="text-xs md:text-sm text-zinc-600 uppercase tracking-widest mb-2">
               {item.year}
               {item.currentEmployer && (
                 <span className="text-zinc-500 ml-2">• {item.currentEmployer}</span>
@@ -214,7 +214,7 @@ export default function TimelineExperience() {
             </div>
 
             {/* Title */}
-            <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-2 tracking-tight">
               {item.title}
             </h3>
 

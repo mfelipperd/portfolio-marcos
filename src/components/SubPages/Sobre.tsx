@@ -11,10 +11,10 @@ export default function Sobre({ onOpenContact }: SobreProps) {
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="w-full py-20 text-white"
+      className="w-full py-12 md:py-20 text-white"
     >
-      <h2 className="text-4xl font-bold mb-8">Sobre Mim</h2>
-      <div className="space-y-6 text-zinc-400 text-lg leading-relaxed mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold mb-6 md:mb-8">Sobre Mim</h2>
+      <div className="space-y-4 md:space-y-6 text-zinc-400 text-base md:text-lg leading-relaxed mb-12 md:mb-16">
         <p>
           Desenvolvedor Full Stack especializado em criar aplicações web escaláveis e de alta performance, com domínio completo do ciclo de desenvolvimento — do planejamento estratégico à implementação e manutenção.
         </p>
@@ -26,8 +26,8 @@ export default function Sobre({ onOpenContact }: SobreProps) {
         </p>
       </div>
 
-      <h2 className="text-3xl font-bold mb-8">Habilidades Técnicas</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-4">
+      <h2 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8">Habilidades Técnicas</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 md:gap-x-12 gap-y-3 md:gap-y-4">
         {[
           "React.js / Next.js (SSR/SSG)",
           "Node.js / Nest.js / Java / Angular",
@@ -53,10 +53,10 @@ export default function Sobre({ onOpenContact }: SobreProps) {
       </div>
 
       {/* CTA Button */}
-      <div className="mt-16 text-center">
+      <div className="mt-12 md:mt-16 text-center">
         <button
           onClick={onOpenContact}
-          className="px-8 py-3 border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-full text-sm tracking-wider uppercase"
+          className="px-6 md:px-8 py-3 border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-full text-xs md:text-sm tracking-wider uppercase"
         >
           Vamos Trabalhar Juntos?
         </button>

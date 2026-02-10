@@ -35,7 +35,7 @@ export default function Home() {
         }}
         className={`fixed top-0 inset-x-0 z-50 flex items-center transition-colors ${activePage ? 'backdrop-blur-md border-b' : ''}`}
       >
-        <div className={`w-full max-w-[1200px] mx-auto px-6 flex ${activePage ? 'flex-row justify-between items-center h-full' : 'flex-col items-center justify-center gap-12'}`}>
+        <div className={`w-full max-w-[1200px] mx-auto px-4 md:px-6 flex ${activePage ? 'flex-row justify-between items-center h-full' : 'flex-col items-center justify-center gap-8 md:gap-12'}`}>
 
 
 
@@ -56,7 +56,7 @@ export default function Home() {
           >
             <ThreeDText 
               text="M.Felippe" 
-              className="text-6xl md:text-9xl tracking-tighter text-left m-0 p-0"
+              className="text-5xl sm:text-6xl md:text-9xl tracking-tighter text-left m-0 p-0"
             />
           </motion.div>
 
@@ -67,22 +67,30 @@ export default function Home() {
             layout
             className="flex gap-6 md:gap-12"
           >
-            {menuItems.map((item) => (
-              <span 
-                key={item} 
-                onClick={() => setActivePage(item)}
-                className={`menu-item text-lg md:text-xl font-medium tracking-wide ${activePage === item ? 'text-white' : ''}`}
-              >
-                {item}
-              </span>
-            ))}
+            {menuItems
+              .filter(item => {
+                // Na home: mostra todos os itens
+                if (!activePage) return true;
+                // Quando em uma página: mostra apenas a outra opção
+                return item !== activePage;
+              })
+              .map((item) => (
+                <span 
+                  key={item} 
+                  onClick={() => setActivePage(item)}
+                  className={`menu-item text-base sm:text-lg md:text-xl font-medium tracking-wide ${activePage === item ? 'text-white' : ''}`}
+                >
+                  {item}
+                </span>
+              ))
+            }
           </motion.nav>
         </div>
       </motion.header>
 
       {/* Sub-page Content Area */}
-      <div className="relative z-10 pt-24 min-h-screen">
-        <div className="max-w-[1200px] mx-auto px-6">
+      <div className="relative z-10 pt-20 md:pt-24 min-h-screen">
+        <div className="max-w-[1200px] mx-auto px-4 md:px-6">
 
 
 
