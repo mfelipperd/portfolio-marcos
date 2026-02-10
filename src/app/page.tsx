@@ -52,7 +52,7 @@ export default function Home() {
               y: 0,
             }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
-            className={`cursor-pointer z-50 flex items-center justify-start w-fit ${!activePage ? 'flashlight-mask translate-y-[-50%]' : ''}`}
+            className={`cursor-pointer z-50 flex items-center justify-start w-fit ${!activePage ? 'flashlight-mask' : ''}`}
             onClick={() => setActivePage(null)}
             style={{ transformOrigin: "left center" }}
           >

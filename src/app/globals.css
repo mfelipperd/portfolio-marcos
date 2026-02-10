@@ -34,19 +34,18 @@ body {
 .flashlight-mask {
   mask-image: radial-gradient(
     circle var(--flashlight-size) at var(--flashlight-x) var(--flashlight-y),
-    black 0%,
-    transparent 100%
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.4) 100%
   );
   -webkit-mask-image: radial-gradient(
     circle var(--flashlight-size) at var(--flashlight-x) var(--flashlight-y),
-    black 0%,
-    transparent 100%
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.4) 100%
   );
   mask-repeat: no-repeat;
   mask-composite: intersect;
-  /* Make mask relative to viewport */
-  mask-position: fixed; 
 }
+
 
 /* Header Refinement */
 .header-conventional {
