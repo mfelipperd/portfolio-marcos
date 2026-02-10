@@ -233,7 +233,7 @@ export default function RootLayout({
         <meta name="format-detection" content="address=no" />
         <meta name="format-detection" content="email=no" />
       </head>
-      <body className={`${geistSans.variable}`}>
+      <body className={`${geistSans.variable}`} suppressHydrationWarning>
         {children}
         <Analytics />
       </body>

@@ -1,138 +1,111 @@
 @import "tailwindcss";
-@import "./animations.css";
 
 /* Smooth scroll global */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 120px; /* Offset para o header fixo */
-}
-
-/* Custom smooth scrolling */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
+  scroll-padding-top: 120px;
+  background-color: #000;
 }
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --primary: #a259f7;
-  --secondary: #6d28d9;
-  --glass-bg: rgba(30, 0, 60, 0.35);
-  --glass-border: rgba(162, 89, 247, 0.25);
+  --background: #000000;
+  --foreground: #ffffff;
+  --flashlight-x: 50%;
+  --flashlight-y: 50%;
+  --flashlight-size: 15rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
-
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --primary: #a259f7;
-    --secondary: #6d28d9;
-    --glass-bg: rgba(162, 89, 247, 0.18);
-    --glass-border: rgba(162, 89, 247, 0.25);
-  }
-}
-
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Scrollbar Styles - Organizer Style */
-/* Webkit browsers (Chrome, Safari, Edge) */
+/* Flashlight / Spotlight Masking */
+.flashlight-mask {
+  mask-image: radial-gradient(
+    circle var(--flashlight-size) at var(--flashlight-x) var(--flashlight-y),
+    black 0%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle var(--flashlight-size) at var(--flashlight-x) var(--flashlight-y),
+    black 0%,
+    transparent 100%
+  );
+  mask-repeat: no-repeat;
+  mask-composite: intersect;
+  /* Make mask relative to viewport */
+  mask-position: fixed; 
+}
 
-/* Base scrollbar - always minimal size but invisible */
+/* Header Refinement */
+.header-conventional {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.5s ease;
+}
+
+/* 3D Text Effect */
+.text-3d {
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.2em 0; /* Added padding to prevent shadow clipping */
+  text-shadow: 
+    1px 1px 0px #ccc,
+    2px 2px 0px #bbb,
+    3px 3px 0px #aaa,
+    4px 4px 0px #999,
+    5px 5px 0px #888,
+    6px 6px 10px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease;
+}
+
+
+
+.text-3d:hover {
+  transform: translateY(-5px) scale(1.05);
+}
+
+/* Minimal Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 0;
+  background: #000;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 4px;
-  border: none;
-  transition: background 0.2s ease, opacity 0.2s ease;
+  background: #333;
+  border-radius: 10px;
 }
 
-::-webkit-scrollbar-corner {
-  background: transparent;
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
-/* Show scrollbar thumb on hover or scroll */
-body:hover::-webkit-scrollbar-thumb,
-body:active::-webkit-scrollbar-thumb,
-*:hover::-webkit-scrollbar-thumb,
-*:active::-webkit-scrollbar-thumb {
-  background: rgba(162, 89, 247, 0.5);
+/* Menu Hover Effect */
+.menu-item {
+  color: #888;
+  transition: color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
 }
 
-body:hover::-webkit-scrollbar-thumb:hover,
-*:hover::-webkit-scrollbar-thumb:hover {
-  background: rgba(162, 89, 247, 0.8);
+.menu-item:hover {
+  color: #fff;
+  transform: translateY(-2px);
 }
 
-/* Track remains transparent always - no background */
-body:hover::-webkit-scrollbar-track,
-*:hover::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* Simple scrollbar - no complex animations */
-
-/* Firefox - Simple Organizer style */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
-  transition: scrollbar-color 0.2s ease;
-}
-
-*:hover {
-  scrollbar-color: rgba(162, 89, 247, 0.5) transparent;
-}
-
-/* Smooth scrolling behavior */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom scroll indicators for sections */
-.scroll-indicator {
-  position: fixed;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 60%;
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(162, 89, 247, 0.1),
-    rgba(162, 89, 247, 0.3),
-    rgba(162, 89, 247, 0.1),
-    transparent
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: 1000;
-}
-
-body:hover .scroll-indicator {
-  opacity: 1;
-}
