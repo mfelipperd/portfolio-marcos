@@ -23,12 +23,18 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Global Interactivity */
+a, button, [onClick], .cursor-pointer {
+  cursor: pointer;
+}
+
 
 /* Flashlight / Spotlight Masking */
 .flashlight-mask {
@@ -61,7 +67,7 @@ body {
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  padding: 0.2em 0; /* Added padding to prevent shadow clipping */
+  padding: 0.2em 0.3em; /* Increased padding to prevent shadow and scale clipping */
   text-shadow: 
     1px 1px 0px #ccc,
     2px 2px 0px #bbb,

@@ -25,7 +25,7 @@ export default function Projetos({ onOpenContact }: ProjetosProps) {
       <div className="mt-16 text-center">
         <button
           onClick={onOpenContact}
-          className="px-8 py-3 border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-full text-sm tracking-wider uppercase"
+          className="text-white hover:text-zinc-300 transition-all text-sm tracking-wider uppercase underline underline-offset-8 decoration-white/30 hover:decoration-white"
         >
           Interessado? Entre em Contato
         </button>

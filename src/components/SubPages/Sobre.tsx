@@ -59,7 +59,7 @@ export default function Sobre({ onOpenContact }: SobreProps) {
       <div className="mt-12 md:mt-16 text-center">
         <button
           onClick={onOpenContact}
-          className="px-6 md:px-8 py-3 border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-full text-xs md:text-sm tracking-wider uppercase"
+          className="text-white hover:text-zinc-300 transition-all text-xs md:text-sm tracking-wider uppercase underline underline-offset-8 decoration-white/30 hover:decoration-white"
         >
           Vamos Trabalhar Juntos?
         </button>

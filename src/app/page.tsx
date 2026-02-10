@@ -33,7 +33,7 @@ export default function Home() {
           backgroundColor: activePage ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0)",
           borderBottomColor: activePage ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0)",
         }}
-        className={`fixed top-0 inset-x-0 z-50 flex items-center transition-colors ${activePage ? 'backdrop-blur-md border-b' : ''}`}
+        className={`fixed top-0 inset-x-0 z-50 flex items-center transition-colors ${activePage ? 'backdrop-blur-md border-b pointer-events-auto' : 'pointer-events-none'}`}
       >
         <div className={`w-full max-w-[1200px] mx-auto px-4 md:px-6 flex ${activePage ? 'flex-row justify-between items-center h-full' : 'flex-col items-center justify-center gap-8 md:gap-12'}`}>
 
@@ -48,16 +48,15 @@ export default function Home() {
               scale: activePage ? 0.35 : 1,
               x: 0,
               y: 0,
-              // Removido width forçado para permitir w-fit funcionar e centralizar
             }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
-            className={`cursor-pointer z-50 flex items-center justify-start w-fit ${!activePage ? 'flashlight-mask' : ''}`}
+            className={`cursor-pointer z-50 flex items-center justify-start w-fit pointer-events-auto ${!activePage ? 'flashlight-mask' : ''}`}
             onClick={() => setActivePage(null)}
             style={{ transformOrigin: "left center" }}
           >
             <ThreeDText 
               text="M.Felippe" 
-              className="text-4xl sm:text-6xl md:text-9xl tracking-tighter text-left m-0 p-0"
+              className="text-4xl sm:text-6xl md:text-9xl tracking-tighter text-left"
             />
           </motion.div>
 
@@ -66,7 +65,7 @@ export default function Home() {
           {/* Menu Container */}
           <motion.nav
             layout
-            className="flex gap-4 md:gap-12 flex-shrink-0" // Removido ml-auto para não quebrar a centralização na Home
+            className="flex gap-4 md:gap-12 shrink-0 pointer-events-auto"
           >
             {menuItems
               .filter(item => {
@@ -118,16 +117,16 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20"
         >
           <button
             onClick={() => setIsContactModalOpen(true)}
-            className="px-8 py-3 border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-full text-sm tracking-wider uppercase"
+            className="text-white hover:text-zinc-300 transition-all text-sm tracking-wider uppercase underline underline-offset-8 decoration-white/30 hover:decoration-white"
           >
             Entrar em Contato
           </button>
-          <p className="text-xs text-zinc-800 tracking-widest uppercase">
-            © 2026 Portfolio
+          <p className="text-xs text-zinc-800 tracking-widest uppercase flex items-center gap-2">
+            © 2026 Portfolio | Design inspirado em <a href="https://macedo.design/" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-600 transition-colors">Rodrigo Macedo</a>
           </p>
         </motion.div>
       )}
