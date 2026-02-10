@@ -7,8 +7,9 @@ interface ThreeDTextProps {
 
 export default function ThreeDText({ text, className = "" }: ThreeDTextProps) {
   return (
-    <h1 className={`text-3d ${className}`}>
+    <h1 className={`text-3d m-0 p-0 ${className}`}>
       {text}
     </h1>
   );
 }
+
