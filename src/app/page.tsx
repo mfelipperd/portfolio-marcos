@@ -48,7 +48,7 @@ export default function Home() {
               scale: activePage ? 0.35 : 1,
               x: 0,
               y: 0,
-              width: activePage ? "auto" : "100%",
+              // Removido width forçado para permitir w-fit funcionar e centralizar
             }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
             className={`cursor-pointer z-50 flex items-center justify-start w-fit ${!activePage ? 'flashlight-mask' : ''}`}
@@ -66,7 +66,7 @@ export default function Home() {
           {/* Menu Container */}
           <motion.nav
             layout
-            className="flex gap-4 md:gap-12 ml-auto flex-shrink-0"
+            className="flex gap-4 md:gap-12 flex-shrink-0" // Removido ml-auto para não quebrar a centralização na Home
           >
             {menuItems
               .filter(item => {
