@@ -2,7 +2,11 @@
 
 import { motion } from "framer-motion";
 
-export default function Sobre() {
+interface SobreProps {
+  onOpenContact: () => void;
+}
+
+export default function Sobre({ onOpenContact }: SobreProps) {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -46,6 +50,16 @@ export default function Sobre() {
             <span className="text-zinc-300 font-medium">{skill}</span>
           </motion.div>
         ))}
+      </div>
+
+      {/* CTA Button */}
+      <div className="mt-16 text-center">
+        <button
+          onClick={onOpenContact}
+          className="px-8 py-3 border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-full text-sm tracking-wider uppercase"
+        >
+          Vamos Trabalhar Juntos?
+        </button>
       </div>
     </motion.div>
   );

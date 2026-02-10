@@ -4,19 +4,19 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ThreeDText from "../components/ThreeDText";
 import FlashlightCursor from "../components/FlashlightCursor";
+import ContactModal from "../components/ContactModal";
 import Sobre from "../components/SubPages/Sobre";
 import Projetos from "../components/SubPages/Projetos";
-import Contato from "../components/SubPages/Contato";
 
 export default function Home() {
   const [activePage, setActivePage] = useState<string | null>(null);
-  const menuItems = ["Sobre", "Experiências", "Contato"];
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const menuItems = ["Sobre", "Experiências"];
 
   const renderContent = () => {
     switch (activePage) {
-      case "Sobre": return <Sobre />;
-      case "Experiências": return <Projetos />;
-      case "Contato": return <Contato />;
+      case "Sobre": return <Sobre onOpenContact={() => setIsContactModalOpen(true)} />;
+      case "Experiências": return <Projetos onOpenContact={() => setIsContactModalOpen(true)} />;
       default: return null;
     }
   };
@@ -109,11 +109,22 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs text-zinc-800 tracking-widest uppercase"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4"
         >
-          © 2026 Portfolio
+          <button
+            onClick={() => setIsContactModalOpen(true)}
+            className="px-8 py-3 border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-full text-sm tracking-wider uppercase"
+          >
+            Entrar em Contato
+          </button>
+          <p className="text-xs text-zinc-800 tracking-widest uppercase">
+            © 2026 Portfolio
+          </p>
         </motion.div>
       )}
+
+      {/* Contact Modal */}
+      <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
     </main>
   );
 }

@@ -1,7 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FaExternalLinkAlt, FaBriefcase, FaCode } from "react-icons/fa";
+import { FaExternalLinkAlt } from "react-icons/fa";
+
+interface Project {
+  title: string;
+  description: string;
+  technologies: string[];
+}
 
 interface TimelineItem {
   year: string;
@@ -12,6 +18,7 @@ interface TimelineItem {
   link?: string;
   company?: string;
   period?: string;
+  projects?: Project[];
 }
 
 const timelineData: TimelineItem[] = [
@@ -28,10 +35,31 @@ const timelineData: TimelineItem[] = [
     title: "Oficina d'Ideias",
     type: "experience",
     description: "Desenvolvedor Full Stack Júnior focado em Next.js e otimização SEO, construindo APIs REST robustas e interfaces de alta performance.",
-    technologies: ["React", "Next.js", "Node.js", "AWS"],
     company: "Oficina d'Ideias",
     period: "Mai 2022 - Fev 2024",
-    link: "https://oficina-di-deias.vercel.app/"
+    link: "https://oficina-di-deias.vercel.app/",
+    projects: [
+      {
+        title: "WebScraper em Python",
+        description: "Automação de coleta de dados web com processamento e armazenamento estruturado",
+        technologies: ["Python", "BeautifulSoup", "Selenium", "Pandas"]
+      },
+      {
+        title: "Formulário com PostgreSQL",
+        description: "Sistema de formulários dinâmicos com validação e persistência em banco de dados relacional",
+        technologies: ["React", "Node.js", "PostgreSQL", "Express"]
+      },
+      {
+        title: "Landing Pages",
+        description: "Páginas de conversão otimizadas para SEO e performance",
+        technologies: ["Next.js", "TailwindCSS", "TypeScript"]
+      },
+      {
+        title: "Sites Institucionais",
+        description: "Websites corporativos responsivos com CMS integrado",
+        technologies: ["Next.js", "React", "WordPress", "AWS"]
+      }
+    ]
   },
   {
     year: "2023",
@@ -61,100 +89,201 @@ const timelineData: TimelineItem[] = [
     year: "2024",
     title: "ENCIBRA S.A.",
     type: "experience",
-    description: "Desenvolvedor de Software especializado em desenvolvimento de interfaces interativas com React.js e construção de APIs escaláveis com Node.js/Nest.js. Implementação de aplicações Next.js e administração de infraestrutura AWS.",
-    technologies: ["React", "Next.js", "Node.js", "Nest.js", "AWS", "PostgreSQL"],
+    description: "Desenvolvedor de Software especializado em desenvolvimento de interfaces interativas com React.js e construção de APIs escaláveis com Node.js/Nest.js.",
     company: "ENCIBRA S.A.",
-    period: "Fev 2024 - Presente"
+    period: "Fev 2024 - Presente",
+    projects: [
+      {
+        title: "Sistema Financeiro",
+        description: "Plataforma completa de gestão financeira com geração de PDF e exportação de relatórios",
+        technologies: ["Next.js", "ShadcnUI", "TypeScript", "TailwindCSS", "Context API", "Docker"]
+      },
+      {
+        title: "Sistema de Vistorias",
+        description: "Aplicação para gerenciamento de vistorias técnicas com interface moderna e responsiva",
+        technologies: ["Vite.js", "TypeScript", "TailwindCSS", "Context API", "Docker"]
+      },
+      {
+        title: "Gerenciamento de Contratos",
+        description: "Sistema para controle e acompanhamento de contratos empresariais",
+        technologies: ["Next.js", "TypeScript", "PostgreSQL", "Nest.js"]
+      },
+      {
+        title: "Gerenciamento de Saneamento Básico",
+        description: "Plataforma para monitoramento e gestão de infraestrutura de saneamento",
+        technologies: ["React", "Node.js", "PostgreSQL", "AWS"]
+      },
+      {
+        title: "Fiscalização de Obras",
+        description: "Sistema de acompanhamento e fiscalização de obras públicas",
+        technologies: ["Next.js", "TypeScript", "Nest.js", "Docker"]
+      }
+    ]
+  },
+  {
+    year: "2025",
+    title: "Automação e IA",
+    type: "project",
+    description: "Integração de inteligência artificial e automação em projetos, utilizando ferramentas modernas para otimizar processos e criar soluções inovadoras.",
+    projects: [
+      {
+        title: "Workflows com n8n",
+        description: "Automação de processos empresariais com integração de APIs, webhooks e processamento de dados",
+        technologies: ["n8n", "Node.js", "APIs REST", "Webhooks", "PostgreSQL"]
+      },
+      {
+        title: "Chatbots com Typebot",
+        description: "Desenvolvimento de chatbots conversacionais inteligentes para atendimento automatizado",
+        technologies: ["Typebot", "OpenAI", "Webhooks", "JavaScript"]
+      },
+      {
+        title: "Integração com LLMs",
+        description: "Implementação de modelos de linguagem em aplicações para análise de dados e geração de conteúdo",
+        technologies: ["OpenAI API", "Claude API", "LangChain", "Python"]
+      },
+      {
+        title: "Automação de Deploy",
+        description: "Pipelines CI/CD automatizados com testes e deploy contínuo",
+        technologies: ["GitHub Actions", "Docker", "Vercel", "AWS"]
+      }
+    ]
+  },
+  {
+    year: "2026",
+    title: "Desenvolvimento Moderno",
+    type: "project",
+    description: "Aplicação de práticas e ferramentas de desenvolvimento de ponta, incluindo IA assistida e arquiteturas escaláveis.",
+    projects: [
+      {
+        title: "Desenvolvimento com IA Assistida",
+        description: "Utilização de ferramentas de IA para acelerar desenvolvimento e melhorar qualidade de código",
+        technologies: ["GitHub Copilot", "Cursor", "Antigravity", "ChatGPT"]
+      },
+      {
+        title: "Arquitetura Serverless",
+        description: "Implementação de aplicações serverless escaláveis e econômicas",
+        technologies: ["AWS Lambda", "Vercel Functions", "Next.js", "PostgreSQL"]
+      },
+      {
+        title: "Monitoramento e Observabilidade",
+        description: "Sistemas de monitoramento em tempo real com alertas e dashboards",
+        technologies: ["Sentry", "Vercel Analytics", "Grafana", "Prometheus"]
+      },
+      {
+        title: "Micro-frontends",
+        description: "Arquitetura modular com micro-frontends para aplicações enterprise",
+        technologies: ["Module Federation", "React", "TypeScript", "Webpack"]
+      }
+    ]
   }
 ];
 
 export default function TimelineExperience() {
   return (
-    <div className="relative py-20">
-      {/* Timeline Line */}
-      <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-zinc-800 via-zinc-700 to-zinc-800" />
+    <div className="relative py-12 max-w-4xl mx-auto">
+      {/* Vertical Line */}
+      <div className="absolute left-0 top-0 bottom-0 w-px bg-white/10" />
 
       {/* Timeline Items */}
       <div className="space-y-16">
         {timelineData.map((item, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-            className={`relative flex items-center ${
-              index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-            } flex-col md:gap-8`}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="relative pl-12"
           >
-            {/* Year Badge */}
-            <div className="absolute left-8 md:left-1/2 -translate-x-1/2 w-16 h-16 bg-gradient-to-br from-zinc-900 to-black border-2 border-zinc-700 rounded-full flex items-center justify-center z-10">
-              <span className="text-sm font-bold text-white">{item.year}</span>
+            {/* Dot on timeline */}
+            <div className="absolute left-0 top-2 -translate-x-1/2 w-2 h-2 bg-white rounded-full" />
+
+            {/* Year */}
+            <div className="text-sm text-zinc-600 uppercase tracking-widest mb-2">
+              {item.year}
             </div>
 
-            {/* Content Card */}
-            <div
-              className={`w-full md:w-[calc(50%-4rem)] ${
-                index % 2 === 0 ? "md:text-right md:pr-8" : "md:text-left md:pl-8"
-              } ml-20 md:ml-0`}
-            >
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="bg-gradient-to-br from-zinc-900/80 to-zinc-950/80 backdrop-blur-sm border border-zinc-800/50 rounded-2xl p-6 hover:border-zinc-700/70 transition-all"
-              >
-                {/* Icon & Title */}
-                <div className={`flex items-center gap-3 mb-3 ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"} justify-start`}>
-                  {item.type === "experience" ? (
-                    <FaBriefcase className="text-2xl text-purple-400" />
-                  ) : (
-                    <FaCode className="text-2xl text-blue-400" />
-                  )}
-                  <h3 className="text-2xl font-bold text-white">{item.title}</h3>
-                </div>
+            {/* Title */}
+            <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">
+              {item.title}
+            </h3>
 
-                {/* Company & Period */}
-                {item.company && (
-                  <p className="text-sm text-zinc-500 uppercase tracking-wider mb-3">
-                    {item.company} • {item.period}
-                  </p>
-                )}
+            {/* Company & Period */}
+            {item.company && (
+              <p className="text-sm text-zinc-500 uppercase tracking-wider mb-3">
+                {item.company} • {item.period}
+              </p>
+            )}
 
-                {/* Description */}
-                <p className="text-zinc-400 leading-relaxed mb-4">
-                  {item.description}
-                </p>
+            {/* Description */}
+            <p className="text-zinc-400 leading-relaxed mb-4 max-w-2xl">
+              {item.description}
+            </p>
 
-                {/* Technologies */}
-                {item.technologies && (
-                  <div className={`flex flex-wrap gap-2 mb-4 ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"} justify-start`}>
-                    {item.technologies.map((tech, i) => (
-                      <span
-                        key={i}
-                        className="text-xs bg-zinc-800/50 text-zinc-300 px-3 py-1 rounded-full border border-zinc-700/30"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                {/* Link */}
-                {item.link && (
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors ${index % 2 === 0 ? "md:ml-auto" : ""}`}
+            {/* Technologies (for non-experience items) */}
+            {item.technologies && !item.projects && (
+              <div className="flex flex-wrap gap-3 mb-4">
+                {item.technologies.map((tech, i) => (
+                  <span
+                    key={i}
+                    className="text-xs text-zinc-500 tracking-wide"
                   >
-                    <span>Ver {item.type === "experience" ? "empresa" : "projeto"}</span>
-                    <FaExternalLinkAlt className="text-sm" />
-                  </a>
-                )}
-              </motion.div>
-            </div>
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            )}
 
-            {/* Spacer for alternating layout */}
-            <div className="hidden md:block w-[calc(50%-4rem)]" />
+            {/* Projects (for experience items) */}
+            {item.projects && (
+              <div className="mt-6 space-y-6 border-l border-white/5 pl-6">
+                {item.projects.map((project, pIndex) => (
+                  <motion.div
+                    key={pIndex}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: pIndex * 0.1 }}
+                    className="relative"
+                  >
+                    {/* Project dot */}
+                    <div className="absolute -left-[25px] top-2 w-1.5 h-1.5 bg-zinc-600 rounded-full" />
+                    
+                    <h4 className="text-lg font-semibold text-white mb-1">
+                      {project.title}
+                    </h4>
+                    <p className="text-sm text-zinc-400 mb-3">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map((tech, tIndex) => (
+                        <span
+                          key={tIndex}
+                          className="text-xs text-zinc-600"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+
+            {/* Link */}
+            {item.link && (
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-white hover:text-zinc-400 transition-colors group mt-4"
+              >
+                <span className="border-b border-white/20 group-hover:border-zinc-400/40 transition-colors">
+                  Ver {item.type === "experience" ? "empresa" : "projeto"}
+                </span>
+                <FaExternalLinkAlt className="text-xs" />
+              </a>
+            )}
           </motion.div>
         ))}
       </div>

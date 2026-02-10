@@ -3,7 +3,11 @@
 import { motion } from "framer-motion";
 import TimelineExperience from "../TimelineExperience";
 
-export default function Projetos() {
+interface ProjetosProps {
+  onOpenContact: () => void;
+}
+
+export default function Projetos({ onOpenContact }: ProjetosProps) {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -16,6 +20,16 @@ export default function Projetos() {
       </p>
 
       <TimelineExperience />
+
+      {/* CTA Button */}
+      <div className="mt-16 text-center">
+        <button
+          onClick={onOpenContact}
+          className="px-8 py-3 border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-full text-sm tracking-wider uppercase"
+        >
+          Interessado? Entre em Contato
+        </button>
+      </div>
     </motion.div>
   );
 }
