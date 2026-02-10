@@ -45,9 +45,10 @@ export default function Home() {
           <motion.div
             initial={false}
             animate={{
-              scale: activePage ? 0.25 : 1,
+              scale: activePage ? 0.35 : 1,
               x: 0,
               y: 0,
+              width: activePage ? "auto" : "100%",
             }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
             className={`cursor-pointer z-50 flex items-center justify-start w-fit ${!activePage ? 'flashlight-mask' : ''}`}
@@ -56,7 +57,7 @@ export default function Home() {
           >
             <ThreeDText 
               text="M.Felippe" 
-              className="text-5xl sm:text-6xl md:text-9xl tracking-tighter text-left m-0 p-0"
+              className="text-4xl sm:text-6xl md:text-9xl tracking-tighter text-left m-0 p-0"
             />
           </motion.div>
 
@@ -65,7 +66,7 @@ export default function Home() {
           {/* Menu Container */}
           <motion.nav
             layout
-            className="flex gap-6 md:gap-12"
+            className="flex gap-4 md:gap-12 ml-auto flex-shrink-0"
           >
             {menuItems
               .filter(item => {
