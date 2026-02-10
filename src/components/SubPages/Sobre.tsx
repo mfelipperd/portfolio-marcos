@@ -1,6 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { SiReact, SiNodedotjs, SiTypescript, SiGraphql, SiTailwindcss, SiPostgresql, SiDocker } from "react-icons/si";
+import { FaCode } from "react-icons/fa6";
+import { MdOutlineShowChart } from "react-icons/md";
 
 interface SobreProps {
   onOpenContact: () => void;
@@ -29,25 +32,25 @@ export default function Sobre({ onOpenContact }: SobreProps) {
       <h2 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8">Habilidades Técnicas</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 md:gap-x-12 gap-y-3 md:gap-y-4">
         {[
-          "React.js / Next.js (SSR/SSG)",
-          "Node.js / Nest.js / Java / Angular",
-          "TypeScript / JavaScript (ES6+)",
-          "GraphQL / RESTful APIs",
-          "Tailwind CSS / UI Design / Mapbox",
-          "PostgreSQL / MongoDB / MySQL",
-          "Docker / CI/CD / Automação (n8n)",
-          "Clean Code / Clean Architecture",
-          "Agile Methodologies / SEO"
+          { name: "React.js / Next.js (SSR/SSG)", icon: SiReact },
+          { name: "Node.js / Nest.js / Java / Angular", icon: SiNodedotjs },
+          { name: "TypeScript / JavaScript (ES6+)", icon: SiTypescript },
+          { name: "GraphQL / RESTful APIs", icon: SiGraphql },
+          { name: "Tailwind CSS / UI Design / Mapbox", icon: SiTailwindcss },
+          { name: "PostgreSQL / MongoDB / MySQL", icon: SiPostgresql },
+          { name: "Docker / CI/CD / Automação (n8n)", icon: SiDocker },
+          { name: "Clean Code / Clean Architecture", icon: FaCode },
+          { name: "Agile Methodologies / SEO", icon: MdOutlineShowChart }
         ].map((skill, index) => (
           <motion.div 
-            key={skill}
+            key={skill.name}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 + (index * 0.05) }}
-            className="flex items-center gap-3 py-2 border-b border-white/5"
+            className="flex items-center gap-3 py-2 border-b border-white/5 group hover:border-white/10 transition-colors"
           >
-            <div className="w-1 h-1 rounded-full bg-white/60" />
-            <span className="text-zinc-400 text-sm tracking-wide">{skill}</span>
+            <skill.icon className="text-lg text-zinc-500 group-hover:text-zinc-300 transition-colors grayscale" />
+            <span className="text-zinc-400 text-sm tracking-wide group-hover:text-zinc-300 transition-colors">{skill.name}</span>
           </motion.div>
         ))}
       </div>
