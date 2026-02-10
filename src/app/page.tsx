@@ -37,7 +37,9 @@ export default function Home() {
         }}
         className={`fixed top-0 inset-x-0 z-50 flex items-center transition-colors ${activePage ? 'backdrop-blur-md border-b' : ''}`}
       >
-        <div className={`w-full max-w-full mx-auto px-12 flex ${activePage ? 'flex-row justify-between items-center h-full' : 'flex-col items-center justify-center gap-12'}`}>
+        <div className={`w-full max-w-full mx-auto px-4 flex ${activePage ? 'flex-row justify-between items-center h-full' : 'flex-col items-center justify-center gap-12'}`}>
+
+
 
           
           {/* Title / Logo Container */}
@@ -81,7 +83,9 @@ export default function Home() {
 
       {/* Sub-page Content Area */}
       <div className="relative z-10 pt-24 min-h-screen">
-        <div className="max-w-full mx-auto px-12">
+        <div className="max-w-full mx-auto px-4">
+
+
 
         <AnimatePresence mode="wait">
           {activePage && (
