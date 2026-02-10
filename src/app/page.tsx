@@ -45,7 +45,6 @@ export default function Home() {
           
           {/* Title / Logo Container */}
           <motion.div
-            layout
             initial={false}
             animate={{
               scale: activePage ? 0.25 : 1,
@@ -53,15 +52,16 @@ export default function Home() {
               y: 0,
             }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
-            className={`cursor-pointer z-50 flex items-center ${!activePage ? 'flashlight-mask translate-y-[-50%]' : ''}`}
+            className={`cursor-pointer z-50 flex items-center justify-start w-fit ${!activePage ? 'flashlight-mask translate-y-[-50%]' : ''}`}
             onClick={() => setActivePage(null)}
-            style={{ transformOrigin: activePage ? "left center" : "center center" }}
+            style={{ transformOrigin: "left center" }}
           >
             <ThreeDText 
               text="M.Felippe" 
-              className="text-6xl md:text-9xl tracking-tighter"
+              className="text-6xl md:text-9xl tracking-tighter text-left m-0 p-0"
             />
           </motion.div>
+
 
 
           {/* Menu Container */}
