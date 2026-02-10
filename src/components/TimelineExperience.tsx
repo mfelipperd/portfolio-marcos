@@ -120,7 +120,7 @@ const timelineData: TimelineItem[] = [
     year: "2023",
     title: "Visual Laser",
     type: "project",
-    description: "Website moderno para clínica de estética com galeria de procedimentos, sistema de agendamento integrado e blog educativo.",
+    description: "Site institucional para clínica oftalmológica com sistema de agendamento online, galeria de procedimentos e informações sobre tratamentos especializados.",
     technologies: ["WordPress", "PHP", "MySQL", "JavaScript"],
     link: "https://visuallaser.med.br/",
     currentEmployer: "Oficina d'Ideias"
@@ -129,7 +129,7 @@ const timelineData: TimelineItem[] = [
     year: "2023",
     title: "Home Idoc",
     type: "project",
-    description: "Site institucional para plataforma de telemedicina que conecta médicos e pacientes.",
+    description: "Site institucional para plataforma de atendimento oftalmológico em domicílio, conectando médicos especialistas e pacientes com facilidade e conveniência.",
     technologies: ["React", "Next.js", "TypeScript"],
     link: "https://homeidoc.vercel.app/",
     currentEmployer: "Oficina d'Ideias"
@@ -178,7 +178,7 @@ const timelineData: TimelineItem[] = [
     year: "2022",
     title: "LavaFlex",
     type: "project",
-    description: "Primeiro site construído. Plataforma digital para lava-jato com agendamento online, controle de serviços e programa de fidelidade.",
+    description: "Primeiro site construído. Site institucional para empresa especializada em lavagem de fachadas, com portfólio de serviços e sistema de orçamento online.",
     technologies: ["HTML5", "CSS3", "JavaScript", "Node.js"],
     link: "https://lavaflex.com.br",
     currentEmployer: "Autônomo"
