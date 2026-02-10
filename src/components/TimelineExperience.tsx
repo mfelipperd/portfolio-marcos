@@ -19,71 +19,67 @@ interface TimelineItem {
   company?: string;
   period?: string;
   projects?: Project[];
+  currentEmployer?: string;
 }
 
 const timelineData: TimelineItem[] = [
   {
-    year: "2022",
-    title: "LavaFlex",
+    year: "2026",
+    title: "Desenvolvimento Moderno",
     type: "project",
-    description: "Primeiro site construído. Plataforma digital para lava-jato com agendamento online, controle de serviços e programa de fidelidade.",
-    technologies: ["HTML5", "CSS3", "JavaScript", "Node.js"],
-    link: "https://lavaflex.com.br"
-  },
-  {
-    year: "2022",
-    title: "Oficina d'Ideias",
-    type: "experience",
-    description: "Desenvolvedor Full Stack Júnior focado em Next.js e otimização SEO, construindo APIs REST robustas e interfaces de alta performance.",
-    company: "Oficina d'Ideias",
-    period: "Mai 2022 - Fev 2024",
-    link: "https://oficina-di-deias.vercel.app/",
+    description: "Aplicação de práticas e ferramentas de desenvolvimento de ponta, incluindo IA assistida e arquiteturas escaláveis.",
+    currentEmployer: "ENCIBRA S.A.",
     projects: [
       {
-        title: "WebScraper em Python",
-        description: "Automação de coleta de dados web com processamento e armazenamento estruturado",
-        technologies: ["Python", "BeautifulSoup", "Selenium", "Pandas"]
+        title: "Desenvolvimento com IA Assistida",
+        description: "Utilização de ferramentas de IA para acelerar desenvolvimento e melhorar qualidade de código",
+        technologies: ["GitHub Copilot", "Cursor", "Antigravity", "ChatGPT"]
       },
       {
-        title: "Formulário com PostgreSQL",
-        description: "Sistema de formulários dinâmicos com validação e persistência em banco de dados relacional",
-        technologies: ["React", "Node.js", "PostgreSQL", "Express"]
+        title: "Arquitetura Serverless",
+        description: "Implementação de aplicações serverless escaláveis e econômicas",
+        technologies: ["AWS Lambda", "Vercel Functions", "Next.js", "PostgreSQL"]
       },
       {
-        title: "Landing Pages",
-        description: "Páginas de conversão otimizadas para SEO e performance",
-        technologies: ["Next.js", "TailwindCSS", "TypeScript"]
+        title: "Monitoramento e Observabilidade",
+        description: "Sistemas de monitoramento em tempo real com alertas e dashboards",
+        technologies: ["Sentry", "Vercel Analytics", "Grafana", "Prometheus"]
       },
       {
-        title: "Sites Institucionais",
-        description: "Websites corporativos responsivos com CMS integrado",
-        technologies: ["Next.js", "React", "WordPress", "AWS"]
+        title: "Micro-frontends",
+        description: "Arquitetura modular com micro-frontends para aplicações enterprise",
+        technologies: ["Module Federation", "React", "TypeScript", "Webpack"]
       }
     ]
   },
   {
-    year: "2023",
-    title: "Plataforma de Credenciamento + Expo Multimix",
+    year: "2025",
+    title: "Automação e IA",
     type: "project",
-    description: "Sistema enterprise para gestão de credenciamentos da feira Expo Multimix, com controle de acesso, geração de crachás e relatórios em tempo real.",
-    technologies: ["React", "NestJS", "PostgreSQL", "Docker"],
-    link: "https://expo-mm-site.vercel.app/"
-  },
-  {
-    year: "2023",
-    title: "Home Idoc",
-    type: "project",
-    description: "Site institucional para plataforma de telemedicina que conecta médicos e pacientes.",
-    technologies: ["React", "Next.js", "TypeScript"],
-    link: "https://homeidoc.vercel.app/"
-  },
-  {
-    year: "2023",
-    title: "Visual Laser",
-    type: "project",
-    description: "Website moderno para clínica de estética com galeria de procedimentos, sistema de agendamento integrado e blog educativo.",
-    technologies: ["WordPress", "PHP", "MySQL", "JavaScript"],
-    link: "https://visuallaser.med.br/"
+    description: "Integração de inteligência artificial e automação em projetos, utilizando ferramentas modernas para otimizar processos e criar soluções inovadoras.",
+    currentEmployer: "ENCIBRA S.A.",
+    projects: [
+      {
+        title: "Workflows com n8n",
+        description: "Automação de processos empresariais com integração de APIs, webhooks e processamento de dados",
+        technologies: ["n8n", "Node.js", "APIs REST", "Webhooks", "PostgreSQL"]
+      },
+      {
+        title: "Chatbots com Typebot",
+        description: "Desenvolvimento de chatbots conversacionais inteligentes para atendimento automatizado",
+        technologies: ["Typebot", "OpenAI", "Webhooks", "JavaScript"]
+      },
+      {
+        title: "Integração com LLMs",
+        description: "Implementação de modelos de linguagem em aplicações para análise de dados e geração de conteúdo",
+        technologies: ["OpenAI API", "Claude API", "LangChain", "Python"]
+      },
+      {
+        title: "Automação de Deploy",
+        description: "Pipelines CI/CD automatizados com testes e deploy contínuo",
+        technologies: ["GitHub Actions", "Docker", "Vercel", "AWS"]
+      }
+    ]
   },
   {
     year: "2024",
@@ -121,60 +117,71 @@ const timelineData: TimelineItem[] = [
     ]
   },
   {
-    year: "2025",
-    title: "Automação e IA",
+    year: "2023",
+    title: "Visual Laser",
     type: "project",
-    description: "Integração de inteligência artificial e automação em projetos, utilizando ferramentas modernas para otimizar processos e criar soluções inovadoras.",
+    description: "Website moderno para clínica de estética com galeria de procedimentos, sistema de agendamento integrado e blog educativo.",
+    technologies: ["WordPress", "PHP", "MySQL", "JavaScript"],
+    link: "https://visuallaser.med.br/",
+    currentEmployer: "Oficina d'Ideias"
+  },
+  {
+    year: "2023",
+    title: "Home Idoc",
+    type: "project",
+    description: "Site institucional para plataforma de telemedicina que conecta médicos e pacientes.",
+    technologies: ["React", "Next.js", "TypeScript"],
+    link: "https://homeidoc.vercel.app/",
+    currentEmployer: "Oficina d'Ideias"
+  },
+  {
+    year: "2023",
+    title: "Plataforma de Credenciamento + Expo Multimix",
+    type: "project",
+    description: "Sistema enterprise para gestão de credenciamentos da feira Expo Multimix, com controle de acesso, geração de crachás e relatórios em tempo real.",
+    technologies: ["React", "NestJS", "PostgreSQL", "Docker"],
+    link: "https://expo-mm-site.vercel.app/",
+    currentEmployer: "Oficina d'Ideias"
+  },
+  {
+    year: "2022",
+    title: "Oficina d'Ideias",
+    type: "experience",
+    description: "Desenvolvedor Full Stack Júnior focado em Next.js e otimização SEO, construindo APIs REST robustas e interfaces de alta performance.",
+    company: "Oficina d'Ideias",
+    period: "Mai 2022 - Fev 2024",
+    link: "https://oficina-di-deias.vercel.app/",
     projects: [
       {
-        title: "Workflows com n8n",
-        description: "Automação de processos empresariais com integração de APIs, webhooks e processamento de dados",
-        technologies: ["n8n", "Node.js", "APIs REST", "Webhooks", "PostgreSQL"]
+        title: "WebScraper em Python",
+        description: "Automação de coleta de dados web com processamento e armazenamento estruturado",
+        technologies: ["Python", "BeautifulSoup", "Selenium", "Pandas"]
       },
       {
-        title: "Chatbots com Typebot",
-        description: "Desenvolvimento de chatbots conversacionais inteligentes para atendimento automatizado",
-        technologies: ["Typebot", "OpenAI", "Webhooks", "JavaScript"]
+        title: "Formulário com PostgreSQL",
+        description: "Sistema de formulários dinâmicos com validação e persistência em banco de dados relacional",
+        technologies: ["React", "Node.js", "PostgreSQL", "Express"]
       },
       {
-        title: "Integração com LLMs",
-        description: "Implementação de modelos de linguagem em aplicações para análise de dados e geração de conteúdo",
-        technologies: ["OpenAI API", "Claude API", "LangChain", "Python"]
+        title: "Landing Pages",
+        description: "Páginas de conversão otimizadas para SEO e performance",
+        technologies: ["Next.js", "TailwindCSS", "TypeScript"]
       },
       {
-        title: "Automação de Deploy",
-        description: "Pipelines CI/CD automatizados com testes e deploy contínuo",
-        technologies: ["GitHub Actions", "Docker", "Vercel", "AWS"]
+        title: "Sites Institucionais",
+        description: "Websites corporativos responsivos com CMS integrado",
+        technologies: ["Next.js", "React", "WordPress", "AWS"]
       }
     ]
   },
   {
-    year: "2026",
-    title: "Desenvolvimento Moderno",
+    year: "2022",
+    title: "LavaFlex",
     type: "project",
-    description: "Aplicação de práticas e ferramentas de desenvolvimento de ponta, incluindo IA assistida e arquiteturas escaláveis.",
-    projects: [
-      {
-        title: "Desenvolvimento com IA Assistida",
-        description: "Utilização de ferramentas de IA para acelerar desenvolvimento e melhorar qualidade de código",
-        technologies: ["GitHub Copilot", "Cursor", "Antigravity", "ChatGPT"]
-      },
-      {
-        title: "Arquitetura Serverless",
-        description: "Implementação de aplicações serverless escaláveis e econômicas",
-        technologies: ["AWS Lambda", "Vercel Functions", "Next.js", "PostgreSQL"]
-      },
-      {
-        title: "Monitoramento e Observabilidade",
-        description: "Sistemas de monitoramento em tempo real com alertas e dashboards",
-        technologies: ["Sentry", "Vercel Analytics", "Grafana", "Prometheus"]
-      },
-      {
-        title: "Micro-frontends",
-        description: "Arquitetura modular com micro-frontends para aplicações enterprise",
-        technologies: ["Module Federation", "React", "TypeScript", "Webpack"]
-      }
-    ]
+    description: "Primeiro site construído. Plataforma digital para lava-jato com agendamento online, controle de serviços e programa de fidelidade.",
+    technologies: ["HTML5", "CSS3", "JavaScript", "Node.js"],
+    link: "https://lavaflex.com.br",
+    currentEmployer: "Autônomo"
   }
 ];
 
@@ -201,6 +208,9 @@ export default function TimelineExperience() {
             {/* Year */}
             <div className="text-sm text-zinc-600 uppercase tracking-widest mb-2">
               {item.year}
+              {item.currentEmployer && (
+                <span className="text-zinc-500 ml-2">• {item.currentEmployer}</span>
+              )}
             </div>
 
             {/* Title */}
