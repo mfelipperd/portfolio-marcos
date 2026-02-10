@@ -7,6 +7,7 @@ import FlashlightCursor from "../components/FlashlightCursor";
 import ContactModal from "../components/ContactModal";
 import Sobre from "../components/SubPages/Sobre";
 import Projetos from "../components/SubPages/Projetos";
+import FluidGlass from "../components/FluidGlass";
 
 export default function Home() {
   const [activePage, setActivePage] = useState<string | null>(null);
@@ -25,6 +26,27 @@ export default function Home() {
   return (
     <main className="relative min-h-screen bg-black overflow-hidden select-none">
       <FlashlightCursor />
+
+      {/* Fluid Glass Background - Apple Style */}
+      {!activePage && (
+        <>
+          {/* Gradiente de fundo sutil */}
+          <div className="fixed inset-0 z-0 pointer-events-none">
+            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-purple-500/5 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-3xl" />
+          </div>
+          
+          {/* Blob principal direita */}
+          <div className="fixed top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] opacity-40 pointer-events-none z-0">
+            <FluidGlass />
+          </div>
+          
+          {/* Blob secundário esquerda */}
+          <div className="fixed top-1/3 left-1/4 -translate-y-1/3 w-[400px] h-[400px] opacity-20 pointer-events-none z-0">
+            <FluidGlass />
+          </div>
+        </>
+      )}
 
       {/* Header Container */}
       <motion.header

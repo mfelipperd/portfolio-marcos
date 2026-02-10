@@ -12,10 +12,10 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Marcos Felippe - Desenvolvedor Fullstack Senior | React, Node.js, Automação',
+    default: 'Marcos Felippe - Desenvolvedor Fullstack | React, Node.js, Automação',
     template: '%s | Marcos Felippe - Fullstack Developer'
   },
-  description: 'Portfólio de Marcos Felippe - Desenvolvedor Fullstack Senior especializado em React, Node.js, TypeScript e tecnologias modernas. Explore meus projetos, habilidades técnicas e contribuições open-source.',
+  description: 'Portfólio de Marcos Felippe - Desenvolvedor Fullstack especializado em React, Node.js, TypeScript e tecnologias modernas. Explore meus projetos, habilidades técnicas e contribuições open-source.',
   keywords: [
     'desenvolvedor fullstack',
     'React developer',
@@ -54,14 +54,14 @@ export const metadata: Metadata = {
     locale: 'pt_BR',
     url: 'https://marcosfelippe.dev',
     siteName: 'Marcos Felippe - Fullstack Developer',
-    title: 'Marcos Felippe - Desenvolvedor Fullstack Senior | Portfólio',
-    description: '👨‍💻 Portfólio de Marcos Felippe - Desenvolvedor Fullstack Senior. Especializado em React, Node.js, TypeScript e tecnologias modernas. Explore projetos, habilidades e contribuições.',
+    title: 'Marcos Felippe - Desenvolvedor Fullstack | Portfólio',
+    description: '👨‍💻 Portfólio de Marcos Felippe - Desenvolvedor Fullstack. Especializado em React, Node.js, TypeScript e tecnologias modernas. Explore projetos, habilidades e contribuições.',
     images: [
       {
         url: '/og-image-marcos-felippe.jpg',
         width: 1200,
         height: 630,
-        alt: 'Marcos Felippe - Desenvolvedor Fullstack Senior',
+        alt: 'Marcos Felippe - Desenvolvedor Fullstack',
         type: 'image/jpeg',
       },
       {
@@ -75,8 +75,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Marcos Felippe - Desenvolvedor Fullstack Senior 🚀',
-    description: 'Portfólio de Marcos Felippe - Desenvolvedor Fullstack Senior. React, Node.js, TypeScript e tecnologias modernas. Projetos, habilidades e contribuições open-source.',
+    title: 'Marcos Felippe - Desenvolvedor Fullstack 🚀',
+    description: 'Portfólio de Marcos Felippe - Desenvolvedor Fullstack. React, Node.js, TypeScript e tecnologias modernas. Projetos, habilidades e contribuições open-source.',
     images: ['/twitter-card-marcos-felippe.jpg'],
     creator: '@mfelipperd',
     site: '@mfelipperd',
@@ -143,7 +143,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               "name": "Marcos Felippe",
-              "jobTitle": "Desenvolvedor Fullstack Senior",
+              "jobTitle": "Desenvolvedor Fullstack",
               "description": "Desenvolvedor Fullstack especializado em React, Node.js e automação. Crio soluções digitais que convertem e geram resultados reais.",
               "url": "https://marcosfelippe.dev",
               "image": "https://avatars.githubusercontent.com/u/64865137?v=4",
@@ -190,19 +190,19 @@ export default function RootLayout({
         <meta property="og:site_name" content="Marcos Felippe - Fullstack Developer" />
         <meta property="og:locale" content="pt_BR" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Marcos Felippe - Desenvolvedor Fullstack Senior | Transforme sua Ideia em Realidade Digital" />
-        <meta property="og:description" content="🚀 Desenvolvedor Fullstack Senior especializado em React, Node.js e automação. Crio sites modernos, rápidos e que convertem visitantes em clientes. Sua ideia + minha expertise = Sucesso garantido!" />
+        <meta property="og:title" content="Marcos Felippe - Desenvolvedor Fullstack | Transforme sua Ideia em Realidade Digital" />
+        <meta property="og:description" content="🚀 Desenvolvedor Fullstack especializado em React, Node.js e automação. Crio sites modernos, rápidos e que convertem visitantes em clientes. Sua ideia + minha expertise = Sucesso garantido!" />
         <meta property="og:url" content="https://marcosfelippe.dev" />
         <meta property="og:image" content="https://marcosfelippe.dev/og-image-marcos-felippe.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Marcos Felippe - Desenvolvedor Fullstack Senior" />
+        <meta property="og:image:alt" content="Marcos Felippe - Desenvolvedor Fullstack" />
         
         {/* Twitter Card específico */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@mfelipperd" />
         <meta name="twitter:creator" content="@mfelipperd" />
-        <meta name="twitter:title" content="Marcos Felippe - Desenvolvedor Fullstack Senior 🚀" />
+        <meta name="twitter:title" content="Marcos Felippe - Desenvolvedor Fullstack 🚀" />
         <meta name="twitter:description" content="Transforme sua ideia em realidade digital! Sites modernos, rápidos e que convertem. React, Node.js, automação n8n. Sua ideia + minha expertise = Sucesso!" />
         <meta name="twitter:image" content="https://marcosfelippe.dev/twitter-card-marcos-felippe.jpg" />
         <meta name="twitter:image:alt" content="Marcos Felippe - Fullstack Developer Portfolio" />
