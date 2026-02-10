@@ -187,9 +187,9 @@ const timelineData: TimelineItem[] = [
 
 export default function TimelineExperience() {
   return (
-    <div className="relative py-8 md:py-12 max-w-4xl mx-auto">
+    <div className="relative py-8 md:py-12 max-w-4xl mx-auto px-4 md:px-0">
       {/* Vertical Line */}
-      <div className="absolute left-0 top-0 bottom-0 w-px bg-white/10" />
+      <div className="absolute left-6 md:left-0 top-0 bottom-0 w-px bg-white/10" />
 
       {/* Timeline Items */}
       <div className="space-y-12 md:space-y-16">
@@ -200,10 +200,10 @@ export default function TimelineExperience() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="relative pl-8 md:pl-12"
+            className="relative pl-12 md:pl-12"
           >
             {/* Dot on timeline */}
-            <div className="absolute left-0 top-2 -translate-x-1/2 w-2 h-2 bg-white rounded-full" />
+            <div className="absolute left-6 md:left-0 top-2 -translate-x-1/2 w-2 h-2 bg-white rounded-full" />
 
             {/* Year */}
             <div className="text-xs md:text-sm text-zinc-600 uppercase tracking-widest mb-2">
