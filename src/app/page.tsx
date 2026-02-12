@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ThreeDText from "../components/ThreeDText";
-import FlashlightCursor from "../components/FlashlightCursor";
+import LightRays from "../components/LightRays";
 import ContactModal from "../components/ContactModal";
 import Sobre from "../components/SubPages/Sobre";
 import Projetos from "../components/SubPages/Projetos";
@@ -24,7 +23,18 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen bg-black overflow-hidden select-none">
-      <FlashlightCursor />
+      {/* Light Rays Background */}
+      <div className="fixed inset-0 z-0 opacity-40">
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#ffffff"
+          raysSpeed={0.6}
+          lightSpread={1.2}
+          rayLength={3}
+          followMouse={true}
+          mouseInfluence={0.4}
+        />
+      </div>
 
       {/* Header Container */}
       <motion.header
@@ -50,14 +60,13 @@ export default function Home() {
               y: 0,
             }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
-            className={`cursor-pointer z-50 flex items-center justify-start w-fit pointer-events-auto ${!activePage ? 'flashlight-mask' : ''}`}
+            className="cursor-pointer z-50 flex items-center justify-start w-fit pointer-events-auto"
             onClick={() => setActivePage(null)}
             style={{ transformOrigin: "left center" }}
           >
-            <ThreeDText 
-              text="M.Felippe" 
-              className="text-4xl sm:text-6xl md:text-9xl tracking-tighter text-left"
-            />
+            <h1 className="text-4xl sm:text-6xl md:text-9xl tracking-tighter text-left text-neumorphic m-0 p-0">
+              M.Felippe
+            </h1>
           </motion.div>
 
 

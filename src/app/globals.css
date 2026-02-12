@@ -10,9 +10,6 @@ html {
 :root {
   --background: #000000;
   --foreground: #ffffff;
-  --flashlight-x: 50%;
-  --flashlight-y: 50%;
-  --flashlight-size: 15rem;
 }
 
 @theme inline {
@@ -23,7 +20,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-montserrat), Arial, Helvetica, sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
   overflow-x: hidden;
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -35,24 +32,6 @@ a, button, [onClick], .cursor-pointer {
   cursor: pointer;
 }
 
-
-/* Flashlight / Spotlight Masking */
-.flashlight-mask {
-  mask-image: radial-gradient(
-    circle var(--flashlight-size) at var(--flashlight-x) var(--flashlight-y),
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.4) 100%
-  );
-  -webkit-mask-image: radial-gradient(
-    circle var(--flashlight-size) at var(--flashlight-x) var(--flashlight-y),
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.4) 100%
-  );
-  mask-repeat: no-repeat;
-  mask-composite: intersect;
-}
-
-
 /* Header Refinement */
 .header-conventional {
   background: rgba(0, 0, 0, 0.7);
@@ -61,27 +40,39 @@ a, button, [onClick], .cursor-pointer {
   transition: all 0.5s ease;
 }
 
-/* 3D Text Effect */
-.text-3d {
+/* Title Flat Style */
+.text-flat {
   color: #fff;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  padding: 0.2em 0.3em; /* Increased padding to prevent shadow and scale clipping */
-  text-shadow: 
-    1px 1px 0px #ccc,
-    2px 2px 0px #bbb,
-    3px 3px 0px #aaa,
-    4px 4px 0px #999,
-    5px 5px 0px #888,
-    6px 6px 10px rgba(0,0,0,0.5);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
+.text-flat:hover {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
 
+/* Neumorphic Text Effect (Engraved / "Cavado") */
+.text-neumorphic {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-family: var(--font-montserrat), sans-serif;
+  letter-spacing: -0.02em;
+  /* Engraved look: dark on top-left, subtle light on bottom-right */
+  text-shadow: 
+    -2px -2px 3px rgba(0, 0, 0, 0.8),
+    1px 1px 1px rgba(255, 255, 255, 0.15);
+  transition: transform 0.4s ease, text-shadow 0.4s ease;
+}
 
-.text-3d:hover {
-  transform: translateY(-5px) scale(1.05);
+.text-neumorphic:hover {
+  transform: translateY(-1px);
+  text-shadow: 
+    -1px -1px 2px rgba(0, 0, 0, 0.9),
+    1.5px 1.5px 2px rgba(255, 255, 255, 0.25);
 }
 
 /* Minimal Scrollbar */
