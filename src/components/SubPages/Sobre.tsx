@@ -55,6 +55,29 @@ export default function Sobre({ onOpenContact }: SobreProps) {
         ))}
       </div>
 
+      <h2 className="text-2xl md:text-3xl font-bold mt-16 md:mt-24 mb-6 md:mb-8">Ecossistema & Ferramentas</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 md:gap-x-12 gap-y-3 md:gap-y-4">
+        {[
+          { name: "Zod / React Hook Form (RHF)", icon: FaCode },
+          { name: "Shadcn UI / Radix UI", icon: SiTailwindcss },
+          { name: "Tanstack Query / Table", icon: MdOutlineShowChart },
+          { name: "Zustand / Redux Toolkit", icon: FaCode },
+          { name: "ReactBits / Framer Motion", icon: SiReact },
+          { name: "SWR / Axios / Fetch API", icon: FaCode }
+        ].map((tool, index) => (
+          <motion.div 
+            key={tool.name}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 + (index * 0.05) }}
+            className="flex items-center gap-3 py-2 border-b border-white/5 group hover:border-white/10 transition-colors"
+          >
+            <tool.icon className="text-lg text-zinc-500 group-hover:text-zinc-300 transition-colors grayscale" />
+            <span className="text-zinc-400 text-sm tracking-wide group-hover:text-zinc-300 transition-colors">{tool.name}</span>
+          </motion.div>
+        ))}
+      </div>
+
       {/* CTA Button */}
       <div className="mt-12 md:mt-16 text-center">
         <button
