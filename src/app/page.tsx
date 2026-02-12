@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import LightRays from "../components/LightRays";
+import FlashlightCursor from "../components/FlashlightCursor";
 import ContactModal from "../components/ContactModal";
 import Sobre from "../components/SubPages/Sobre";
 import Projetos from "../components/SubPages/Projetos";
@@ -23,6 +24,7 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen bg-black overflow-hidden select-none">
+      <FlashlightCursor />
       {/* Light Rays Background */}
       <div className="fixed inset-0 z-0 opacity-40">
         <LightRays
@@ -60,11 +62,11 @@ export default function Home() {
               y: 0,
             }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
-            className="cursor-pointer z-50 flex items-center justify-start w-fit pointer-events-auto"
+            className={`cursor-pointer z-50 flex items-center justify-start w-fit pointer-events-auto title-container ${!activePage ? 'flashlight-mask' : ''}`}
             onClick={() => setActivePage(null)}
             style={{ transformOrigin: "left center" }}
           >
-            <h1 className="text-4xl sm:text-6xl md:text-9xl tracking-tighter text-left text-neumorphic m-0 p-0">
+            <h1 className="text-4xl sm:text-6xl md:text-9xl text-left text-neumorphic m-0 p-0">
               M.Felippe
             </h1>
           </motion.div>

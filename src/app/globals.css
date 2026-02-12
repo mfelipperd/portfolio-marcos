@@ -10,7 +10,28 @@ html {
 :root {
   --background: #000000;
   --foreground: #ffffff;
+  --flashlight-x: 50%;
+  --flashlight-y: 50%;
+  --flashlight-size: 15rem;
 }
+
+/* Flashlight / Illumination Masking */
+.flashlight-mask {
+  mask-image: radial-gradient(
+    circle var(--flashlight-size, 20rem) at var(--flashlight-x, 50%) var(--flashlight-y, 50%),
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle var(--flashlight-size, 20rem) at var(--flashlight-x, 50%) var(--flashlight-y, 50%),
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  mask-repeat: no-repeat;
+}
+
 
 @theme inline {
   --color-background: var(--background);
@@ -58,9 +79,9 @@ a, button, [onClick], .cursor-pointer {
 .text-neumorphic {
   color: #fff;
   text-transform: uppercase;
-  font-weight: 900;
+  font-weight: 800;
   font-family: var(--font-montserrat), sans-serif;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   /* Engraved look: dark on top-left, subtle light on bottom-right */
   text-shadow: 
     -2px -2px 3px rgba(0, 0, 0, 0.8),
