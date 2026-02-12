@@ -15,7 +15,7 @@ export default async function Image() {
     (
       <div
         style={{
-          background: 'linear-gradient(to bottom right, #0f0c29, #302b63, #24243e)',
+          background: '#000000',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -24,72 +24,32 @@ export default async function Image() {
           justifyContent: 'center',
           fontFamily: 'sans-serif',
           color: 'white',
-          padding: '40px',
-          textAlign: 'center',
+          padding: '80px',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: '20px',
-          }}
-        >
-          {/* Simulated Logo/Icon */}
-          <div
-            style={{
-              width: '80px',
-              height: '80px',
-              borderRadius: '50%',
-              background: '#a259f7',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '40px',
-              fontWeight: 'bold',
-              marginRight: '20px',
-              boxShadow: '0 0 20px rgba(162, 89, 247, 0.5)',
-            }}
-          >
-            MF
-          </div>
-        </div>
         <h1
           style={{
-            fontSize: '60px',
-            fontWeight: 'bold',
-            margin: '0 0 20px 0',
-            backgroundClip: 'text',
-            color: 'transparent',
-            backgroundImage: 'linear-gradient(90deg, #fff, #a259f7)',
+            fontSize: '180px',
+            fontWeight: '800',
+            margin: '0 0 40px 0',
+            color: '#ffffff',
+            letterSpacing: '0',
+            textTransform: 'uppercase',
           }}
         >
-          Marcos Felippe
+          M.Felippe
         </h1>
         <p
           style={{
-            fontSize: '30px',
+            fontSize: '42px',
             margin: 0,
-            opacity: 0.8,
-            maxWidth: '800px',
-            lineHeight: 1.4,
+            opacity: 0.7,
+            fontWeight: '400',
+            letterSpacing: '2px',
           }}
         >
-          Desenvolvedor Fullstack | React, Node.js & Automação
+          Desenvolvedor FullStack React Node
         </p>
-        <div
-          style={{
-            marginTop: '40px',
-            padding: '10px 20px',
-            border: '2px solid rgba(255, 255, 255, 0.2)',
-            borderRadius: '50px',
-            fontSize: '20px',
-            background: 'rgba(0,0,0,0.3)',
-          }}
-        >
-          marcosfelippe.dev
-        </div>
       </div>
     ),
     {
