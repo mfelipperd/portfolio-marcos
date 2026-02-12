@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 
-export const alt = 'Marcos Felippe - Desenvolvedor Fullstack Senior';
+export const alt = 'Marcos Felippe - Desenvolvedor Fullstack';
 export const size = {
   width: 1200,
   height: 630,
@@ -76,7 +76,7 @@ export default async function Image() {
             lineHeight: 1.4,
           }}
         >
-          Desenvolvedor Fullstack Senior | React, Node.js & Automação
+          Desenvolvedor Fullstack | React, Node.js & Automação
         </p>
         <div
           style={{
