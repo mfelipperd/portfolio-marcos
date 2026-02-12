@@ -1,6 +1,6 @@
 # 👨‍💻 Marcos Felippe - Portfólio Pessoal
 
-> **Desenvolvedor Fullstack Senior** especializado em React, Node.js, TypeScript e tecnologias modernas. Este é meu portfólio pessoal onde compartilho meus projetos, habilidades e contribuições open-source.
+> **Desenvolvedor Fullstack ** especializado em React, Node.js, TypeScript e tecnologias modernas. Este é meu portfólio pessoal onde compartilho meus projetos, habilidades e contribuições open-source.
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-Online-brightgreen)](https://marcosfelippe.dev)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://www.linkedin.com/in/mfelipperd/)
