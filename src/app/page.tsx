@@ -1,31 +1,52 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import LightRays from "../components/LightRays";
 import FlashlightCursor from "../components/FlashlightCursor";
 import ContactModal from "../components/ContactModal";
 import Sobre from "../components/SubPages/Sobre";
 import Projetos from "../components/SubPages/Projetos";
+import MarcasGrid from "@/components/SubPages/MarcasGrid";
 
-export default function Home() {
-  const [activePage, setActivePage] = useState<string | null>(null);
+function PortfolioContent() {
+  const searchParams = useSearchParams();
+  const menuItems = ["Portfolio", "Sobre", "Experiências"];
+  
+  // Initial state based on URL
+  const pParam = searchParams.get("p");
+  const initialPage = menuItems.find(
+    item => item.toLowerCase() === pParam?.toLowerCase()
+  ) || "Portfolio";
+
+  const [activePage, setActivePage] = useState<string | null>(initialPage);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const menuItems = ["Sobre", "Experiências"];
+
+  // Sync URL when activePage changes
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (activePage) {
+      url.searchParams.set("p", activePage.toLowerCase());
+    } else {
+      url.searchParams.delete("p");
+    }
+    window.history.replaceState({}, "", url.toString());
+  }, [activePage]);
 
   const renderContent = () => {
     switch (activePage) {
+      case "Portfolio": return <MarcasGrid />;
       case "Sobre": return <Sobre onOpenContact={() => setIsContactModalOpen(true)} />;
       case "Experiências": return <Projetos onOpenContact={() => setIsContactModalOpen(true)} />;
       default: return null;
     }
   };
 
-
   return (
     <main className="relative min-h-screen bg-black overflow-hidden select-none">
       <FlashlightCursor />
-      {/* Light Rays Background */}
+      
       <div className="fixed inset-0 z-0 opacity-40">
         <LightRays
           raysOrigin="top-center"
@@ -38,7 +59,6 @@ export default function Home() {
         />
       </div>
 
-      {/* Header Container */}
       <motion.header
         animate={{
           height: activePage ? "4rem" : "100vh",
@@ -48,12 +68,6 @@ export default function Home() {
         className={`fixed top-0 inset-x-0 z-50 flex items-center transition-colors ${activePage ? 'backdrop-blur-md border-b pointer-events-auto' : 'pointer-events-none'}`}
       >
         <div className={`w-full max-w-[1200px] mx-auto px-4 md:px-6 flex ${activePage ? 'flex-row justify-between items-center h-full' : 'flex-col items-center justify-center gap-8 md:gap-12'}`}>
-
-
-
-
-          
-          {/* Title / Logo Container */}
           <motion.div
             initial={false}
             animate={{
@@ -71,25 +85,16 @@ export default function Home() {
             </h1>
           </motion.div>
 
-
-
-          {/* Menu Container */}
           <motion.nav
             layout
             className="flex gap-4 md:gap-12 shrink-0 pointer-events-auto"
           >
             {menuItems
-              .filter(item => {
-                // Na home: mostra todos os itens
-                if (!activePage) return true;
-                // Quando em uma página: mostra apenas a outra opção
-                return item !== activePage;
-              })
               .map((item) => (
                 <span 
                   key={item} 
                   onClick={() => setActivePage(item)}
-                  className={`menu-item text-base sm:text-lg md:text-xl font-medium tracking-wide ${activePage === item ? 'text-white' : ''}`}
+                  className={`menu-item text-base sm:text-lg md:text-xl font-medium tracking-wide transition-all ${activePage === item ? 'text-white border-b border-white/50' : 'text-zinc-500 hover:text-zinc-300'}`}
                 >
                   {item}
                 </span>
@@ -99,30 +104,24 @@ export default function Home() {
         </div>
       </motion.header>
 
-      {/* Sub-page Content Area */}
       <div className="relative z-10 pt-20 md:pt-24 min-h-screen">
         <div className="max-w-[1200px] mx-auto px-4 md:px-6">
-
-
-
-        <AnimatePresence mode="wait">
-          {activePage && (
-            <motion.div
-              key={activePage}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            >
-              {renderContent()}
-            </motion.div>
-          )}
-        </AnimatePresence>
+          <AnimatePresence mode="wait">
+            {activePage && (
+              <motion.div
+                key={activePage}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                {renderContent()}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
-    </div>
 
-
-      {/* Subtle Bottom Footer */}
       {!activePage && (
         <motion.div 
           initial={{ opacity: 0 }}
@@ -142,9 +141,15 @@ export default function Home() {
         </motion.div>
       )}
 
-      {/* Contact Modal */}
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
     </main>
   );
 }
 
+export default function Home() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-black flex items-center justify-center text-white">Carregando...</div>}>
+      <PortfolioContent />
+    </Suspense>
+  );
+}
