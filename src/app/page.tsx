@@ -43,6 +43,13 @@ function PortfolioContent() {
     }
   };
 
+  const getPageTitle = () => {
+    if (activePage === "Portfolio") return "Marcas & Projetos";
+    if (activePage === "Sobre") return "Sobre Mim";
+    if (activePage === "Experiências") return "Experiências";
+    return "";
+  };
+
   return (
     <main className="relative min-h-screen bg-black overflow-hidden select-none">
       <FlashlightCursor />
@@ -65,7 +72,7 @@ function PortfolioContent() {
           backgroundColor: activePage ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0)",
           borderBottomColor: activePage ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0)",
         }}
-        className={`fixed top-0 inset-x-0 z-50 flex items-center transition-colors ${activePage ? 'backdrop-blur-md border-b pointer-events-auto' : 'pointer-events-none'}`}
+        className={`fixed top-0 inset-x-0 z-50 flex items-center transition-colors ${activePage ? 'backdrop-blur-md border-b pointer-events-auto' : 'pointer-events-none sticky-header'}`}
       >
         <div className={`w-full max-w-[1200px] mx-auto px-4 md:px-6 flex ${activePage ? 'flex-row justify-between items-center h-full' : 'flex-col items-center justify-center gap-8 md:gap-12'}`}>
           <motion.div
@@ -87,14 +94,15 @@ function PortfolioContent() {
 
           <motion.nav
             layout
-            className="flex gap-4 md:gap-12 shrink-0 pointer-events-auto"
+            className="flex gap-4 md:gap-8 shrink-0 pointer-events-auto"
           >
             {menuItems
+              .filter(item => item !== activePage)
               .map((item) => (
                 <span 
                   key={item} 
                   onClick={() => setActivePage(item)}
-                  className={`menu-item text-base sm:text-lg md:text-xl font-medium tracking-wide transition-all ${activePage === item ? 'text-white border-b border-white/50' : 'text-zinc-500 hover:text-zinc-300'}`}
+                  className="menu-item text-sm sm:text-base md:text-xl font-medium tracking-wide text-zinc-500 hover:text-white transition-all duration-300"
                 >
                   {item}
                 </span>
@@ -104,7 +112,7 @@ function PortfolioContent() {
         </div>
       </motion.header>
 
-      <div className="relative z-10 pt-20 md:pt-24 min-h-screen">
+      <div className={`relative z-10 ${activePage ? 'pt-24 md:pt-32' : 'pt-20'} min-h-screen`}>
         <div className="max-w-[1200px] mx-auto px-4 md:px-6">
           <AnimatePresence mode="wait">
             {activePage && (
@@ -114,7 +122,21 @@ function PortfolioContent() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -30 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
+                className="w-full"
               >
+                {/* Dynamic Section Title */}
+                <header className="mb-12 md:mb-20">
+                  <motion.h2 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-2xl md:text-4xl font-bold text-white tracking-tight flex items-center gap-4"
+                  >
+                    <span className="w-8 h-px bg-white/20" />
+                    {getPageTitle()}
+                  </motion.h2>
+                </header>
+
                 {renderContent()}
               </motion.div>
             )}
