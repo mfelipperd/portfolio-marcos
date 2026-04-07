@@ -54,7 +54,13 @@ const brands: Brand[] = [
       </svg>
     ),
   },
+  {
+    name: "DO Brasil Group",
+    logo: "https://www.dobrasilgroup.com.br/images/DOBRASIL%20-%20amarela%20-%20fundo%20azul%20e%20verde.png",
+    url: "https://www.dobrasilgroup.com.br/doce-de-leite",
+  },
 ];
+
 
 export default function MarcasGrid() {
   return (
