@@ -9,10 +9,11 @@ import ContactModal from "../components/ContactModal";
 import Sobre from "../components/SubPages/Sobre";
 import Projetos from "../components/SubPages/Projetos";
 import MarcasGrid from "@/components/SubPages/MarcasGrid";
+import Ferramentas from "../components/SubPages/Ferramentas";
 
 function PortfolioContent() {
   const searchParams = useSearchParams();
-  const menuItems = ["Portfolio", "Sobre", "Experiências"];
+  const menuItems = ["Portfolio", "Sobre", "Experiências", "Ferramentas"];
   
   // Initial state based on URL
   const pParam = searchParams.get("p");
@@ -39,6 +40,7 @@ function PortfolioContent() {
       case "Portfolio": return <MarcasGrid />;
       case "Sobre": return <Sobre onOpenContact={() => setIsContactModalOpen(true)} />;
       case "Experiências": return <Projetos onOpenContact={() => setIsContactModalOpen(true)} />;
+      case "Ferramentas": return <Ferramentas />;
       default: return null;
     }
   };
@@ -47,6 +49,7 @@ function PortfolioContent() {
     if (activePage === "Portfolio") return "Marcas & Projetos";
     if (activePage === "Sobre") return "Sobre Mim";
     if (activePage === "Experiências") return "Experiências";
+    if (activePage === "Ferramentas") return "Ferramentas & Utilidades";
     return "";
   };
 
