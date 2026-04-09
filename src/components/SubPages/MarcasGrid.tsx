@@ -13,9 +13,14 @@ interface Brand {
 
 const brands: Brand[] = [
   {
-    name: "Expo Multimix",
-    logo: "https://www.expomultimix.com.br/_next/image?url=%2Fassets%2Flogo%20EMM_Prancheta%201.png&w=3840&q=75",
-    url: "https://www.expomultimix.com.br",
+    "name": "DO Brasil Group",
+    "logo": "https://www.dobrasilgroup.com.br/images/DOBRASIL%20-%20amarela%20-%20fundo%20azul%20e%20verde.png",
+    "url": "https://www.dobrasilgroup.com.br/doce-de-leite"
+  },
+  {
+    "name": "Expo Multimix",
+    "logo": "https://www.expomultimix.com.br/_next/image?url=%2Fassets%2Flogo%20EMM_Prancheta%201.png&w=3840&q=75",
+    "url": "https://www.expomultimix.com.br",
   },
   {
     name: "Home IDOC",
@@ -54,11 +59,7 @@ const brands: Brand[] = [
       </svg>
     ),
   },
-  {
-    name: "DO Brasil Group",
-    logo: "https://www.dobrasilgroup.com.br/images/DOBRASIL%20-%20amarela%20-%20fundo%20azul%20e%20verde.png",
-    url: "https://www.dobrasilgroup.com.br/doce-de-leite",
-  },
+
 ];
 
 

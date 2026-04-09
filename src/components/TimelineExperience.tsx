@@ -31,6 +31,11 @@ const timelineData: TimelineItem[] = [
     currentEmployer: "ENCIBRA S.A.",
     projects: [
       {
+        title: "DO Brasil Distribuidora",
+        description: "Landing page premium para distribuidora B2B com integração de captura de leads e catálogo showcase.",
+        technologies: ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion", "Google Sheets API"]
+      },
+      {
         title: "Desenvolvimento com IA Assistida",
         description: "Utilização de ferramentas de IA para acelerar desenvolvimento e melhorar qualidade de código",
         technologies: ["GitHub Copilot", "Cursor", "Antigravity", "ChatGPT"]
