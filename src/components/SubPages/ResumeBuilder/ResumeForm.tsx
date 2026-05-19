@@ -232,29 +232,9 @@ export default function ResumeForm({ data, onChange }: ResumeFormProps) {
         </div>
       )}
 
-      {/* Template Selection */}
-      <section className="space-y-4">
-        <h3 className="text-xl font-semibold border-b border-white/10 pb-2">1. Template</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {(["minimalist", "modern", "executive"] as const).map((tpl) => (
-            <button
-              key={tpl}
-              onClick={() => updateField("template", tpl)}
-              className={`p-3 rounded-md border text-sm uppercase tracking-wider transition-all ${
-                data.template === tpl
-                  ? "bg-white text-black border-white"
-                  : "bg-transparent text-zinc-400 border-white/10 hover:border-white/30"
-              }`}
-            >
-              {tpl}
-            </button>
-          ))}
-        </div>
-      </section>
-
       {/* Personal Info */}
       <section className="space-y-4">
-        <h3 className="text-xl font-semibold border-b border-white/10 pb-2">2. Dados Pessoais</h3>
+        <h3 className="text-xl font-semibold border-b border-white/10 pb-2">1. Dados Pessoais</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
             type="text"
@@ -314,7 +294,7 @@ export default function ResumeForm({ data, onChange }: ResumeFormProps) {
 
       {/* Photo Upload */}
       <section className="space-y-4">
-        <h3 className="text-xl font-semibold border-b border-white/10 pb-2">3. Foto de Perfil</h3>
+        <h3 className="text-xl font-semibold border-b border-white/10 pb-2">2. Foto de Perfil</h3>
         <div className="flex items-center gap-4">
           {data.photoUrl ? (
             <div className="relative w-20 h-20 rounded-full overflow-hidden border border-white/20">
@@ -343,7 +323,7 @@ export default function ResumeForm({ data, onChange }: ResumeFormProps) {
       {/* Experiences */}
       <section className="space-y-4">
         <div className="flex items-center justify-between border-b border-white/10 pb-2">
-          <h3 className="text-xl font-semibold">4. Experiências</h3>
+          <h3 className="text-xl font-semibold">3. Experiências</h3>
           <button onClick={addExperience} className="text-sm bg-white/10 hover:bg-white/20 p-2 rounded-md transition-colors flex items-center gap-2">
             <FaPlus size={12} /> Adicionar
           </button>
@@ -452,7 +432,7 @@ export default function ResumeForm({ data, onChange }: ResumeFormProps) {
       {/* Education */}
       <section className="space-y-4">
         <div className="flex items-center justify-between border-b border-white/10 pb-2">
-          <h3 className="text-xl font-semibold">5. Formação Acadêmica / Cursos</h3>
+          <h3 className="text-xl font-semibold">4. Formação Acadêmica / Cursos</h3>
           <button onClick={addEducation} className="text-sm bg-white/10 hover:bg-white/20 p-2 rounded-md transition-colors flex items-center gap-2">
             <FaPlus size={12} /> Adicionar
           </button>

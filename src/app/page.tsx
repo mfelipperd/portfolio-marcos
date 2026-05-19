@@ -107,7 +107,9 @@ function PortfolioContent() {
               y: 0,
             }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
-            className={`cursor-pointer z-50 flex items-center justify-start w-fit pointer-events-auto title-container ${!activePage ? 'flashlight-mask' : ''}`}
+            className={`cursor-pointer z-50 flex items-center justify-start pointer-events-auto title-container ${!activePage ? 'flashlight-mask' : ''} ${
+              (activePage || isScrolled) ? 'w-20 sm:w-32 md:w-auto' : 'w-auto'
+            }`}
             onClick={() => setActivePage(null)}
             style={{ transformOrigin: "left center" }}
           >
@@ -118,7 +120,7 @@ function PortfolioContent() {
 
           <motion.nav
             layout
-            className="flex gap-4 md:gap-8 shrink-0 pointer-events-auto"
+            className="flex gap-2 sm:gap-4 md:gap-8 shrink-0 pointer-events-auto"
           >
             {menuItems
               .filter(item => item !== activePage)
@@ -126,7 +128,7 @@ function PortfolioContent() {
                 <span 
                   key={item} 
                   onClick={() => setActivePage(item)}
-                  className="menu-item text-sm sm:text-base md:text-xl font-medium tracking-wide text-zinc-500 hover:text-white transition-all duration-300"
+                  className="menu-item text-xs sm:text-base md:text-xl font-medium tracking-wide text-zinc-500 hover:text-white transition-all duration-300 cursor-pointer"
                 >
                   {item}
                 </span>

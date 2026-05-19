@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ResumeForm from "./ResumeForm";
 import ResumePreview from "./ResumePreview";
 import { ResumeData, initialResumeData } from "./types";
@@ -11,10 +11,66 @@ interface ResumeBuilderProps {
   onBack: () => void;
 }
 
+interface ResponsivePreviewWrapperProps {
+  children: React.ReactNode;
+}
+
+function ResponsivePreviewWrapper({ children }: ResponsivePreviewWrapperProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (!containerRef.current) return;
+      const containerWidth = containerRef.current.clientWidth;
+      const targetWidth = 794; // Base A4 width (~210mm)
+      const newScale = Math.min(containerWidth / targetWidth, 1);
+      setScale(newScale);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    let resizeObserver: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== "undefined" && containerRef.current) {
+      resizeObserver = new ResizeObserver(() => {
+        handleResize();
+      });
+      resizeObserver.observe(containerRef.current);
+    }
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+    };
+  }, []);
+
+  return (
+    <div 
+      ref={containerRef} 
+      className="w-full flex items-start justify-center overflow-hidden"
+      style={{ height: `${1123 * scale}px` }}
+    >
+      <div 
+        style={{ 
+          transform: `scale(${scale})`, 
+          transformOrigin: "top center",
+        }}
+        className="shrink-0"
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
   const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
   const [isExporting, setIsExporting] = useState(false);
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
   const previewRef = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -62,19 +118,21 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
   return (
     <div className="w-full flex flex-col h-[calc(100vh-120px)] relative bg-black">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10 shrink-0">
+      <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10 shrink-0 gap-2">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+          className="flex items-center gap-1.5 text-zinc-400 hover:text-white transition-colors text-xs sm:text-sm font-medium shrink-0"
         >
           <FaArrowLeft /> Voltar
         </button>
-        <h2 className="text-2xl font-bold text-white tracking-wider uppercase">Criador de Currículos</h2>
-        <div className="flex gap-4">
+        <h2 className="text-sm sm:text-2xl font-bold text-white tracking-wider uppercase truncate max-w-[130px] min-[400px]:max-w-[200px] sm:max-w-none text-center">
+          Criador de Currículos
+        </h2>
+        <div className="flex shrink-0">
           <button
             onClick={exportPDF}
             disabled={isExporting}
-            className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors text-sm font-medium disabled:opacity-50"
+            className="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md transition-colors text-xs sm:text-sm font-medium disabled:opacity-50"
           >
             <FaFilePdf /> PDF
           </button>
@@ -89,20 +147,75 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
         </p>
       </div>
 
+      {/* Mobile Tab Selector */}
+      <div className="flex lg:hidden border border-white/10 rounded-lg p-1 mb-4 bg-zinc-900/50 shrink-0">
+        <button
+          onClick={() => setActiveTab("edit")}
+          className={`flex-1 py-2 text-center rounded-md font-medium text-sm transition-all ${
+            activeTab === "edit"
+              ? "bg-white text-black font-bold shadow-md"
+              : "text-zinc-400 hover:text-white"
+          }`}
+        >
+          Editar Currículo
+        </button>
+        <button
+          onClick={() => setActiveTab("preview")}
+          className={`flex-1 py-2 text-center rounded-md font-medium text-sm transition-all ${
+            activeTab === "preview"
+              ? "bg-white text-black font-bold shadow-md"
+              : "text-zinc-400 hover:text-white"
+          }`}
+        >
+          Visualizar
+        </button>
+      </div>
+
       {/* Main Content Area */}
       <div className="flex flex-col lg:flex-row gap-8 flex-1 overflow-hidden">
         {/* Left Side: Form */}
-        <div className="w-full lg:w-1/2 flex flex-col overflow-hidden">
+        <div className={`w-full lg:w-1/2 flex flex-col overflow-hidden ${activeTab === "edit" ? "flex" : "hidden lg:flex"}`}>
           <div className="bg-zinc-900/20 border border-white/10 rounded-lg p-6 flex-1 overflow-y-auto custom-scrollbar">
             <ResumeForm data={resumeData} onChange={setResumeData} />
           </div>
         </div>
 
-        {/* Right Side: Live Preview (Thumbnail) */}
-        <div className="w-full lg:w-1/2 bg-zinc-800 rounded-lg flex items-center justify-center p-8 relative overflow-hidden group">
+        {/* Right Side: Live Preview */}
+        <div className={`w-full lg:w-1/2 bg-zinc-800 rounded-lg flex flex-col items-center justify-start p-4 sm:p-8 relative overflow-y-auto custom-scrollbar ${activeTab === "preview" ? "flex flex-1" : "hidden lg:flex"}`}>
+          {/* Info bar on mobile */}
+          <div className="text-zinc-400 text-xs mb-4 flex items-center justify-between w-full lg:hidden px-2 shrink-0">
+            <span>Role para visualizar o currículo inteiro</span>
+            <button 
+              onClick={() => setIsPreviewModalOpen(true)}
+              className="bg-white/10 text-white px-3 py-1.5 rounded-md flex items-center gap-1.5 font-bold hover:bg-white/20 transition-colors"
+            >
+              <FaSearchPlus size={12} /> Tela Cheia
+            </button>
+          </div>
+
+          {/* Template Selection */}
+          <div className="w-full max-w-full mb-6 bg-zinc-900/50 border border-white/10 rounded-lg p-3 flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0 relative z-20">
+            <span className="text-xs font-semibold text-zinc-300 uppercase tracking-wider">Modelo:</span>
+            <div className="flex gap-2 w-full sm:w-auto">
+              {(["minimalist", "modern", "executive"] as const).map((tpl) => (
+                <button
+                  key={tpl}
+                  onClick={() => setResumeData(prev => ({ ...prev, template: tpl }))}
+                  className={`flex-1 sm:flex-none px-3 py-1.5 rounded border text-[10px] uppercase tracking-wider transition-all font-semibold ${
+                    resumeData.template === tpl
+                      ? "bg-white text-black border-white shadow-md font-bold"
+                      : "bg-transparent text-zinc-400 border-white/10 hover:border-white/30 hover:text-white"
+                  }`}
+                >
+                  {tpl === "minimalist" ? "Minimalista" : tpl === "modern" ? "Moderno" : "Executivo"}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <button 
             onClick={() => setIsPreviewModalOpen(true)}
-            className="absolute inset-0 z-10 bg-black/0 hover:bg-black/20 transition-colors flex items-center justify-center outline-none"
+            className="absolute inset-0 z-10 bg-black/0 hover:bg-black/20 transition-colors hidden lg:flex items-center justify-center outline-none"
             aria-label="Ampliar visualização"
           >
             <div className="opacity-0 group-hover:opacity-100 bg-black/70 text-white px-6 py-3 rounded-full flex items-center gap-2 backdrop-blur-sm transition-all transform scale-90 group-hover:scale-100 font-bold shadow-2xl border border-white/20">
@@ -110,9 +223,10 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
             </div>
           </button>
 
-          {/* Scaled down preview to fit the container without scrolling */}
-          <div className="scale-[0.35] sm:scale-[0.4] md:scale-[0.45] origin-center pointer-events-none transition-transform shadow-2xl">
-            <ResumePreview data={resumeData} />
+          <div className="w-full max-w-full origin-top transition-transform shadow-2xl">
+            <ResponsivePreviewWrapper>
+              <ResumePreview data={resumeData} />
+            </ResponsivePreviewWrapper>
           </div>
         </div>
       </div>
@@ -138,9 +252,11 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
           </button>
           <div 
             onClick={(e) => e.stopPropagation()}
-            className="scale-[0.7] sm:scale-90 md:scale-100 origin-top bg-white shadow-2xl mt-12 mb-12"
+            className="w-full max-w-[850px] mt-12 mb-12 bg-white shadow-2xl"
           >
-             <ResumePreview data={resumeData} />
+             <ResponsivePreviewWrapper>
+               <ResumePreview data={resumeData} />
+             </ResponsivePreviewWrapper>
           </div>
         </div>
       )}
