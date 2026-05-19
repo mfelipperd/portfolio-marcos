@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ResumeForm from "./ResumeForm";
 import ResumePreview from "./ResumePreview";
 import { ResumeData, initialResumeData } from "./types";
-import { FaFilePdf, FaArrowLeft, FaSearchPlus, FaTimes, FaExclamationTriangle } from "react-icons/fa";
+import { FaFilePdf, FaArrowLeft, FaSearchPlus, FaTimes, FaExclamationTriangle, FaWhatsapp } from "react-icons/fa";
 import { saveAs } from "file-saver";
 
 interface ResumeBuilderProps {
@@ -72,9 +72,57 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("preview");
   const [showWarningBanner, setShowWarningBanner] = useState(true);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [whatsappPhone, setWhatsappPhone] = useState("");
   const previewRef = useRef<HTMLDivElement>(null);
 
+  const formatPhone = (val: string) => {
+    const raw = val.replace(/\D/g, "");
+    if (raw.length <= 2) return raw;
+    if (raw.length <= 6) return `(${raw.slice(0, 2)}) ${raw.slice(2)}`;
+    if (raw.length <= 10) return `(${raw.slice(0, 2)}) ${raw.slice(2, 6)}-${raw.slice(6)}`;
+    return `(${raw.slice(0, 2)}) ${raw.slice(2, 7)}-${raw.slice(7, 11)}`;
+  };
+
   React.useEffect(() => {
+    // 1. Try to load from URL import param
+    const urlParams = new URLSearchParams(window.location.search);
+    const importParam = urlParams.get("import");
+    
+    if (importParam) {
+      try {
+        // Reconstruct standard Base64 string from URL-safe Base64
+        let base64 = importParam.replace(/-/g, '+').replace(/_/g, '/');
+        while (base64.length % 4) {
+          base64 += '=';
+        }
+        
+        // Decode base64 to UTF-8 string safely
+        const jsonStr = decodeURIComponent(
+          atob(base64)
+            .split('')
+            .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+            .join('')
+        );
+        
+        const importedData = JSON.parse(jsonStr);
+        if (importedData && typeof importedData === "object") {
+          // Update data and save to localStorage
+          setResumeData(importedData);
+          localStorage.setItem("portfolio_resume_data", jsonStr);
+          
+          // Clear import param from URL without refreshing the page
+          const newUrl = new URL(window.location.href);
+          newUrl.searchParams.delete("import");
+          window.history.replaceState({}, "", newUrl.toString());
+          return; // Skip loading from localStorage
+        }
+      } catch (e) {
+        console.error("Erro ao importar dados da URL:", e);
+      }
+    }
+
+    // 2. Fallback to localStorage if no import param
     const saved = localStorage.getItem("portfolio_resume_data");
     if (saved) {
       try {
@@ -84,6 +132,35 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
       }
     }
   }, []);
+
+  const shareWhatsApp = () => {
+    try {
+      // 1. Convert resumeData to a clean JSON string
+      const jsonStr = JSON.stringify(resumeData);
+      
+      // 2. Encode to Base64 (supporting special characters correctly via encodeURIComponent)
+      const base64 = btoa(encodeURIComponent(jsonStr).replace(/%([0-9A-F]{2})/g, (match, p1) => {
+        return String.fromCharCode(parseInt(p1, 16));
+      }));
+      
+      // Make it URL-safe base64
+      const safeBase64 = base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      
+      // 3. Generate link
+      const origin = window.location.origin;
+      const shareUrl = `${origin}/?p=curriculo&import=${safeBase64}`;
+      
+      // 4. Create WhatsApp share URL
+      const text = `Olá! Criei meu currículo no Portfólio de Marcos. Você pode visualizar ou editar meus dados acessando este link: ${shareUrl}`;
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+      
+      // 5. Open WhatsApp
+      window.open(whatsappUrl, "_blank");
+    } catch (error) {
+      console.error("Erro ao gerar link de compartilhamento:", error);
+      alert("Não foi possível gerar o link de compartilhamento.");
+    }
+  };
 
   React.useEffect(() => {
     localStorage.setItem("portfolio_resume_data", JSON.stringify(resumeData));
@@ -107,25 +184,7 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
 
       const encryptedBuffer = await response.arrayBuffer();
       const blob = new Blob([encryptedBuffer], { type: "application/pdf" });
-      const fileURL = URL.createObjectURL(blob);
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-      if (isMobile) {
-        // Em dispositivos móveis, tentamos abrir em uma nova aba para visualização e salvamento nativo.
-        // Se o bloqueador de popups impedir, abrimos na aba atual.
-        const newTab = window.open(fileURL, "_blank");
-        if (!newTab) {
-          window.location.href = fileURL;
-        }
-      } else {
-        // No desktop, fazemos o download direto do arquivo
-        const link = document.createElement("a");
-        link.href = fileURL;
-        link.download = "meu_curriculo.pdf";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
+      saveAs(blob, "meu_curriculo.pdf");
     } catch (error) {
       console.error("Erro ao gerar PDF:", error);
       alert("Ocorreu um erro ao gerar e proteger o PDF.");
@@ -144,12 +203,12 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
         >
           <FaArrowLeft /> Voltar
         </button>
-        <h2 className="text-sm sm:text-2xl font-bold text-white tracking-wider uppercase truncate max-w-[130px] min-[400px]:max-w-[200px] sm:max-w-none text-center">
+        <h2 className="text-sm sm:text-2xl font-bold text-white tracking-wider uppercase truncate max-w-[110px] min-[380px]:max-w-[160px] md:max-w-none text-center">
           Criador de Currículos
         </h2>
-        <div className="flex shrink-0">
+        <div className="flex shrink-0 items-center">
           <button
-            onClick={exportPDF}
+            onClick={() => setIsShareModalOpen(true)}
             disabled={isExporting}
             className="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md transition-colors text-xs sm:text-sm font-medium disabled:opacity-50"
           >
@@ -276,7 +335,7 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
             </div>
             
             {/* Divider */}
-            <div className="w-[1px] h-6 bg-white/10 shrink-0" />
+            <div className="w-px h-6 bg-white/10 shrink-0" />
             
             {/* Fullscreen Trigger */}
             <button
@@ -317,6 +376,89 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
              <ResponsivePreviewWrapper>
                <ResumePreview data={resumeData} />
              </ResponsivePreviewWrapper>
+          </div>
+        </div>
+      )}
+      {/* Export & Share Modal */}
+      {isShareModalOpen && (
+        <div className="fixed inset-0 z-9999 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="bg-zinc-900 border border-white/10 rounded-2xl p-6 max-w-md w-full shadow-2xl space-y-6">
+            <div className="flex items-center justify-between border-b border-white/5 pb-4">
+              <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                <FaFilePdf className="text-red-500" /> Exportar Currículo
+              </h3>
+              <button
+                onClick={() => setIsShareModalOpen(false)}
+                className="text-zinc-500 hover:text-white transition-colors"
+                title="Fechar"
+                aria-label="Fechar"
+              >
+                <FaTimes size={18} />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <p className="text-sm text-zinc-400">
+                Você pode gerar o arquivo PDF do seu currículo e opcionalmente enviá-lo como um link interativo direto no WhatsApp do recrutador.
+              </p>
+
+              <div className="space-y-2">
+                <label className="text-xs uppercase tracking-wider text-zinc-500 font-bold flex items-center gap-1.5">
+                  <FaWhatsapp className="text-emerald-500" /> WhatsApp do Destinatário (DDD + Número)
+                </label>
+                <input
+                  type="text"
+                  placeholder="(11) 99999-9999"
+                  value={whatsappPhone}
+                  onChange={(e) => setWhatsappPhone(formatPhone(e.target.value))}
+                  className="w-full bg-zinc-950 border border-white/10 rounded-xl py-3 px-4 text-white outline-none focus:border-white/30 transition-all text-sm"
+                />
+                <span className="text-[10px] text-zinc-500 block leading-normal">
+                  Se informado, abriremos o WhatsApp enviando o link interativo do currículo. O destinatário poderá visualizá-lo e editá-lo diretamente pelo site.
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <button
+                onClick={() => {
+                  setIsShareModalOpen(false);
+                  exportPDF();
+                }}
+                className="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white py-3 rounded-xl text-sm font-bold transition-colors"
+              >
+                Apenas Baixar PDF
+              </button>
+              <button
+                onClick={() => {
+                  const cleanPhone = whatsappPhone.replace(/\D/g, "");
+                  if (cleanPhone.length >= 10) {
+                    // Send interactive link to WhatsApp
+                    const jsonStr = JSON.stringify(resumeData);
+                    const base64 = btoa(encodeURIComponent(jsonStr).replace(/%([0-9A-F]{2})/g, (match, p1) => {
+                      return String.fromCharCode(parseInt(p1, 16));
+                    }));
+                    const safeBase64 = base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+                    const origin = window.location.origin;
+                    const shareUrl = `${origin}/?p=curriculo&import=${safeBase64}`;
+                    const text = `Olá! Segue o link para visualizar e editar meu currículo completo diretamente no site: ${shareUrl}`;
+                    const whatsappUrl = `https://api.whatsapp.com/send?phone=55${cleanPhone.replace(/^55/, "")}&text=${encodeURIComponent(text)}`;
+                    
+                    window.open(whatsappUrl, "_blank");
+                    
+                    // Proceed with standard PDF export
+                    setIsShareModalOpen(false);
+                    exportPDF();
+                  } else {
+                    alert("Por favor, digite um número de WhatsApp válido com DDD.");
+                  }
+                }}
+                disabled={!whatsappPhone}
+                className="flex-1 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 disabled:hover:bg-emerald-600 text-white py-3 rounded-xl text-sm font-bold transition-colors flex items-center justify-center gap-2"
+              >
+                <FaWhatsapp /> Enviar e Baixar PDF
+              </button>
+            </div>
           </div>
         </div>
       )}
