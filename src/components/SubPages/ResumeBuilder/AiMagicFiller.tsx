@@ -36,9 +36,16 @@ INSTRUÇÃO DE PERSONALIZAÇÃO:
 Por favor, analise a descrição da vaga acima e personalize o conteúdo do meu currículo (especialmente o resumo profissional 'summary' e a descrição das experiências 'description') de forma estratégica e ética. Destaque minhas habilidades, tecnologias e conquistas anteriores que são mais relevantes para essa oportunidade específica, garantindo que o currículo pareça feito sob medida para essa vaga.`
       : "";
 
-    const prompt = `Atue como um Especialista em Carreiras e Recrutamento. 
+    const prompt = `Atue como um Especialista em Carreiras, Recrutamento e Otimização de ATS (Sistemas de Rastreamento de Candidatos).
 Organize e melhore o conteúdo do meu currículo com base nas minhas informações brutas fornecidas abaixo.${jobCustomizationText}
-Escreva de forma profissional, atrativa e focada em resultados.
+Escreva de forma profissional, atrativa e focada em resultados semânticos para algoritmos de IA de recrutamento (como a Gaia da Gupy).
+
+INSTRUÇÕES IMPORTANTES DE ESCRITA:
+1. Para cada experiência profissional, utilize a Metodologia STAR (Situação, Tarefa, Ação e Resultado). Descreva as conquistas usando verbos de ação fortes no início das frases (ex: "Desenvolveu...", "Liderou...", "Otimizou...", "Reduziu...").
+2. Adicione ou sugira métricas de impacto quantitativas e dados numéricos nas realizações. Quando não souber os dados exatos, inclua placeholders como "[X%]" ou "[R$ X]" para que o usuário possa preencher.
+3. Evite "keyword stuffing" (repetição artificial de palavras-chave). Insira termos técnicos e competências de forma fluida e contextualizada nas frases.
+4. Identifique e agrupe as principais habilidades técnicas (hard skills) e competências comportamentais em uma lista de termos chave no campo "skills" (máximo 12 habilidades).
+5. Se houver idiomas informados, adicione-os no campo "languages" no formato "Idioma (Nível de Proficiência)" (ex: "Inglês (Avançado)", "Espanhol (Intermediário)").
 
 Minhas Informações Brutas:
 """
@@ -63,7 +70,7 @@ A estrutura do JSON DEVE ser exatamente esta:
       "endMonth": "Mês de término (formato 01, 02, etc.) ou vazio se for atual",
       "endYear": "Ano de término (formato AAAA) ou vazio se for atual",
       "current": true ou false (true se for o emprego atual, false caso contrário)",
-      "description": "Descrição sucinta em tópicos curtos focada em conquistas"
+      "description": "Descrição estruturada no método STAR utilizando tópicos curtos. Foque em realizações e inclua placeholders numéricos como [X%] para métricas de impacto."
     }
   ],
   "educations": [
@@ -75,7 +82,9 @@ A estrutura do JSON DEVE ser exatamente esta:
       "endMonth": "Mês de término (formato 01, 02, etc.)",
       "endYear": "Ano de término (formato AAAA)"
     }
-  ]
+  ],
+  "skills": ["Habilidade 1", "Habilidade 2", "Habilidade 3", "etc."],
+  "languages": ["Idioma 1 (Proficiência)", "etc."]
 }
 
 REGRA DE RETORNO:
@@ -199,6 +208,8 @@ Exemplo de retorno esperado:
           summary: parsed.summary || "",
           experiences: formattedExperiences,
           educations: formattedEducations,
+          skills: Array.isArray(parsed.skills) ? parsed.skills : [],
+          languages: Array.isArray(parsed.languages) ? parsed.languages : [],
           cep: parsed.cep || "",
         });
 

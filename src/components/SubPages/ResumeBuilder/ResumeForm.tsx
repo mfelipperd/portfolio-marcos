@@ -158,6 +158,38 @@ export default function ResumeForm({ data, onChange }: ResumeFormProps) {
     );
   };
 
+  const addSkill = () => {
+    const skills = data.skills || [];
+    updateField("skills", [...skills, ""]);
+  };
+
+  const updateSkill = (index: number, value: string) => {
+    const skills = [...(data.skills || [])];
+    skills[index] = value;
+    updateField("skills", skills);
+  };
+
+  const removeSkill = (index: number) => {
+    const skills = (data.skills || []).filter((_, i) => i !== index);
+    updateField("skills", skills);
+  };
+
+  const addLanguage = () => {
+    const languages = data.languages || [];
+    updateField("languages", [...languages, ""]);
+  };
+
+  const updateLanguage = (index: number, value: string) => {
+    const languages = [...(data.languages || [])];
+    languages[index] = value;
+    updateField("languages", languages);
+  };
+
+  const removeLanguage = (index: number) => {
+    const languages = (data.languages || []).filter((_, i) => i !== index);
+    updateField("languages", languages);
+  };
+
   const handleApplyAiData = (aiData: Partial<ResumeData> & { cep?: string }) => {
     setShowManualForm(true);
     // Check if any critical field is missing
@@ -577,6 +609,82 @@ export default function ResumeForm({ data, onChange }: ResumeFormProps) {
             ))}
             {data.educations.length === 0 && (
               <p className="text-zinc-500 text-sm italic">Nenhuma formação adicionada.</p>
+            )}
+          </section>
+
+          {/* Habilidades */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2">
+              <h3 className="text-xl font-semibold">5. Habilidades Técnicas</h3>
+              <button 
+                onClick={addSkill} 
+                className="text-sm bg-white/10 hover:bg-white/20 p-2 rounded-md transition-colors flex items-center gap-2"
+              >
+                <FaPlus size={12} /> Adicionar
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {(data.skills || []).map((skill, idx) => (
+                <div key={idx} className="flex items-center gap-2 bg-zinc-900/30 p-2 border border-white/10 rounded-md">
+                  <input
+                    type="text"
+                    placeholder="Ex: React, Node.js, Inglês, Liderança"
+                    className="bg-transparent border-0 outline-none text-sm w-full focus:ring-0 focus:border-0"
+                    value={skill}
+                    onChange={(e) => updateSkill(idx, e.target.value)}
+                  />
+                  <button 
+                    onClick={() => removeSkill(idx)}
+                    className="text-zinc-500 hover:text-red-400 p-1 transition-colors"
+                    title="Remover Habilidade"
+                    aria-label="Remover Habilidade"
+                  >
+                    <FaTrash size={12} />
+                  </button>
+                </div>
+              ))}
+            </div>
+            {(data.skills || []).length === 0 && (
+              <p className="text-zinc-500 text-sm italic">Nenhuma habilidade adicionada.</p>
+            )}
+          </section>
+
+          {/* Idiomas */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2">
+              <h3 className="text-xl font-semibold">6. Idiomas</h3>
+              <button 
+                onClick={addLanguage} 
+                className="text-sm bg-white/10 hover:bg-white/20 p-2 rounded-md transition-colors flex items-center gap-2"
+              >
+                <FaPlus size={12} /> Adicionar
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {(data.languages || []).map((lang, idx) => (
+                <div key={idx} className="flex items-center gap-2 bg-zinc-900/30 p-2 border border-white/10 rounded-md">
+                  <input
+                    type="text"
+                    placeholder="Ex: Inglês (Avançado), Espanhol (Básico)"
+                    className="bg-transparent border-0 outline-none text-sm w-full focus:ring-0 focus:border-0"
+                    value={lang}
+                    onChange={(e) => updateLanguage(idx, e.target.value)}
+                  />
+                  <button 
+                    onClick={() => removeLanguage(idx)}
+                    className="text-zinc-500 hover:text-red-400 p-1 transition-colors"
+                    title="Remover Idioma"
+                    aria-label="Remover Idioma"
+                  >
+                    <FaTrash size={12} />
+                  </button>
+                </div>
+              ))}
+            </div>
+            {(data.languages || []).length === 0 && (
+              <p className="text-zinc-500 text-sm italic">Nenhum idioma adicionado.</p>
             )}
           </section>
         </>

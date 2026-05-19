@@ -31,7 +31,7 @@ const formatPeriod = (
 };
 
 export function PdfTemplate({ data }: PdfTemplateProps) {
-  const { template, name, title, email, phone, address, summary, photoUrl, experiences, educations } = data;
+  const { template, name, title, email, phone, address, summary, photoUrl, experiences, educations, skills, languages } = data;
 
   if (template === "modern") {
     return (
@@ -79,6 +79,28 @@ export function PdfTemplate({ data }: PdfTemplateProps) {
                     </Text>
                   </View>
                 ))}
+              </View>
+            )}
+
+            {skills && skills.length > 0 && (
+              <View style={styles.sectionContainer}>
+                <Text style={styles.modernSidebarTitle}>Habilidades</Text>
+                <View style={styles.skillsContainer}>
+                  {skills.map((skill, idx) => (
+                    <Text key={idx} style={styles.skillBadge}>{skill}</Text>
+                  ))}
+                </View>
+              </View>
+            )}
+
+            {languages && languages.length > 0 && (
+              <View style={styles.sectionContainer}>
+                <Text style={styles.modernSidebarTitle}>Idiomas</Text>
+                <View style={styles.modernSidebarContent}>
+                  {languages.map((lang, idx) => (
+                    <Text key={idx} style={styles.languageText}>{lang}</Text>
+                  ))}
+                </View>
               </View>
             )}
           </View>
@@ -180,6 +202,20 @@ export function PdfTemplate({ data }: PdfTemplateProps) {
               ))}
             </View>
           )}
+
+          {skills && skills.length > 0 && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitleExecutive}>Habilidades Técnicas</Text>
+              <Text style={styles.executiveSkillsText}>{skills.join("   •   ")}</Text>
+            </View>
+          )}
+
+          {languages && languages.length > 0 && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitleExecutive}>Idiomas</Text>
+              <Text style={styles.executiveLanguagesText}>{languages.join("   •   ")}</Text>
+            </View>
+          )}
         </Page>
       </Document>
     );
@@ -243,6 +279,28 @@ export function PdfTemplate({ data }: PdfTemplateProps) {
                 <Text style={styles.companySub}>{edu.institution}</Text>
               </View>
             ))}
+          </View>
+        )}
+
+        {skills && skills.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitleMinimalist}>Habilidades Técnicas</Text>
+            <View style={styles.minimalistSkillsContainer}>
+              {skills.map((skill, idx) => (
+                <Text key={idx} style={styles.minimalistSkillBadge}>{skill}</Text>
+              ))}
+            </View>
+          </View>
+        )}
+
+        {languages && languages.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitleMinimalist}>Idiomas</Text>
+            <View style={styles.minimalistLanguagesContainer}>
+              {languages.map((lang, idx) => (
+                <Text key={idx} style={styles.minimalistLanguageBadge}>{lang}</Text>
+              ))}
+            </View>
           </View>
         )}
       </Page>
@@ -520,5 +578,68 @@ const styles = StyleSheet.create({
     fontSize: 8,
     fontFamily: "Times-Italic",
     color: "#4b5563",
+  },
+  skillsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 4,
+  },
+  skillBadge: {
+    fontSize: 7.5,
+    backgroundColor: "#e5e7eb",
+    color: "#374151",
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    borderRadius: 2,
+    marginBottom: 4,
+  },
+  languageText: {
+    fontSize: 8,
+    color: "#4b5563",
+    fontWeight: "bold",
+  },
+  executiveSkillsText: {
+    fontSize: 8.5,
+    color: "#111827",
+    textAlign: "center",
+    lineHeight: 1.4,
+  },
+  executiveLanguagesText: {
+    fontSize: 8.5,
+    fontFamily: "Times-Bold",
+    color: "#111827",
+    textAlign: "center",
+    lineHeight: 1.4,
+  },
+  minimalistSkillsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 4,
+  },
+  minimalistSkillBadge: {
+    fontSize: 8,
+    backgroundColor: "#f3f4f6",
+    color: "#1f2937",
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    borderRadius: 2,
+    borderWidth: 0.5,
+    borderColor: "#e5e7eb",
+  },
+  minimalistLanguagesContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  minimalistLanguageBadge: {
+    fontSize: 8,
+    fontWeight: "bold",
+    color: "#1f2937",
+    backgroundColor: "#f9fafb",
+    borderWidth: 0.5,
+    borderColor: "#e5e7eb",
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 2,
   },
 });

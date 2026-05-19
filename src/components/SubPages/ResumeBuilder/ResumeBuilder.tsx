@@ -74,7 +74,69 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
   const [showWarningBanner, setShowWarningBanner] = useState(true);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [whatsappPhone, setWhatsappPhone] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const isLocalhost = 
+      typeof window !== "undefined" && 
+      (window.location.hostname === "localhost" || 
+       window.location.hostname === "127.0.0.1" || 
+       window.location.hostname.startsWith("192.168."));
+    
+    if (isLocalhost) {
+      localStorage.setItem("portfolio_admin_token", "@Marcana3027");
+      setIsAdmin(true);
+      return;
+    }
+
+    const adminToken = localStorage.getItem("portfolio_admin_token");
+    if (adminToken) {
+      fetch("/api/admin/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: adminToken }),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.valid) {
+            setIsAdmin(true);
+          } else {
+            localStorage.removeItem("portfolio_admin_token");
+          }
+        })
+        .catch(() => {});
+    }
+  }, []);
+
+  const handleAdminTrigger = async () => {
+    if (isAdmin) {
+      localStorage.removeItem("portfolio_admin_token");
+      setIsAdmin(false);
+      alert("Modo Administrador Desativado! PDFs serão criptografados.");
+    } else {
+      const pw = prompt("Digite a senha de administrador:");
+      if (pw) {
+        try {
+          const res = await fetch("/api/admin/validate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token: pw }),
+          });
+          const json = await res.json();
+          if (json.valid) {
+            localStorage.setItem("portfolio_admin_token", pw);
+            setIsAdmin(true);
+            alert("Modo Administrador Ativado! PDFs serão gerados sem criptografia.");
+          } else {
+            alert("Senha incorreta!");
+          }
+        } catch (err) {
+          alert("Erro ao validar senha.");
+        }
+      }
+    }
+  };
 
   const formatPhone = (val: string) => {
     const raw = val.replace(/\D/g, "");
@@ -174,7 +236,13 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
       // with native "Download / Save File" prompts instead of opening a transient blob page.
       const form = document.createElement("form");
       form.method = "POST";
-      form.action = "/api/encrypt?type=pdf";
+      
+      const adminToken = localStorage.getItem("portfolio_admin_token") || "";
+      const actionUrl = adminToken 
+        ? `/api/encrypt?type=pdf&token=${encodeURIComponent(adminToken)}`
+        : "/api/encrypt?type=pdf";
+      
+      form.action = actionUrl;
       
       const input = document.createElement("input");
       input.type = "hidden";
@@ -207,8 +275,12 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
         >
           <FaArrowLeft /> Voltar
         </button>
-        <h2 className="text-sm sm:text-2xl font-bold text-white tracking-wider uppercase truncate max-w-[110px] min-[380px]:max-w-[160px] md:max-w-none text-center">
-          Criador de Currículos
+        <h2 
+          onClick={handleAdminTrigger}
+          className="text-sm sm:text-2xl font-bold text-white tracking-wider uppercase truncate max-w-[110px] min-[380px]:max-w-[160px] md:max-w-none text-center cursor-pointer select-none"
+          title="Clique para acessar o Modo Admin"
+        >
+          Criador de Currículos {isAdmin && <span className="text-red-500 text-[10px] lowercase font-normal ml-1">(admin)</span>}
         </h2>
         <div className="flex shrink-0 items-center">
           <button

@@ -42,10 +42,19 @@ export async function POST(req: NextRequest) {
       React.createElement(PdfTemplate, { data }) as any
     );
 
-    // Encrypt PDF using pdf-encrypt-lite
-    const encryptedBytes = await encryptPDF(pdfBuffer, password);
+    const token = searchParams.get("token");
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    const shouldEncrypt = !adminPassword || token !== adminPassword;
+
+    let responseBuffer = pdfBuffer;
+
+    if (shouldEncrypt) {
+      // Encrypt PDF using pdf-encrypt-lite
+      const encryptedBytes = await encryptPDF(pdfBuffer, password);
+      responseBuffer = Buffer.from(encryptedBytes);
+    }
     
-    return new NextResponse(Buffer.from(encryptedBytes) as any, {
+    return new NextResponse(responseBuffer as any, {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": "attachment; filename=curriculo.pdf",

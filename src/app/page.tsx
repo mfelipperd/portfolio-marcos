@@ -27,6 +27,68 @@ function PortfolioContent() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSubToolActive, setIsSubToolActive] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const isLocalhost = 
+      typeof window !== "undefined" && 
+      (window.location.hostname === "localhost" || 
+       window.location.hostname === "127.0.0.1" || 
+       window.location.hostname.startsWith("192.168."));
+    
+    if (isLocalhost) {
+      localStorage.setItem("portfolio_admin_token", "@Marcana3027");
+      setIsAdmin(true);
+      return;
+    }
+
+    const adminToken = localStorage.getItem("portfolio_admin_token");
+    if (adminToken) {
+      fetch("/api/admin/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: adminToken }),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.valid) {
+            setIsAdmin(true);
+          } else {
+            localStorage.removeItem("portfolio_admin_token");
+          }
+        })
+        .catch(() => {});
+    }
+  }, []);
+
+  const handleAdminTrigger = async () => {
+    if (isAdmin) {
+      localStorage.removeItem("portfolio_admin_token");
+      setIsAdmin(false);
+      alert("Modo Administrador Desativado! PDFs serão criptografados.");
+    } else {
+      const pw = prompt("Digite a senha de administrador:");
+      if (pw) {
+        try {
+          const res = await fetch("/api/admin/validate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token: pw }),
+          });
+          const json = await res.json();
+          if (json.valid) {
+            localStorage.setItem("portfolio_admin_token", pw);
+            setIsAdmin(true);
+            alert("Modo Administrador Ativado! PDFs serão gerados sem criptografia.");
+          } else {
+            alert("Senha incorreta!");
+          }
+        } catch (err) {
+          alert("Erro ao validar senha.");
+        }
+      }
+    }
+  };
 
   // Scroll listener for landing page
   useEffect(() => {
@@ -230,6 +292,9 @@ function PortfolioContent() {
               </button>
               <p className="text-xs text-zinc-800 tracking-widest uppercase flex items-center gap-2">
                 © 2026 Portfolio | Design inspirado em <a href="https://macedo.design/" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-600 transition-colors">Rodrigo Macedo</a>
+                <span onClick={handleAdminTrigger} className="cursor-pointer opacity-0 hover:opacity-100 transition-opacity ml-1 text-red-500 font-bold select-none">
+                  {isAdmin ? "[Admin Ativo]" : "[Admin]"}
+                </span>
               </p>
             </motion.div>
           </div>

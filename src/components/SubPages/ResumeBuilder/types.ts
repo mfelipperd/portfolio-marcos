@@ -30,6 +30,8 @@ export interface ResumeData {
   photoUrl: string | null;
   experiences: Experience[];
   educations: Education[];
+  skills: string[];
+  languages: string[];
   template: "minimalist" | "modern" | "executive";
 }
 
@@ -43,5 +45,7 @@ export const initialResumeData: ResumeData = {
   photoUrl: null,
   experiences: [],
   educations: [],
+  skills: [],
+  languages: [],
   template: "minimalist",
 };

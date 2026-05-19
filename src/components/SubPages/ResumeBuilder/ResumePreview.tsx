@@ -33,7 +33,7 @@ const formatPeriod = (
 };
 
 export default function ResumePreview({ data, previewRef }: ResumePreviewProps) {
-  const { template, name, title, email, phone, address, summary, photoUrl, experiences, educations } = data;
+  const { template, name, title, email, phone, address, summary, photoUrl, experiences, educations, skills, languages } = data;
 
   const renderMinimalist = () => (
     <div className="p-10 font-sans text-gray-800 bg-white h-full">
@@ -97,6 +97,28 @@ export default function ResumePreview({ data, previewRef }: ResumePreviewProps) 
           </div>
         </section>
       )}
+
+      {skills && skills.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-lg font-bold text-gray-900 uppercase tracking-widest mb-3">Habilidades Técnicas</h2>
+          <div className="flex flex-wrap gap-2">
+            {skills.map((skill, idx) => (
+              <span key={idx} className="bg-gray-100 text-gray-800 text-xs px-2.5 py-1 rounded font-medium border border-gray-200">{skill}</span>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {languages && languages.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-lg font-bold text-gray-900 uppercase tracking-widest mb-3">Idiomas</h2>
+          <div className="flex flex-wrap gap-4 text-sm text-gray-700">
+            {languages.map((lang, idx) => (
+              <span key={idx} className="font-medium bg-gray-50 border border-gray-150 px-2 py-0.5 rounded">{lang}</span>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 
@@ -127,6 +149,28 @@ export default function ResumePreview({ data, previewRef }: ResumePreviewProps) 
                   <div className="text-gray-600">{edu.institution}</div>
                   <div className="text-gray-500 text-xs">{formatPeriod(edu.startMonth, edu.startYear, edu.endMonth, edu.endYear)}</div>
                 </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {skills && skills.length > 0 && (
+          <div className="space-y-4">
+            <h2 className="text-sm font-bold text-gray-900 uppercase tracking-widest border-b border-gray-300 pb-1">Habilidades</h2>
+            <div className="flex flex-wrap gap-1.5">
+              {skills.map((skill, idx) => (
+                <span key={idx} className="bg-gray-200 text-gray-800 text-xs px-2 py-0.5 rounded border border-gray-300">{skill}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {languages && languages.length > 0 && (
+          <div className="space-y-4">
+            <h2 className="text-sm font-bold text-gray-900 uppercase tracking-widest border-b border-gray-300 pb-1">Idiomas</h2>
+            <div className="space-y-1 text-sm text-gray-700">
+              {languages.map((lang, idx) => (
+                <div key={idx} className="font-medium">{lang}</div>
               ))}
             </div>
           </div>
@@ -227,6 +271,24 @@ export default function ResumePreview({ data, previewRef }: ResumePreviewProps) 
               </div>
             ))}
           </div>
+        </section>
+      )}
+
+      {skills && skills.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-lg font-bold uppercase tracking-wider border-b border-gray-400 mb-4 text-center">Habilidades Técnicas</h2>
+          <p className="text-sm text-gray-800 text-center leading-relaxed">
+            {skills.join("   •   ")}
+          </p>
+        </section>
+      )}
+
+      {languages && languages.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-lg font-bold uppercase tracking-wider border-b border-gray-400 mb-4 text-center">Idiomas</h2>
+          <p className="text-sm text-gray-850 text-center leading-relaxed font-semibold">
+            {languages.join("   •   ")}
+          </p>
         </section>
       )}
     </div>
