@@ -36,7 +36,7 @@ export default function ResumePreview({ data, previewRef }: ResumePreviewProps) 
   const { template, name, title, email, phone, address, summary, photoUrl, experiences, educations, skills, languages } = data;
 
   const renderMinimalist = () => (
-    <div className="p-10 font-sans text-gray-800 bg-white h-full">
+    <div className="p-10 font-sans text-gray-800 bg-white min-h-full">
       <header className="border-b-2 border-gray-800 pb-6 mb-6 flex items-center gap-6">
         {photoUrl && (
           <img src={photoUrl} alt={name} className="w-24 h-24 rounded-full object-cover border border-gray-300" />
@@ -123,7 +123,7 @@ export default function ResumePreview({ data, previewRef }: ResumePreviewProps) 
   );
 
   const renderModern = () => (
-    <div className="flex h-full font-sans text-gray-800 bg-white">
+    <div className="flex min-h-full font-sans text-gray-800 bg-white">
       {/* Sidebar */}
       <aside className="w-1/3 bg-gray-100 p-8 flex flex-col gap-8 border-r border-gray-200">
         {photoUrl && (
@@ -213,7 +213,7 @@ export default function ResumePreview({ data, previewRef }: ResumePreviewProps) 
   );
 
   const renderExecutive = () => (
-    <div className="p-12 font-serif text-gray-900 bg-white h-full">
+    <div className="p-12 font-serif text-gray-900 bg-white min-h-full">
       <header className="text-center mb-10">
         {photoUrl && (
           <img src={photoUrl} alt={name} className="w-20 h-20 mx-auto rounded-md object-cover mb-4 grayscale" />
@@ -298,7 +298,7 @@ export default function ResumePreview({ data, previewRef }: ResumePreviewProps) 
     <div 
       ref={previewRef} 
       // The fixed width/height below simulate an A4 paper for accurate PDF generation via html2pdf
-      className="bg-white w-[210mm] min-h-[297mm] shadow-2xl mx-auto overflow-hidden relative box-border"
+      className="bg-white w-[210mm] min-h-[297mm] shadow-2xl mx-auto relative box-border"
     >
       {template === "minimalist" && renderMinimalist()}
       {template === "modern" && renderModern()}

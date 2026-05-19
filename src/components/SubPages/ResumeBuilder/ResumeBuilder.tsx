@@ -17,50 +17,90 @@ interface ResponsivePreviewWrapperProps {
 
 function ResponsivePreviewWrapper({ children }: ResponsivePreviewWrapperProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
+  const [pagesCount, setPagesCount] = useState(1);
+
+  const calculateLayout = () => {
+    if (!containerRef.current) return;
+    
+    // Recalculate scale
+    const containerWidth = containerRef.current.clientWidth;
+    const targetWidth = 794; // Base A4 width (~210mm)
+    const newScale = Math.min(containerWidth / targetWidth, 1);
+    setScale(newScale);
+
+    // Recalculate page count
+    if (contentRef.current) {
+      // Use scrollHeight of the inner content directly. If ResumePreview has a lot of content, its scrollHeight will be large.
+      const firstChild = contentRef.current.firstElementChild as HTMLElement | null;
+      const contentHeight = firstChild ? Math.max(firstChild.scrollHeight, firstChild.offsetHeight) : 1123;
+      const pageHeight = 1123;
+      const pages = Math.max(Math.ceil((contentHeight) / pageHeight), 1);
+      setPagesCount(pages);
+    }
+  };
 
   useEffect(() => {
-    const handleResize = () => {
-      if (!containerRef.current) return;
-      const containerWidth = containerRef.current.clientWidth;
-      const targetWidth = 794; // Base A4 width (~210mm)
-      const newScale = Math.min(containerWidth / targetWidth, 1);
-      setScale(newScale);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
+    calculateLayout();
+    window.addEventListener("resize", calculateLayout);
 
     let resizeObserver: ResizeObserver | null = null;
     if (typeof ResizeObserver !== "undefined" && containerRef.current) {
       resizeObserver = new ResizeObserver(() => {
-        handleResize();
+        calculateLayout();
       });
       resizeObserver.observe(containerRef.current);
+      
+      // We must observe the first child (ResumePreview) because it grows naturally.
+      // The contentRef itself has a fixed calculated height so it won't trigger resize events on content changes.
+      if (contentRef.current && contentRef.current.firstElementChild) {
+        resizeObserver.observe(contentRef.current.firstElementChild);
+      }
     }
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", calculateLayout);
       if (resizeObserver) {
         resizeObserver.disconnect();
       }
     };
-  }, []);
+  }, [children]);
 
   return (
     <div 
       ref={containerRef} 
-      className="w-full flex items-start justify-center overflow-hidden"
-      style={{ height: `${1123 * scale}px` }}
+      className="w-full flex items-start justify-center overflow-hidden relative"
+      style={{ height: `${pagesCount * 1123 * scale}px` }}
     >
       <div 
+        ref={contentRef}
         style={{ 
           transform: `scale(${scale})`, 
           transformOrigin: "top center",
+          height: `${pagesCount * 1123}px`,
+          width: "794px"
         }}
-        className="shrink-0"
+        className="shrink-0 relative bg-white shadow-lg"
       >
         {children}
+
+        {/* Page breaks visual indicators */}
+        {Array.from({ length: pagesCount - 1 }).map((_, index) => {
+          const topPosition = (index + 1) * 1123;
+          return (
+            <div 
+              key={index}
+              className="absolute left-0 right-0 flex items-center justify-center pointer-events-none select-none"
+              style={{ top: `${topPosition}px`, transform: "translateY(-50%)", zIndex: 50 }}
+            >
+              <div className="w-full border-t-2 border-dashed border-red-500/60"></div>
+              <span className="absolute bg-red-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-red-600 shadow-sm uppercase tracking-wider">
+                Quebra de Página {index + 1}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
