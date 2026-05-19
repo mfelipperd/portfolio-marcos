@@ -36,59 +36,63 @@ INSTRUÇÃO DE PERSONALIZAÇÃO:
 Por favor, analise a descrição da vaga acima e personalize o conteúdo do meu currículo (especialmente o resumo profissional 'summary' e a descrição das experiências 'description') de forma estratégica e ética. Destaque minhas habilidades, tecnologias e conquistas anteriores que são mais relevantes para essa oportunidade específica, garantindo que o currículo pareça feito sob medida para essa vaga.`
       : "";
 
-    const prompt = `Atue como um Especialista em Carreiras, Recrutamento e Otimização de ATS (Sistemas de Rastreamento de Candidatos).
-Organize e melhore o conteúdo do meu currículo com base nas minhas informações brutas fornecidas abaixo.${jobCustomizationText}
-Escreva de forma profissional, atrativa e focada em resultados semânticos para algoritmos de IA de recrutamento (como a Gaia da Gupy).
+    const prompt = `Atue como um Engenheiro de Inteligência Artificial e Especialista em Recrutamento e Otimização de ATS (Sistemas de Rastreamento de Candidatos, como a IA Gaia da Gupy que usa modelos baseados em Transformers e similaridade de cosseno de embeddings de sentenças).
 
-INSTRUÇÕES IMPORTANTES DE ESCRITA:
-1. Para cada experiência profissional, utilize a Metodologia STAR (Situação, Tarefa, Ação e Resultado). Descreva as conquistas usando verbos de ação fortes no início das frases (ex: "Desenvolveu...", "Liderou...", "Otimizou...", "Reduziu...").
-2. Adicione ou sugira métricas de impacto quantitativas e dados numéricos nas realizações. Quando não souber os dados exatos, inclua placeholders como "[X%]" ou "[R$ X]" para que o usuário possa preencher.
-3. Evite "keyword stuffing" (repetição artificial de palavras-chave). Insira termos técnicos e competências de forma fluida e contextualizada nas frases.
-4. Identifique e agrupe as principais habilidades técnicas (hard skills) e competências comportamentais em uma lista de termos chave no campo "skills" (máximo 12 habilidades).
-5. Se houver idiomas informados, adicione-os no campo "languages" no formato "Idioma (Nível de Proficiência)" (ex: "Inglês (Avançado)", "Espanhol (Intermediário)").
+Sua tarefa é organizar, otimizar e estruturar o currículo fornecido abaixo para maximizar a aderência semântica e facilitar o Reconhecimento de Entidades Nomeadas (NER) pelo parser do ATS.${jobCustomizationText}
+
+INSTRUÇÕES DE ENGENHARIA LINGUÍSTICA E ESCRITA (ALINHADAS ÀS DIRETRIZES DO ATS GAIA):
+1. **Estrutura de Experiências (Metodologia STAR)**:
+   - Para cada cargo em "experiences", estruture a "description" sob a forma de tópicos (bullet points) usando a metodologia STAR (Situação-Problema, Tarefa/Meta, Ação Técnica com ferramentas/frameworks e Resultado Mensurável).
+   - Inicie cada frase obrigatoriamente com verbos de ação fortes no pretérito perfeito (ex: "Desenvolveu...", "Liderou...", "Otimizou...", "Reduziu...", "Implementou...", "Projetou..."). Evite construções passivas ou gerúndios (ex: "Responsável por...", "Fazendo...").
+   - Adicione ou sugira métricas de impacto quantitativas e resultados reais. Caso não tenha os dados exatos, inclua placeholders como "[X%]", "[R$ X]" ou "[X horas]" para que o usuário preencha.
+2. **Prevenção de Spam de Palavras-Chave (Anti-Keyword Stuffing)**:
+   - Não liste palavras-chave de forma desconexa nas experiências. Integre os termos técnicos de modo fluido e gramaticalmente natural nas descrições de atividades das experiências.
+3. **Mapeamento de Entidades (Habilidades Técnicas e Idiomas)**:
+   - Extraia e catalogue no campo "skills" as principais competências técnicas (hard skills) e tecnologias mais relevantes mencionadas ou inferidas nas experiências (máximo de 12 competências, ex: React, Node.js, TypeScript).
+   - Catalogue no campo "languages" os idiomas indicados no formato "Idioma (Nível de Proficiência)" (ex: "Inglês (Avançado)", "Espanhol (Intermediário)").
 
 Minhas Informações Brutas:
 """
 ${rawText}
 """
 
-A estrutura do JSON DEVE ser exatamente esta:
+A estrutura do JSON retornado DEVE seguir rigorosamente este esquema:
 {
   "name": "Nome Completo",
   "title": "Profissão ou Cargo Principal",
   "email": "E-mail",
   "phone": "Telefone com DDD",
-  "cep": "CEP se disponível (ex: 12345-678 ou apenas números)",
-  "address": "Cidade/Estado (opcional se houver CEP, pois buscaremos via CEP)",
-  "summary": "Resumo profissional de alto impacto (máx 4 linhas)",
+  "cep": "CEP se disponível (apenas números ou no formato 12345-678)",
+  "address": "Cidade/Estado (Exemplo: São Paulo/SP)",
+  "summary": "Resumo profissional de alto impacto focado em resultados semânticos para o cargo (máximo de 4 linhas)",
   "experiences": [
     {
       "title": "Cargo",
       "company": "Empresa",
-      "startMonth": "Mês de início (formato 01, 02, etc.)",
+      "startMonth": "Mês de início (formato MM, ex: 01, 02)",
       "startYear": "Ano de início (formato AAAA)",
-      "endMonth": "Mês de término (formato 01, 02, etc.) ou vazio se for atual",
-      "endYear": "Ano de término (formato AAAA) ou vazio se for atual",
+      "endMonth": "Mês de término (formato MM) ou vazio se for emprego atual",
+      "endYear": "Ano de término (formato AAAA) ou vazio se for emprego atual",
       "current": true ou false (true se for o emprego atual, false caso contrário)",
-      "description": "Descrição estruturada no método STAR utilizando tópicos curtos. Foque em realizações e inclua placeholders numéricos como [X%] para métricas de impacto."
+      "description": "Escreva em formato de bullet points. Cada bullet point deve descrever a situação/desafio, a ação técnica executada com ferramentas e o impacto/resultado mensurável gerado (utilize placeholders como [X%], [R$ X] ou [X horas]). Use verbos de ação fortes no início de cada frase."
     }
   ],
   "educations": [
     {
-      "course": "Curso ou Graduação",
+      "course": "Curso, Graduação ou Especialização",
       "institution": "Instituição de Ensino",
-      "startMonth": "Mês de início (formato 01, 02, etc.)",
+      "startMonth": "Mês de início (formato MM)",
       "startYear": "Ano de início (formato AAAA)",
-      "endMonth": "Mês de término (formato 01, 02, etc.)",
+      "endMonth": "Mês de término (formato MM)",
       "endYear": "Ano de término (formato AAAA)"
     }
   ],
-  "skills": ["Habilidade 1", "Habilidade 2", "Habilidade 3", "etc."],
+  "skills": ["Habilidade/Tecnologia 1", "Habilidade/Tecnologia 2", "etc."],
   "languages": ["Idioma 1 (Proficiência)", "etc."]
 }
 
 REGRA DE RETORNO:
-Retorne o JSON acima obrigatoriamente dentro de um bloco de código markdown (utilizando três crases e o identificador 'json'), para que a plataforma da IA apresente um botão rápido de cópia. Não inclua nenhum outro texto, introdução ou explicação antes ou depois do bloco.
+Retorne o JSON acima obrigatoriamente dentro de um bloco de código markdown (utilizando três crases e o identificador 'json'), sem qualquer texto adicional de introdução ou conclusão.
 Exemplo de retorno esperado:
 \`\`\`json
 {
