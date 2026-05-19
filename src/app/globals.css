@@ -17,18 +17,19 @@ html {
 
 /* Flashlight / Illumination Masking */
 .flashlight-mask {
-  mask-image: radial-gradient(
-    circle var(--flashlight-size, 20rem) at var(--flashlight-x, 50%) var(--flashlight-y, 50%),
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.6) 40%,
-    rgba(0, 0, 0, 0.25) 100%
-  );
   -webkit-mask-image: radial-gradient(
     circle var(--flashlight-size, 20rem) at var(--flashlight-x, 50%) var(--flashlight-y, 50%),
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 0.6) 40%,
     rgba(0, 0, 0, 0.25) 100%
   );
+  mask-image: radial-gradient(
+    circle var(--flashlight-size, 20rem) at var(--flashlight-x, 50%) var(--flashlight-y, 50%),
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0.25) 100%
+  );
+  -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
 }
 
@@ -56,6 +57,7 @@ a, button, [onClick], .cursor-pointer {
 /* Header Refinement */
 .header-conventional {
   background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.5s ease;
@@ -124,5 +126,24 @@ a, button, [onClick], .cursor-pointer {
 .menu-item:hover {
   color: #fff;
   transform: translateY(-2px);
+}
+
+/* Landing Page Utilities */
+.landing-text-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+section {
+  scroll-margin-top: 100px;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 

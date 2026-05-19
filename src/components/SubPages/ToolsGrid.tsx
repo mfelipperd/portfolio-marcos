@@ -17,7 +17,12 @@ const tools: Tool[] = [
     description: "Crie e exporte QR Codes personalizados em PNG ou JPEG.",
     icon: <FaQrcode className="w-12 h-12" />,
   },
-  // Mais ferramentas podem ser adicionadas aqui
+  {
+    id: "resume",
+    name: "Criador de Currículos",
+    description: "Crie, personalize e baixe seu currículo gratuitamente em PDF ou Word.",
+    icon: <FaTools className="w-12 h-12" />,
+  },
 ];
 
 interface ToolsGridProps {

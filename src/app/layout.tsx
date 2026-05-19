@@ -119,11 +119,6 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://github.com" />
         <link rel="dns-prefetch" href="https://linkedin.com" />
         
-        {/* Favicon e ícones */}
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="apple-touch-icon" href="/favicon.svg" />
-        <link rel="manifest" href="/site.webmanifest" />
-        
         {/* Structured Data para SEO */}
         <script
           type="application/ld+json"

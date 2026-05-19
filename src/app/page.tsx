@@ -10,27 +10,48 @@ import Sobre from "../components/SubPages/Sobre";
 import Projetos from "../components/SubPages/Projetos";
 import MarcasGrid from "@/components/SubPages/MarcasGrid";
 import Ferramentas from "../components/SubPages/Ferramentas";
+import LandingPage from "../components/LandingPage";
 
 function PortfolioContent() {
   const searchParams = useSearchParams();
   const menuItems = ["Portfolio", "Sobre", "Experiências", "Ferramentas"];
   
   // Initial state based on URL
-  const pParam = searchParams.get("p");
+  const pParam = searchParams.get("p")?.toLowerCase();
+  const isDirectTool = pParam === "curriculo" || pParam === "resume" || pParam === "qrcode";
   const initialPage = menuItems.find(
-    item => item.toLowerCase() === pParam?.toLowerCase()
-  ) || "Portfolio";
+    item => item.toLowerCase() === pParam
+  ) || (isDirectTool ? "Ferramentas" : "Portfolio");
 
   const [activePage, setActivePage] = useState<string | null>(initialPage);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Scroll listener for landing page
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Sync URL when activePage changes
   useEffect(() => {
     const url = new URL(window.location.href);
     if (activePage) {
-      url.searchParams.set("p", activePage.toLowerCase());
+      const currentP = url.searchParams.get("p")?.toLowerCase();
+      const isCurrentDirect = currentP === "curriculo" || currentP === "resume" || currentP === "qrcode";
+      
+      if (activePage === "Ferramentas" && isCurrentDirect) {
+        // Keep the direct url parameter p=curriculo / p=resume / p=qrcode
+      } else {
+        url.searchParams.set("p", activePage.toLowerCase());
+        url.searchParams.delete("tool");
+      }
     } else {
       url.searchParams.delete("p");
+      url.searchParams.delete("tool");
     }
     window.history.replaceState({}, "", url.toString());
   }, [activePage]);
@@ -71,17 +92,17 @@ function PortfolioContent() {
 
       <motion.header
         animate={{
-          height: activePage ? "4rem" : "100vh",
-          backgroundColor: activePage ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0)",
-          borderBottomColor: activePage ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0)",
+          height: (activePage || isScrolled) ? "4rem" : "100vh",
+          backgroundColor: (activePage || isScrolled) ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0)",
+          borderBottomColor: (activePage || isScrolled) ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0)",
         }}
-        className={`fixed top-0 inset-x-0 z-50 flex items-center transition-colors ${activePage ? 'backdrop-blur-md border-b pointer-events-auto' : 'pointer-events-none sticky-header'}`}
+        className={`fixed top-0 inset-x-0 z-50 flex items-center transition-colors ${(activePage || isScrolled) ? 'backdrop-blur-md border-b pointer-events-auto' : 'pointer-events-none sticky-header'}`}
       >
         <div className={`w-full max-w-[1200px] mx-auto px-4 md:px-6 flex ${activePage ? 'flex-row justify-between items-center h-full' : 'flex-col items-center justify-center gap-8 md:gap-12'}`}>
           <motion.div
             initial={false}
             animate={{
-              scale: activePage ? 0.35 : 1,
+              scale: (activePage || isScrolled) ? 0.35 : 1,
               x: 0,
               y: 0,
             }}
@@ -148,22 +169,28 @@ function PortfolioContent() {
       </div>
 
       {!activePage && (
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20"
-        >
-          <button
-            onClick={() => setIsContactModalOpen(true)}
-            className="text-white hover:text-zinc-300 transition-all text-sm tracking-wider uppercase underline underline-offset-8 decoration-white/30 hover:decoration-white"
-          >
-            Entrar em Contato
-          </button>
-          <p className="text-xs text-zinc-800 tracking-widest uppercase flex items-center gap-2">
-            © 2026 Portfolio | Design inspirado em <a href="https://macedo.design/" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-600 transition-colors">Rodrigo Macedo</a>
-          </p>
-        </motion.div>
+        <div className="relative z-10 pt-20">
+          <div className="max-w-[1200px] mx-auto px-4 md:px-6">
+            <LandingPage />
+            
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="flex flex-col items-center gap-4 py-20 border-t border-white/5"
+            >
+              <button
+                onClick={() => setIsContactModalOpen(true)}
+                className="text-white hover:text-zinc-300 transition-all text-sm tracking-wider uppercase underline underline-offset-8 decoration-white/30 hover:decoration-white"
+              >
+                Entrar em Contato
+              </button>
+              <p className="text-xs text-zinc-800 tracking-widest uppercase flex items-center gap-2">
+                © 2026 Portfolio | Design inspirado em <a href="https://macedo.design/" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-600 transition-colors">Rodrigo Macedo</a>
+              </p>
+            </motion.div>
+          </div>
+        </div>
       )}
 
       <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
