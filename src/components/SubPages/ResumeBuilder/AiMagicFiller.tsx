@@ -14,6 +14,7 @@ interface AiMagicFillerProps {
 export default function AiMagicFiller({ isOpen, onClose, onApplyData }: AiMagicFillerProps) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [rawText, setRawText] = useState("");
+  const [jobDescription, setJobDescription] = useState("");
   const [generatedPrompt, setGeneratedPrompt] = useState("");
   const [jsonInput, setJsonInput] = useState("");
   const [copied, setCopied] = useState(false);
@@ -24,8 +25,19 @@ export default function AiMagicFiller({ isOpen, onClose, onApplyData }: AiMagicF
   const [progress, setProgress] = useState(0);
 
   const handleGeneratePrompt = () => {
+    const jobCustomizationText = jobDescription.trim()
+      ? `\nAdicionalmente, estou aplicando para a seguinte vaga de emprego:
+Descrição da Vaga de Trabalho / Requisitos:
+"""
+${jobDescription.trim()}
+"""
+
+INSTRUÇÃO DE PERSONALIZAÇÃO:
+Por favor, analise a descrição da vaga acima e personalize o conteúdo do meu currículo (especialmente o resumo profissional 'summary' e a descrição das experiências 'description') de forma estratégica e ética. Destaque minhas habilidades, tecnologias e conquistas anteriores que são mais relevantes para essa oportunidade específica, garantindo que o currículo pareça feito sob medida para essa vaga.`
+      : "";
+
     const prompt = `Atue como um Especialista em Carreiras e Recrutamento. 
-Organize e melhore o conteúdo do meu currículo com base nessas informações brutas fornecidas abaixo.
+Organize e melhore o conteúdo do meu currículo com base nas minhas informações brutas fornecidas abaixo.${jobCustomizationText}
 Escreva de forma profissional, atrativa e focada em resultados.
 
 Minhas Informações Brutas:
@@ -192,6 +204,7 @@ Exemplo de retorno esperado:
 
         // Limpa estados
         setRawText("");
+        setJobDescription("");
         setJsonInput("");
         setStep(1);
         onClose();
@@ -251,16 +264,34 @@ Exemplo de retorno esperado:
           {step === 1 && (
             <div className="space-y-4">
               <p className="text-sm text-zinc-400">
-                Cole abaixo suas informações profissionais brutas (de forma livre, rascunhada, sem formatação). Nossa ferramenta montará o prompt ideal para a IA.
+                Cole abaixo suas informações profissionais brutas e, se desejar, a descrição da vaga para a qual deseja se candidatar. O prompt gerado irá guiar a IA na personalização do seu currículo.
               </p>
               
-              <textarea 
-                value={rawText}
-                onChange={(e) => setRawText(e.target.value)}
-                aria-label="Texto profissional bruto"
-                placeholder="Ex: Meu nome é Marcos, sou Dev React. Trabalhei na Empresa Tech de 2021 a 2024 fazendo sites. Fiz faculdade de ADS na Fatec de 2018 a 2021..."
-                className="w-full h-64 bg-black/50 border border-white/10 rounded-lg p-4 text-sm text-zinc-300 resize-none focus:outline-none focus:border-blue-500/50 transition-colors custom-scrollbar"
-              />
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">
+                  1. Minhas Informações Profissionais (Bruto/Rascunho) <span className="text-blue-500">*</span>
+                </label>
+                <textarea 
+                  value={rawText}
+                  onChange={(e) => setRawText(e.target.value)}
+                  aria-label="Texto profissional bruto"
+                  placeholder="Ex: Meu nome é Marcos, sou Dev React. Trabalhei na Empresa Tech de 2021 a 2024 fazendo sites. Fiz faculdade de ADS na Fatec de 2018 a 2021..."
+                  className="w-full h-36 bg-black/50 border border-white/10 rounded-lg p-4 text-sm text-zinc-300 resize-none focus:outline-none focus:border-blue-500/50 transition-colors custom-scrollbar"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">
+                  2. Descrição da Vaga de Trabalho (Opcional - para personalização)
+                </label>
+                <textarea 
+                  value={jobDescription}
+                  onChange={(e) => setJobDescription(e.target.value)}
+                  aria-label="Descrição da vaga de trabalho"
+                  placeholder="Cole aqui a descrição da vaga, requisitos, responsabilidades ou competências desejadas para que a IA adapte o currículo especificamente para essa oportunidade..."
+                  className="w-full h-28 bg-black/50 border border-white/10 rounded-lg p-4 text-sm text-zinc-300 resize-none focus:outline-none focus:border-blue-500/50 transition-colors custom-scrollbar"
+                />
+              </div>
 
               <div className="flex justify-end pt-2">
                 <button 

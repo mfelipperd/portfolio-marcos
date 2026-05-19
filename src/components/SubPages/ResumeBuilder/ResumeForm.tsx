@@ -46,6 +46,8 @@ export default function ResumeForm({ data, onChange }: ResumeFormProps) {
   const [isAiModalOpen, setIsAiModalOpen] = React.useState(false);
   const [cep, setCep] = React.useState("");
   const [highlightMissing, setHighlightMissing] = React.useState(false);
+  const isDataEmpty = !data.name && !data.title && !data.email && !data.phone && data.experiences.length === 0 && data.educations.length === 0;
+  const [showManualForm, setShowManualForm] = React.useState(!isDataEmpty);
 
   const getInputClass = (val: string, extraClasses = "") => {
     const isMissing = highlightMissing && (!val || val.trim() === "");
@@ -157,6 +159,7 @@ export default function ResumeForm({ data, onChange }: ResumeFormProps) {
   };
 
   const handleApplyAiData = (aiData: Partial<ResumeData> & { cep?: string }) => {
+    setShowManualForm(true);
     // Check if any critical field is missing
     const hasMissing = 
       !aiData.name || 
@@ -209,314 +212,375 @@ export default function ResumeForm({ data, onChange }: ResumeFormProps) {
   return (
     <div className="flex flex-col gap-6 sm:gap-8 text-white pb-20">
       
-      {/* AI Button */}
-      <button
-        onClick={() => setIsAiModalOpen(true)}
-        className="w-full bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white p-4 rounded-lg flex items-center justify-center gap-3 font-bold transition-all shadow-lg hover:shadow-blue-500/25"
-      >
-        <FaMagic className="text-xl" /> 
-        Preenchimento Mágico com IA
-      </button>
-
-      {highlightMissing && (
-        <div className="bg-amber-600/20 border border-amber-500/30 p-4 rounded-lg flex items-center justify-between text-amber-300 text-sm shadow-md animate-fade-in shrink-0">
-          <div>
-            <span className="font-bold">⚠️ Preenchimento concluído!</span> Alguns campos não puderam ser preenchidos pela IA e foram destacados em laranja. Por favor, complete-os manualmente.
+      {isDataEmpty && !showManualForm ? (
+        /* Welcome card promoting AI */
+        <div className="bg-zinc-900/40 border border-white/10 rounded-2xl p-6 sm:p-8 text-center space-y-6 max-w-xl mx-auto shadow-xl my-4">
+          <div className="mx-auto w-16 h-16 bg-blue-600/10 text-blue-450 rounded-full flex items-center justify-center animate-pulse">
+            <FaMagic size={28} />
           </div>
+          <div className="space-y-2">
+            <h3 className="text-xl font-bold text-white">Preencha seu Currículo com IA</h3>
+            <p className="text-sm text-zinc-400 leading-relaxed">
+              Cole qualquer texto sobre você, suas experiências e estudos (pode ser um rascunho simples ou uma biografia informal). Nossa IA organizará e otimizará tudo no padrão profissional ideal em segundos.
+            </p>
+          </div>
+
           <button
-            onClick={() => setHighlightMissing(false)}
-            className="bg-amber-500 hover:bg-amber-600 text-black font-bold px-3 py-1.5 rounded text-xs transition-colors shrink-0 ml-4"
+            onClick={() => setIsAiModalOpen(true)}
+            className="w-full bg-linear-to-r from-blue-600 to-purple-650 hover:from-blue-500 hover:to-purple-555 text-white py-4 px-6 rounded-xl font-bold text-base flex items-center justify-center gap-3 transition-all shadow-lg hover:shadow-blue-500/25 active:scale-[0.98]"
           >
-            Entendido
+            <FaMagic /> Iniciar Preenchimento Inteligente
           </button>
-        </div>
-      )}
 
-      {/* Personal Info */}
-      <section className="space-y-4">
-        <h3 className="text-xl font-semibold border-b border-white/10 pb-2">1. Dados Pessoais</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            placeholder="Nome Completo"
-            className={getInputClass(data.name, "w-full p-3 rounded-md text-base")}
-            value={data.name}
-            onChange={(e) => updateField("name", e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Profissão / Título"
-            className={getInputClass(data.title, "w-full p-3 rounded-md text-base")}
-            value={data.title}
-            onChange={(e) => updateField("title", e.target.value)}
-          />
+          <div className="pt-2 border-t border-white/5">
+            <button
+              onClick={() => setShowManualForm(true)}
+              className="text-xs text-zinc-500 hover:text-zinc-300 underline underline-offset-4 transition-colors"
+            >
+              Prefiro preencher manualmente do zero
+            </button>
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            placeholder="E-mail"
-            className={getInputClass(data.email, "w-full p-3 rounded-md text-base")}
-            value={data.email}
-            onChange={(e) => updateField("email", e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Telefone"
-            className={getInputClass(data.phone, "w-full p-3 rounded-md text-base")}
-            value={data.phone}
-            onChange={(e) => updateField("phone", maskPhone(e.target.value))}
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <input
-            type="text"
-            placeholder="CEP (Preenchimento Automático)"
-            maxLength={9}
-            className="w-full bg-zinc-900/50 border border-white/10 p-3 rounded-md focus:border-white/50 outline-none transition-colors"
-            value={cep}
-            onChange={handleCepChange}
-          />
-          <input
-            type="text"
-            placeholder="Endereço / Cidade"
-            className={getInputClass(data.address, "w-full p-3 rounded-md text-base md:col-span-2")}
-            value={data.address}
-            onChange={(e) => updateField("address", e.target.value)}
-          />
-        </div>
-        <textarea
-          placeholder="Resumo Profissional"
-          className={getInputClass(data.summary, "w-full p-3 rounded-md text-base h-24 resize-none")}
-          value={data.summary}
-          onChange={(e) => updateField("summary", e.target.value)}
-        />
-      </section>
-
-      {/* Photo Upload */}
-      <section className="space-y-4">
-        <h3 className="text-xl font-semibold border-b border-white/10 pb-2">2. Foto de Perfil</h3>
-        <div className="flex items-center gap-4">
-          {data.photoUrl ? (
-            <div className="relative w-20 h-20 rounded-full overflow-hidden border border-white/20">
-              <img src={data.photoUrl} alt="Preview" className="w-full h-full object-cover" />
+      ) : (
+        /* The regular form, but with AI helper bar and manual sections */
+        <>
+          {/* AI Helper Bar */}
+          {!isDataEmpty && (
+            <div className="bg-blue-600/10 border border-blue-500/20 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3 text-left">
+                <div className="bg-blue-600/20 text-blue-400 p-2 rounded-lg shrink-0">
+                  <FaMagic />
+                </div>
+                <div>
+                  <h4 className="text-sm font-semibold text-white">Quer refazer ou atualizar com IA?</h4>
+                  <p className="text-xs text-zinc-400">Você pode reprocessar suas informações brutas para atualizar todo o currículo de uma vez.</p>
+                </div>
+              </div>
               <button
-                onClick={() => updateField("photoUrl", null)}
-                className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity"
-                title="Remover foto"
-                aria-label="Remover foto"
+                onClick={() => setIsAiModalOpen(true)}
+                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors shrink-0"
               >
-                <FaTrash className="text-white" />
+                Preencher novamente
               </button>
             </div>
-          ) : (
-            <div className="w-20 h-20 rounded-full border border-dashed border-white/20 flex items-center justify-center text-zinc-500 bg-zinc-900/50">
-              <FaImage size={24} />
+          )}
+
+          {highlightMissing && (
+            <div className="bg-amber-600/20 border border-amber-500/30 p-4 rounded-lg flex items-center justify-between text-amber-300 text-sm shadow-md animate-fade-in shrink-0">
+              <div>
+                <span className="font-bold">⚠️ Preenchimento concluído!</span> Alguns campos não puderam ser preenchidos pela IA e foram destacados em laranja. Por favor, complete-os manualmente.
+              </div>
+              <button
+                onClick={() => setHighlightMissing(false)}
+                className="bg-amber-500 hover:bg-amber-600 text-black font-bold px-3 py-1.5 rounded text-xs transition-colors shrink-0 ml-4"
+              >
+                Entendido
+              </button>
             </div>
           )}
-          <label className="cursor-pointer bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-md transition-colors text-sm font-medium">
-            Escolher Foto
-            <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
-          </label>
-        </div>
-      </section>
 
-      {/* Experiences */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between border-b border-white/10 pb-2">
-          <h3 className="text-xl font-semibold">3. Experiências</h3>
-          <button onClick={addExperience} className="text-sm bg-white/10 hover:bg-white/20 p-2 rounded-md transition-colors flex items-center gap-2">
-            <FaPlus size={12} /> Adicionar
-          </button>
-        </div>
-        
-        {data.experiences.map((exp, idx) => (
-          <div key={exp.id} className="p-4 border border-white/5 bg-zinc-900/30 rounded-md space-y-3 relative group">
-            <button 
-              onClick={() => removeExperience(exp.id)}
-              className="absolute top-4 right-4 text-zinc-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
-              title="Remover experiência"
-              aria-label="Remover experiência"
-            >
-              <FaTrash size={14} />
-            </button>
+          {/* Form Header */}
+          <div className="flex items-center justify-between border-b border-white/10 pb-2">
+            <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+              Edição Manual
+            </h3>
+            {isDataEmpty && (
+              <button
+                onClick={() => setShowManualForm(false)}
+                className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors underline underline-offset-2"
+              >
+                Voltar para o assistente IA
+              </button>
+            )}
+          </div>
+
+          {/* Personal Info */}
+          <section className="space-y-4">
+            <h3 className="text-xl font-semibold border-b border-white/10 pb-2">1. Dados Pessoais</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="Nome Completo"
+                className={getInputClass(data.name, "w-full p-3 rounded-md text-base")}
+                value={data.name}
+                onChange={(e) => updateField("name", e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Profissão / Título"
+                className={getInputClass(data.title, "w-full p-3 rounded-md text-base")}
+                value={data.title}
+                onChange={(e) => updateField("title", e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="E-mail"
+                className={getInputClass(data.email, "w-full p-3 rounded-md text-base")}
+                value={data.email}
+                onChange={(e) => updateField("email", e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder="Telefone"
+                className={getInputClass(data.phone, "w-full p-3 rounded-md text-base")}
+                value={data.phone}
+                onChange={(e) => updateField("phone", maskPhone(e.target.value))}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <input
+                type="text"
+                placeholder="CEP (Preenchimento Automático)"
+                maxLength={9}
+                className="w-full bg-zinc-900/50 border border-white/10 p-3 rounded-md focus:border-white/50 outline-none transition-colors"
+                value={cep}
+                onChange={handleCepChange}
+              />
+              <input
+                type="text"
+                placeholder="Endereço / Cidade"
+                className={getInputClass(data.address, "w-full p-3 rounded-md text-base md:col-span-2")}
+                value={data.address}
+                onChange={(e) => updateField("address", e.target.value)}
+              />
+            </div>
+            <textarea
+              placeholder="Resumo Profissional"
+              className={getInputClass(data.summary, "w-full p-3 rounded-md text-base h-24 resize-none")}
+              value={data.summary}
+              onChange={(e) => updateField("summary", e.target.value)}
+            />
+          </section>
+
+          {/* Photo Upload */}
+          <section className="space-y-4">
+            <h3 className="text-xl font-semibold border-b border-white/10 pb-2">2. Foto de Perfil</h3>
+            <div className="flex items-center gap-4">
+              {data.photoUrl ? (
+                <div className="relative w-20 h-20 rounded-full overflow-hidden border border-white/20">
+                  <img src={data.photoUrl} alt="Preview" className="w-full h-full object-cover" />
+                  <button
+                    onClick={() => updateField("photoUrl", null)}
+                    className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity"
+                    title="Remover foto"
+                    aria-label="Remover foto"
+                  >
+                    <FaTrash className="text-white" />
+                  </button>
+                </div>
+              ) : (
+                <div className="w-20 h-20 rounded-full border border-dashed border-white/20 flex items-center justify-center text-zinc-500 bg-zinc-900/50">
+                  <FaImage size={24} />
+                </div>
+              )}
+              <label className="cursor-pointer bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-md transition-colors text-sm font-medium">
+                Escolher Foto
+                <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+              </label>
+            </div>
+          </section>
+
+          {/* Experiences */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2">
+              <h3 className="text-xl font-semibold">3. Experiências</h3>
+              <button onClick={addExperience} className="text-sm bg-white/10 hover:bg-white/20 p-2 rounded-md transition-colors flex items-center gap-2">
+                <FaPlus size={12} /> Adicionar
+              </button>
+            </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pr-8">
-              <input
-                type="text"
-                placeholder="Cargo"
-                className={getInputClass(exp.title, "w-full p-2 rounded-md text-sm")}
-                value={exp.title}
-                onChange={(e) => updateExperience(exp.id, "title", e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Empresa"
-                className={getInputClass(exp.company, "w-full p-2 rounded-md text-sm")}
-                value={exp.company}
-                onChange={(e) => updateExperience(exp.id, "company", e.target.value)}
-              />
-              
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 items-center md:col-span-2">
-                <div className="flex flex-col gap-1 col-span-2">
-                  <span className="text-xs text-zinc-500 font-medium">Início</span>
-                  <div className="flex gap-2">
-                    <select
-                      aria-label="Mês de início"
-                      className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50"
-                      value={exp.startMonth || "01"}
-                      onChange={(e) => updateExperience(exp.id, "startMonth", e.target.value)}
-                    >
-                      {MONTHS.map(m => <option key={m.value} value={m.value} className="bg-zinc-900">{m.label}</option>)}
-                    </select>
-                    <select
-                      aria-label="Ano de início"
-                      className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50"
-                      value={exp.startYear || YEARS[0]}
-                      onChange={(e) => updateExperience(exp.id, "startYear", e.target.value)}
-                    >
-                      {YEARS.map(y => <option key={y} value={y} className="bg-zinc-900">{y}</option>)}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1 col-span-2">
-                  <span className="text-xs text-zinc-500 font-medium">Término</span>
-                  <div className="flex gap-2">
-                    <select
-                      aria-label="Mês de término"
-                      disabled={exp.current}
-                      className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50 disabled:opacity-50"
-                      value={exp.endMonth || "12"}
-                      onChange={(e) => updateExperience(exp.id, "endMonth", e.target.value)}
-                    >
-                      {MONTHS.map(m => <option key={m.value} value={m.value} className="bg-zinc-900">{m.label}</option>)}
-                    </select>
-                    <select
-                      aria-label="Ano de término"
-                      disabled={exp.current}
-                      className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50 disabled:opacity-50"
-                      value={exp.endYear || YEARS[0]}
-                      onChange={(e) => updateExperience(exp.id, "endYear", e.target.value)}
-                    >
-                      {YEARS.map(y => <option key={y} value={y} className="bg-zinc-900">{y}</option>)}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 pt-5 sm:justify-center">
+            {data.experiences.map((exp, idx) => (
+              <div key={exp.id} className="p-4 border border-white/5 bg-zinc-900/30 rounded-md space-y-3 relative group">
+                <button 
+                  onClick={() => removeExperience(exp.id)}
+                  className="absolute top-4 right-4 text-zinc-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
+                  title="Remover experiência"
+                  aria-label="Remover experiência"
+                >
+                  <FaTrash size={14} />
+                </button>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pr-8">
                   <input
-                    type="checkbox"
-                    id={`current-${exp.id}`}
-                    checked={exp.current || false}
-                    onChange={(e) => updateExperience(exp.id, "current", e.target.checked)}
-                    className="rounded border-white/10 text-blue-600 focus:ring-0 focus:ring-offset-0 bg-zinc-900 w-4 h-4 cursor-pointer"
+                    type="text"
+                    placeholder="Cargo"
+                    className={getInputClass(exp.title, "w-full p-2 rounded-md text-sm")}
+                    value={exp.title}
+                    onChange={(e) => updateExperience(exp.id, "title", e.target.value)}
                   />
-                  <label htmlFor={`current-${exp.id}`} className="text-xs text-zinc-400 cursor-pointer select-none">Atual</label>
+                  <input
+                    type="text"
+                    placeholder="Empresa"
+                    className={getInputClass(exp.company, "w-full p-2 rounded-md text-sm")}
+                    value={exp.company}
+                    onChange={(e) => updateExperience(exp.id, "company", e.target.value)}
+                  />
+                  
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 items-center md:col-span-2">
+                    <div className="flex flex-col gap-1 col-span-2">
+                      <span className="text-xs text-zinc-500 font-medium">Início</span>
+                      <div className="flex gap-2">
+                        <select
+                          aria-label="Mês de início"
+                          className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50"
+                          value={exp.startMonth || "01"}
+                          onChange={(e) => updateExperience(exp.id, "startMonth", e.target.value)}
+                        >
+                          {MONTHS.map(m => <option key={m.value} value={m.value} className="bg-zinc-900">{m.label}</option>)}
+                        </select>
+                        <select
+                          aria-label="Ano de início"
+                          className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50"
+                          value={exp.startYear || YEARS[0]}
+                          onChange={(e) => updateExperience(exp.id, "startYear", e.target.value)}
+                        >
+                          {YEARS.map(y => <option key={y} value={y} className="bg-zinc-900">{y}</option>)}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-1 col-span-2">
+                      <span className="text-xs text-zinc-500 font-medium">Término</span>
+                      <div className="flex gap-2">
+                        <select
+                          aria-label="Mês de término"
+                          disabled={exp.current}
+                          className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50 disabled:opacity-50"
+                          value={exp.endMonth || "12"}
+                          onChange={(e) => updateExperience(exp.id, "endMonth", e.target.value)}
+                        >
+                          {MONTHS.map(m => <option key={m.value} value={m.value} className="bg-zinc-900">{m.label}</option>)}
+                        </select>
+                        <select
+                          aria-label="Ano de término"
+                          disabled={exp.current}
+                          className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50 disabled:opacity-50"
+                          value={exp.endYear || YEARS[0]}
+                          onChange={(e) => updateExperience(exp.id, "endYear", e.target.value)}
+                        >
+                          {YEARS.map(y => <option key={y} value={y} className="bg-zinc-900">{y}</option>)}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 pt-5 sm:justify-center">
+                      <input
+                        type="checkbox"
+                        id={`current-${exp.id}`}
+                        checked={exp.current || false}
+                        onChange={(e) => updateExperience(exp.id, "current", e.target.checked)}
+                        className="rounded border-white/10 text-blue-600 focus:ring-0 focus:ring-offset-0 bg-zinc-900 w-4 h-4 cursor-pointer"
+                      />
+                      <label htmlFor={`current-${exp.id}`} className="text-xs text-zinc-400 cursor-pointer select-none">Atual</label>
+                    </div>
+                  </div>
+
+                  <textarea
+                    placeholder="Descrição das atividades"
+                    className={getInputClass(exp.description, "w-full p-2 rounded-md text-sm h-20 resize-none md:col-span-2")}
+                    value={exp.description}
+                    onChange={(e) => updateExperience(exp.id, "description", e.target.value)}
+                  />
                 </div>
               </div>
+            ))}
+            {data.experiences.length === 0 && (
+              <p className="text-zinc-500 text-sm italic">Nenhuma experiência adicionada.</p>
+            )}
+          </section>
 
-              <textarea
-                placeholder="Descrição das atividades"
-                className={getInputClass(exp.description, "w-full p-2 rounded-md text-sm h-20 resize-none md:col-span-2")}
-                value={exp.description}
-                onChange={(e) => updateExperience(exp.id, "description", e.target.value)}
-              />
+          {/* Education */}
+          <section className="space-y-4">
+            <div className="flex items-center justify-between border-b border-white/10 pb-2">
+              <h3 className="text-xl font-semibold">4. Formação Acadêmica / Cursos</h3>
+              <button onClick={addEducation} className="text-sm bg-white/10 hover:bg-white/20 p-2 rounded-md transition-colors flex items-center gap-2">
+                <FaPlus size={12} /> Adicionar
+              </button>
             </div>
-          </div>
-        ))}
-        {data.experiences.length === 0 && (
-          <p className="text-zinc-500 text-sm italic">Nenhuma experiência adicionada.</p>
-        )}
-      </section>
-
-      {/* Education */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between border-b border-white/10 pb-2">
-          <h3 className="text-xl font-semibold">4. Formação Acadêmica / Cursos</h3>
-          <button onClick={addEducation} className="text-sm bg-white/10 hover:bg-white/20 p-2 rounded-md transition-colors flex items-center gap-2">
-            <FaPlus size={12} /> Adicionar
-          </button>
-        </div>
-        
-        {data.educations.map((edu, idx) => (
-          <div key={edu.id} className="p-4 border border-white/5 bg-zinc-900/30 rounded-md space-y-3 relative group">
-            <button 
-              onClick={() => removeEducation(edu.id)}
-              className="absolute top-4 right-4 text-zinc-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
-              title="Remover formação"
-              aria-label="Remover formação"
-            >
-              <FaTrash size={14} />
-            </button>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pr-8">
-              <input
-                type="text"
-                placeholder="Curso / Formação"
-                className={getInputClass(edu.course, "w-full p-2 rounded-md text-sm md:col-span-2")}
-                value={edu.course}
-                onChange={(e) => updateEducation(edu.id, "course", e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Instituição"
-                className={getInputClass(edu.institution, "w-full p-2 rounded-md text-sm")}
-                value={edu.institution}
-                onChange={(e) => updateEducation(edu.id, "institution", e.target.value)}
-              />
-              
-              <div className="grid grid-cols-2 gap-3 md:col-span-2">
-                <div className="flex flex-col gap-1">
-                  <span className="text-xs text-zinc-500 font-medium">Início</span>
-                  <div className="flex gap-2">
-                    <select
-                      aria-label="Mês de início"
-                      className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50"
-                      value={edu.startMonth || "01"}
-                      onChange={(e) => updateEducation(edu.id, "startMonth", e.target.value)}
-                    >
-                      {MONTHS.map(m => <option key={m.value} value={m.value} className="bg-zinc-900">{m.label}</option>)}
-                    </select>
-                    <select
-                      aria-label="Ano de início"
-                      className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50"
-                      value={edu.startYear || YEARS[0]}
-                      onChange={(e) => updateEducation(edu.id, "startYear", e.target.value)}
-                    >
-                      {YEARS.map(y => <option key={y} value={y} className="bg-zinc-900">{y}</option>)}
-                    </select>
-                  </div>
-                </div>
+            {data.educations.map((edu, idx) => (
+              <div key={edu.id} className="p-4 border border-white/5 bg-zinc-900/30 rounded-md space-y-3 relative group">
+                <button 
+                  onClick={() => removeEducation(edu.id)}
+                  className="absolute top-4 right-4 text-zinc-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
+                  title="Remover formação"
+                  aria-label="Remover formação"
+                >
+                  <FaTrash size={14} />
+                </button>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pr-8">
+                  <input
+                    type="text"
+                    placeholder="Curso / Formação"
+                    className={getInputClass(edu.course, "w-full p-2 rounded-md text-sm md:col-span-2")}
+                    value={edu.course}
+                    onChange={(e) => updateEducation(edu.id, "course", e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Instituição"
+                    className={getInputClass(edu.institution, "w-full p-2 rounded-md text-sm")}
+                    value={edu.institution}
+                    onChange={(e) => updateEducation(edu.id, "institution", e.target.value)}
+                  />
+                  
+                  <div className="grid grid-cols-2 gap-3 md:col-span-2">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-xs text-zinc-500 font-medium">Início</span>
+                      <div className="flex gap-2">
+                        <select
+                          aria-label="Mês de início"
+                          className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50"
+                          value={edu.startMonth || "01"}
+                          onChange={(e) => updateEducation(edu.id, "startMonth", e.target.value)}
+                        >
+                          {MONTHS.map(m => <option key={m.value} value={m.value} className="bg-zinc-900">{m.label}</option>)}
+                        </select>
+                        <select
+                          aria-label="Ano de início"
+                          className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50"
+                          value={edu.startYear || YEARS[0]}
+                          onChange={(e) => updateEducation(edu.id, "startYear", e.target.value)}
+                        >
+                          {YEARS.map(y => <option key={y} value={y} className="bg-zinc-900">{y}</option>)}
+                        </select>
+                      </div>
+                    </div>
 
-                <div className="flex flex-col gap-1">
-                  <span className="text-xs text-zinc-500 font-medium">Término</span>
-                  <div className="flex gap-2">
-                    <select
-                      aria-label="Mês de término"
-                      className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50"
-                      value={edu.endMonth || "12"}
-                      onChange={(e) => updateEducation(edu.id, "endMonth", e.target.value)}
-                    >
-                      {MONTHS.map(m => <option key={m.value} value={m.value} className="bg-zinc-900">{m.label}</option>)}
-                    </select>
-                    <select
-                      aria-label="Ano de término"
-                      className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50"
-                      value={edu.endYear || YEARS[0]}
-                      onChange={(e) => updateEducation(edu.id, "endYear", e.target.value)}
-                    >
-                      {YEARS.map(y => <option key={y} value={y} className="bg-zinc-900">{y}</option>)}
-                    </select>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-xs text-zinc-500 font-medium">Término</span>
+                      <div className="flex gap-2">
+                        <select
+                          aria-label="Mês de término"
+                          className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50"
+                          value={edu.endMonth || "12"}
+                          onChange={(e) => updateEducation(edu.id, "endMonth", e.target.value)}
+                        >
+                          {MONTHS.map(m => <option key={m.value} value={m.value} className="bg-zinc-900">{m.label}</option>)}
+                        </select>
+                        <select
+                          aria-label="Ano de término"
+                          className="w-1/2 bg-zinc-900 border border-white/10 p-2 rounded-md text-sm outline-none focus:border-white/50"
+                          value={edu.endYear || YEARS[0]}
+                          onChange={(e) => updateEducation(edu.id, "endYear", e.target.value)}
+                        >
+                          {YEARS.map(y => <option key={y} value={y} className="bg-zinc-900">{y}</option>)}
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        ))}
-        {data.educations.length === 0 && (
-          <p className="text-zinc-500 text-sm italic">Nenhuma formação adicionada.</p>
-        )}
-      </section>
+            ))}
+            {data.educations.length === 0 && (
+              <p className="text-zinc-500 text-sm italic">Nenhuma formação adicionada.</p>
+            )}
+          </section>
+        </>
+      )}
 
       <AiMagicFiller 
         isOpen={isAiModalOpen} 
