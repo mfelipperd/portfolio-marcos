@@ -26,6 +26,7 @@ function PortfolioContent() {
   const [activePage, setActivePage] = useState<string | null>(initialPage);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSubToolActive, setIsSubToolActive] = useState(false);
 
   // Scroll listener for landing page
   useEffect(() => {
@@ -34,6 +35,40 @@ function PortfolioContent() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Listen for tool/page parameter changes in URL to dynamically check if sub-tool is active
+  useEffect(() => {
+    const checkTool = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const p = urlParams.get("p")?.toLowerCase();
+      const tool = urlParams.get("tool")?.toLowerCase();
+      setIsSubToolActive(
+        p === "curriculo" || p === "resume" || p === "qrcode" || !!tool
+      );
+    };
+
+    checkTool();
+    window.addEventListener("popstate", checkTool);
+    
+    // Intercept pushState and replaceState to catch manual URL updates
+    const originalReplaceState = window.history.replaceState;
+    const originalPushState = window.history.pushState;
+    
+    window.history.replaceState = function(...args) {
+      originalReplaceState.apply(this, args);
+      checkTool();
+    };
+    window.history.pushState = function(...args) {
+      originalPushState.apply(this, args);
+      checkTool();
+    };
+
+    return () => {
+      window.removeEventListener("popstate", checkTool);
+      window.history.replaceState = originalReplaceState;
+      window.history.pushState = originalPushState;
+    };
   }, []);
 
   // Sync URL when activePage changes
@@ -138,7 +173,11 @@ function PortfolioContent() {
         </div>
       </motion.header>
 
-      <div className={`relative z-10 ${activePage ? 'pt-24 md:pt-32' : 'pt-20'} min-h-screen`}>
+      <div className={`relative z-10 ${
+        activePage 
+          ? activePage === "Ferramentas" && isSubToolActive ? 'pt-16 md:pt-32' : 'pt-24 md:pt-32'
+          : 'pt-20'
+      } min-h-screen`}>
         <div className="max-w-[1200px] mx-auto px-4 md:px-6">
           <AnimatePresence mode="wait">
             {activePage && (
@@ -151,17 +190,19 @@ function PortfolioContent() {
                 className="w-full"
               >
                 {/* Dynamic Section Title */}
-                <header className="mb-12 md:mb-20">
-                  <motion.h2 
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-2xl md:text-4xl font-bold text-white tracking-tight flex items-center gap-4"
-                  >
-                    <span className="w-8 h-px bg-white/20" />
-                    {getPageTitle()}
-                  </motion.h2>
-                </header>
+                {!isSubToolActive && (
+                  <header className="mb-6 md:mb-20">
+                    <motion.h2 
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="text-2xl md:text-4xl font-bold text-white tracking-tight flex items-center gap-4"
+                    >
+                      <span className="w-8 h-px bg-white/20" />
+                      {getPageTitle()}
+                    </motion.h2>
+                  </header>
+                )}
 
                 {renderContent()}
               </motion.div>

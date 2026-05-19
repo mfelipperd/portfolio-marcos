@@ -207,7 +207,7 @@ export default function ResumeForm({ data, onChange }: ResumeFormProps) {
   };
 
   return (
-    <div className="flex flex-col gap-8 text-white max-h-full overflow-y-auto pr-4 custom-scrollbar pb-20">
+    <div className="flex flex-col gap-6 sm:gap-8 text-white pb-20">
       
       {/* AI Button */}
       <button

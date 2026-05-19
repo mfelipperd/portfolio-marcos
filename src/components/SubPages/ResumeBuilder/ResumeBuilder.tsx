@@ -70,7 +70,7 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
   const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
   const [isExporting, setIsExporting] = useState(false);
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
+  const [activeTab, setActiveTab] = useState<"edit" | "preview">("preview");
   const [showWarningBanner, setShowWarningBanner] = useState(true);
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -135,9 +135,9 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
   };
 
   return (
-    <div className="w-full flex flex-col h-[calc(100vh-120px)] relative bg-black">
+    <div className="w-full flex flex-col h-[calc(100vh-100px)] lg:h-[calc(100vh-180px)] relative bg-black">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10 shrink-0 gap-2">
+      <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-white/10 shrink-0 gap-2">
         <button
           onClick={onBack}
           className="flex items-center gap-1.5 text-zinc-400 hover:text-white transition-colors text-xs sm:text-sm font-medium shrink-0"
@@ -181,7 +181,7 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
       )}
 
       {/* Mobile Tab Selector */}
-      <div className="flex lg:hidden border border-white/10 rounded-lg p-1 mb-4 bg-zinc-900/50 shrink-0">
+      <div className="flex lg:hidden border border-white/10 rounded-lg p-1 mb-2.5 bg-zinc-900/50 shrink-0">
         <button
           onClick={() => setActiveTab("edit")}
           className={`flex-1 py-2 text-center rounded-md font-medium text-sm transition-all ${
@@ -208,26 +208,20 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
       <div className="flex flex-col lg:flex-row gap-8 flex-1 overflow-hidden">
         {/* Left Side: Form */}
         <div className={`w-full lg:w-1/2 flex flex-col overflow-hidden ${activeTab === "edit" ? "flex" : "hidden lg:flex"}`}>
-          <div className="bg-zinc-900/20 border border-white/10 rounded-lg p-6 flex-1 overflow-y-auto custom-scrollbar">
+          <div className="bg-zinc-900/0 sm:bg-zinc-900/20 border-0 sm:border border-white/10 rounded-none sm:rounded-lg p-0 sm:p-6 flex-1 overflow-y-auto custom-scrollbar">
             <ResumeForm data={resumeData} onChange={setResumeData} />
           </div>
         </div>
 
         {/* Right Side: Live Preview */}
-        <div className={`w-full lg:w-1/2 bg-zinc-800 rounded-lg flex flex-col items-center justify-start p-4 sm:p-8 relative overflow-y-auto custom-scrollbar ${activeTab === "preview" ? "flex flex-1" : "hidden lg:flex"}`}>
+        <div className={`w-full lg:w-1/2 bg-zinc-800 rounded-lg flex flex-col items-center justify-start p-4 sm:p-8 pb-24 lg:pb-8 relative overflow-y-auto custom-scrollbar ${activeTab === "preview" ? "flex flex-1" : "hidden lg:flex"}`}>
           {/* Info bar on mobile */}
-          <div className="text-zinc-400 text-xs mb-4 flex items-center justify-between w-full lg:hidden px-2 shrink-0">
-            <span>Role para visualizar o currículo inteiro</span>
-            <button 
-              onClick={() => setIsPreviewModalOpen(true)}
-              className="bg-white/10 text-white px-3 py-1.5 rounded-md flex items-center gap-1.5 font-bold hover:bg-white/20 transition-colors"
-            >
-              <FaSearchPlus size={12} /> Tela Cheia
-            </button>
+          <div className="text-zinc-400 text-[10px] mb-2 text-center w-full lg:hidden px-2 shrink-0 uppercase tracking-wider opacity-60">
+            Arraste para visualizar todo o currículo
           </div>
 
-          {/* Template Selection */}
-          <div className="w-full max-w-full mb-6 bg-zinc-900/50 border border-white/10 rounded-lg p-3 flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0 relative z-20">
+          {/* Template Selection (Desktop) */}
+          <div className="w-full max-w-full mb-6 bg-zinc-900/50 border border-white/10 rounded-lg p-3 hidden lg:flex flex-row items-center justify-between gap-4 shrink-0 relative z-20">
             <span className="text-xs font-semibold text-zinc-300 uppercase tracking-wider">Modelo:</span>
             <div className="flex gap-2 w-full sm:w-auto">
               {(["minimalist", "modern", "executive"] as const).map((tpl) => (
@@ -260,6 +254,39 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
             <ResponsivePreviewWrapper>
               <ResumePreview data={resumeData} />
             </ResponsivePreviewWrapper>
+          </div>
+
+          {/* Floating Action Bar on Mobile: Template Selector + Fullscreen */}
+          <div className="lg:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-zinc-900/90 border border-white/15 backdrop-blur-md px-3 py-2 rounded-full shadow-2xl flex items-center gap-3 w-[92%] max-w-[380px]">
+            {/* Template options */}
+            <div className="flex gap-1.5 flex-1 items-center">
+              {(["minimalist", "modern", "executive"] as const).map((tpl) => (
+                <button
+                  key={tpl}
+                  onClick={() => setResumeData(prev => ({ ...prev, template: tpl }))}
+                  className={`flex-1 py-2 px-1 rounded-full border text-[9px] uppercase tracking-wider transition-all font-semibold text-center ${
+                    resumeData.template === tpl
+                      ? "bg-white text-black border-white shadow-md font-bold"
+                      : "bg-transparent text-zinc-400 border-white/10 hover:border-white/30"
+                  }`}
+                >
+                  {tpl === "minimalist" ? "Min." : tpl === "modern" ? "Mod." : "Exec."}
+                </button>
+              ))}
+            </div>
+            
+            {/* Divider */}
+            <div className="w-[1px] h-6 bg-white/10 shrink-0" />
+            
+            {/* Fullscreen Trigger */}
+            <button
+              onClick={() => setIsPreviewModalOpen(true)}
+              className="bg-white/10 text-white p-2 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors shrink-0"
+              title="Tela Cheia"
+              aria-label="Tela Cheia"
+            >
+              <FaSearchPlus size={14} />
+            </button>
           </div>
         </div>
       </div>
