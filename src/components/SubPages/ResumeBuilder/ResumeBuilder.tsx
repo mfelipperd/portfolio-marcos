@@ -71,6 +71,7 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
   const [isExporting, setIsExporting] = useState(false);
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
+  const [showWarningBanner, setShowWarningBanner] = useState(true);
   const previewRef = useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -106,7 +107,25 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
 
       const encryptedBuffer = await response.arrayBuffer();
       const blob = new Blob([encryptedBuffer], { type: "application/pdf" });
-      saveAs(blob, 'meu_curriculo.pdf');
+      const fileURL = URL.createObjectURL(blob);
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        // Em dispositivos móveis, tentamos abrir em uma nova aba para visualização e salvamento nativo.
+        // Se o bloqueador de popups impedir, abrimos na aba atual.
+        const newTab = window.open(fileURL, "_blank");
+        if (!newTab) {
+          window.location.href = fileURL;
+        }
+      } else {
+        // No desktop, fazemos o download direto do arquivo
+        const link = document.createElement("a");
+        link.href = fileURL;
+        link.download = "meu_curriculo.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
     } catch (error) {
       console.error("Erro ao gerar PDF:", error);
       alert("Ocorreu um erro ao gerar e proteger o PDF.");
@@ -140,12 +159,26 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
       </div>
 
       {/* Warning banner */}
-      <div className="bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs px-4 py-3 rounded-lg flex items-center gap-3 shrink-0 mb-4 font-medium">
-        <FaExclamationTriangle className="text-amber-500 shrink-0" size={16} />
-        <p className="flex-1">
-          <strong>Atenção:</strong> Revise com cuidado todas as informações preenchidas antes de gerar o arquivo final (PDF). IAs e buscas automáticas podem conter imprecisões ou erros de formatação.
-        </p>
-      </div>
+      {showWarningBanner && (
+        <div className={`bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs px-4 py-3 rounded-lg items-center gap-3 shrink-0 mb-4 font-medium justify-between ${
+          activeTab === "preview" ? "hidden lg:flex" : "flex"
+        }`}>
+          <div className="flex items-center gap-3 flex-1">
+            <FaExclamationTriangle className="text-amber-500 shrink-0" size={16} />
+            <p className="flex-1">
+              <strong>Atenção:</strong> Revise com cuidado todas as informações preenchidas antes de gerar o arquivo final (PDF). IAs e buscas automáticas podem conter imprecisões ou erros de formatação.
+            </p>
+          </div>
+          <button
+            onClick={() => setShowWarningBanner(false)}
+            className="text-zinc-400 hover:text-white transition-colors p-1 shrink-0 ml-2"
+            title="Fechar aviso"
+            aria-label="Fechar aviso"
+          >
+            <FaTimes size={14} />
+          </button>
+        </div>
+      )}
 
       {/* Mobile Tab Selector */}
       <div className="flex lg:hidden border border-white/10 rounded-lg p-1 mb-4 bg-zinc-900/50 shrink-0">
