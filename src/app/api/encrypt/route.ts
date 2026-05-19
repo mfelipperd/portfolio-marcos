@@ -15,8 +15,16 @@ export async function POST(req: NextRequest) {
 
     const password = process.env.RESUME_PASSWORD || "marcos123";
 
-    // Read the body as JSON data
-    const data = await req.json();
+    const contentType = req.headers.get("content-type") || "";
+    let data: any;
+
+    if (contentType.includes("application/x-www-form-urlencoded") || contentType.includes("multipart/form-data")) {
+      const formData = await req.formData();
+      const jsonData = formData.get("data") as string;
+      data = JSON.parse(jsonData);
+    } else {
+      data = await req.json();
+    }
 
     if (!data) {
       return NextResponse.json(

@@ -169,26 +169,30 @@ export default function ResumeBuilder({ onBack }: ResumeBuilderProps) {
   const exportPDF = async () => {
     setIsExporting(true);
     try {
-      // Call API route to generate and protect PDF with password on server side
-      const response = await fetch("/api/encrypt?type=pdf", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(resumeData),
-      });
-
-      if (!response.ok) {
-        throw new Error(await response.text());
-      }
-
-      const encryptedBuffer = await response.arrayBuffer();
-      const blob = new Blob([encryptedBuffer], { type: "application/pdf" });
-      saveAs(blob, "meu_curriculo.pdf");
+      // Create a hidden form and submit it to trigger a native download flow.
+      // This allows mobile browsers (like iOS Safari) to handle the response
+      // with native "Download / Save File" prompts instead of opening a transient blob page.
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = "/api/encrypt?type=pdf";
+      
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "data";
+      input.value = JSON.stringify(resumeData);
+      
+      form.appendChild(input);
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
+      
+      // Reset the exporting state after a brief timeout since form download does not trigger reload
+      setTimeout(() => {
+        setIsExporting(false);
+      }, 2000);
     } catch (error) {
       console.error("Erro ao gerar PDF:", error);
       alert("Ocorreu um erro ao gerar e proteger o PDF.");
-    } finally {
       setIsExporting(false);
     }
   };
