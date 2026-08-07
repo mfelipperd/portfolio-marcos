@@ -46,32 +46,22 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://marcosfelippe.dev'),
+  metadataBase: new URL('https://www.mfelippe.com.br'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://marcosfelippe.dev',
+    url: 'https://www.mfelippe.com.br',
     siteName: 'Marcos Felippe - Fullstack Developer',
     title: 'Marcos Felippe - Desenvolvedor Fullstack | Portfólio',
     description: '👨‍💻 Portfólio de Marcos Felippe - Desenvolvedor Fullstack. Especializado em React, Node.js, TypeScript e tecnologias modernas. Explore projetos, habilidades e contribuições.',
-    images: [
-      {
-        url: '/og-preview.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Marcos Felippe - Desenvolvedor Fullstack',
-        type: 'image/jpeg',
-      }
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Marcos Felippe - Desenvolvedor Fullstack 🚀',
     description: 'Portfólio de Marcos Felippe - Desenvolvedor Fullstack. React, Node.js, TypeScript e tecnologias modernas. Projetos, habilidades e contribuições open-source.',
-    images: ['/og-preview.jpg'],
     creator: '@mfelipperd',
     site: '@mfelipperd',
   },
@@ -85,11 +75,6 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
-  verification: {
-    google: 'seu-google-verification-code',
-    yandex: 'seu-yandex-verification-code',
-    yahoo: 'seu-yahoo-verification-code',
   },
   category: 'technology',
   classification: 'Portfolio de Desenvolvedor Fullstack',
@@ -129,7 +114,7 @@ export default function RootLayout({
               "name": "Marcos Felippe",
               "jobTitle": "Desenvolvedor Fullstack",
               "description": "Desenvolvedor Fullstack especializado em React, Node.js e automação. Crio soluções digitais que convertem e geram resultados reais.",
-              "url": "https://marcosfelippe.dev",
+              "url": "https://www.mfelippe.com.br",
               "image": "https://avatars.githubusercontent.com/u/64865137?v=4",
               "sameAs": [
                 "https://github.com/mfelipperd",
@@ -161,11 +146,7 @@ export default function RootLayout({
           }}
         />
         
-        {/* Meta tags para WhatsApp e Facebook que requerem propriedades específicas não cobertas pelo Next.js Metadata padrão */}
-        <meta property="fb:app_id" content="seu-facebook-app-id" />
-        
         {/* Preload de recursos críticos */}
-        <link rel="preload" href="/og-preview.jpg" as="image" />
         <link rel="preload" href="https://avatars.githubusercontent.com/u/64865137?v=4" as="image" />
       </head>
       <body className={`${montserrat.variable}`} suppressHydrationWarning>

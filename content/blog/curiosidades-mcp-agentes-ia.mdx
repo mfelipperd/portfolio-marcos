@@ -1,0 +1,42 @@
+---
+title: "5 curiosidades sobre MCP e agentes de IA que pouca gente comenta"
+description: "Bastidores do Model Context Protocol: da guerra de padrões entre OpenAI e Anthropic ao recurso mais ignorado da spec."
+date: "2026-08-06"
+tags: ["IA", "MCP", "Agentes de IA"]
+coverImage: "/blog/curiosidades-mcp-agentes-ia.png"
+references:
+  - title: "Sampling — Model Context Protocol (spec oficial)"
+    url: "https://modelcontextprotocol.io/specification/2025-06-18/client/sampling"
+  - title: "Introducing the Model Context Protocol — Anthropic"
+    url: "https://www.anthropic.com/news/model-context-protocol"
+  - title: "New tools and features in the Responses API — OpenAI"
+    url: "https://openai.com/index/new-tools-and-features-in-the-responses-api/"
+  - title: "OpenAI co-founds the Agentic AI Foundation — OpenAI"
+    url: "https://openai.com/index/agentic-ai-foundation/"
+---
+
+No [primeiro post sobre MCP](/blog/10-mcps-para-conhecer) mostrei exemplos práticos do protocolo. Dessa vez o foco é diferente: bastidores e detalhes que não aparecem nos tutoriais de "como criar seu primeiro MCP server".
+
+## 1. "Tools" é só uma das cinco peças do protocolo
+
+Quase todo conteúdo sobre MCP fala exclusivamente de **tools** (funções que a IA chama). Mas a spec define cinco primitivas: **tools**, **resources**, **prompts**, **sampling** e **roots/elicitation**. Resources expõem dados como se fossem arquivos que o modelo pode ler sob demanda; prompts são templates reutilizáveis que o servidor sugere ao cliente. A maioria dos servidores MCP em produção hoje usa só uma fração da spec.
+
+## 2. Sampling inverte a direção que todo mundo assume
+
+O senso comum é: "o modelo chama o MCP server". Mas existe um fluxo contrário chamado **sampling**, em que é o **servidor** que pede pro cliente rodar uma geração no modelo — sem precisar da própria chave de API. Um servidor MCP pode, por exemplo, pedir pro modelo resumir um trecho antes de continuar sua própria lógica interna. É uma das partes menos implementadas da spec, mas inverte completamente a hierarquia que a maioria das pessoas imagina.
+
+## 3. A Anthropic abriu um padrão e um concorrente direto adotou
+
+Em março de 2025 a OpenAI — concorrente direta da Anthropic — anunciou suporte ao MCP em toda sua stack: Agents SDK, Responses API, ChatGPT e Codex. Não é comum uma empresa adotar publicamente um protocolo criado do zero por sua principal rival. Isso empurrou o mercado inteiro (incluindo Google e outros labs) a tratar o MCP como padrão de fato, não só "mais uma iniciativa da Anthropic".
+
+## 4. Isso derrubou a API própria da OpenAI
+
+Como consequência da adoção do MCP, a OpenAI anunciou a descontinuação da sua **Assistants API**, com desligamento previsto para meados de 2026. Ou seja: a empresa vai aposentar sua própria arquitetura de agentes em favor de uma construída sobre o protocolo de um concorrente.
+
+## 5. O MCP saiu do controle exclusivo da Anthropic
+
+O protocolo passou a ser co-governado através da **Agentic AI Foundation**, ligada à Linux Foundation, com a própria OpenAI como cofundadora. Um detalhe que passa despercebido: o padrão que "pertencia" à Anthropic hoje é mantido por um consórcio neutro — o que normalmente só acontece com protocolos maduros de infraestrutura crítica (como HTTP ou TLS), não com algo lançado há pouco mais de um ano.
+
+## O padrão por trás do padrão
+
+O fio condutor dessas curiosidades é o mesmo: o MCP virou infraestrutura rápido demais para o hype em torno dele. Ele passou de experimento interno da Anthropic para um protocolo com múltiplas primitivas subutilizadas, adoção por um rival direto e governança compartilhada — tudo em pouco mais de um ano.

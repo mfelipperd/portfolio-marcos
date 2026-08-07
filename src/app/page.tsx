@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import LightRays from "../components/LightRays";
 import FlashlightCursor from "../components/FlashlightCursor";
 import ContactModal from "../components/ContactModal";
@@ -231,6 +232,12 @@ function PortfolioContent() {
                 </span>
               ))
             }
+            <Link
+              href="/blog"
+              className="menu-item text-xs sm:text-base md:text-xl font-medium tracking-wide text-zinc-500 hover:text-white transition-all duration-300"
+            >
+              Blog
+            </Link>
           </motion.nav>
         </div>
       </motion.header>
