@@ -1,0 +1,57 @@
+---
+title: "Harness engineering: por que o que envolve o modelo importa mais que o modelo"
+description: "Agente de IA = modelo + harness. Entenda os princípios, os fundamentos e por que a complexidade da estrutura ao redor do modelo pesa mais do que qual modelo você escolhe."
+date: "2026-08-12"
+tags: ["IA", "Agentes de IA", "Harness Engineering"]
+coverImage: "/blog/harness-engineering-fundamentos-complexidade.png"
+references:
+  - title: "Effective harnesses for long-running agents — Anthropic"
+    url: "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents"
+  - title: "Harness design for long-running application development — Anthropic"
+    url: "https://www.anthropic.com/engineering/harness-design-long-running-apps"
+  - title: "Agent Harness Engineering — Addy Osmani"
+    url: "https://addyosmani.com/blog/agent-harness-engineering"
+  - title: "Designing agentic loops — Simon Willison"
+    url: "https://simonwillison.net/2025/Sep/30/designing-agentic-loops/"
+---
+
+Depois de falar sobre [protocolos que conectam IA a ferramentas](/blog/10-mcps-para-conhecer) e sobre [por que fundamentos de programação importam mais, não menos](/blog/bases-programacao-ia-divida-tecnica), falta uma peça: o que exatamente transforma um modelo de linguagem em um agente que termina o trabalho? A resposta que o mercado convergiu em 2026 não é "um modelo melhor". É o **harness**.
+
+## Agente não é só modelo
+
+A equação que virou consenso entre quem constrói agentes de produção é simples de escrever e difícil de executar bem: **agente = modelo + harness**. Se você não é o modelo, você é o harness — tudo que não é peso de rede: prompts de sistema, arquivos como `CLAUDE.md` ou `AGENTS.md`, ferramentas e servidores MCP, sandbox de execução, hooks, subagentes, memória, orquestração e observabilidade.
+
+Simon Willison resume a parte do loop de um jeito direto: um agente é um sistema que "roda ferramentas em loop para atingir um objetivo". A habilidade não está em escolher o modelo — está em desenhar as ferramentas e o loop ao redor dele.
+
+Isso muda onde fica o trabalho de engenharia. Claude Code, Cursor, Codex, Aider, Cline: todos podem rodar o mesmo modelo por baixo, mas o comportamento que você observa é dominado pelo que o harness faz, não pelo modelo em si.
+
+## Os dados que provam isso
+
+Não é só teoria. No benchmark Terminal Bench 2.0, o mesmo modelo rodando dentro de um harness genérico e dentro de um harness customizado produziu resultados muito diferentes — uma equipe saiu da faixa "Top 30" para "Top 5" mudando **só o harness**, sem trocar o modelo.
+
+A própria Anthropic documentou esse efeito internamente. Ao gerar um app completo a partir do mesmo prompt e com o mesmo modelo (Opus 4.5), a execução "solo" — sem harness — levou 20 minutos, custou 9 dólares e produziu um app com a funcionalidade central quebrada. A execução com harness completo (agente planejador, gerador e avaliador trabalhando em conjunto) levou 6 horas, custou 200 dólares e produziu um app que efetivamente funcionava de ponta a ponta. Vinte vezes mais caro, mas a diferença de qualidade não veio do modelo — veio inteiramente da estrutura ao redor dele.
+
+## Princípios que sustentam um harness bom
+
+Alguns padrões se repetem em quem constrói harnesses que funcionam de verdade:
+
+1. **O ratchet: todo erro vira regra permanente.** Quando o agente comete um erro, a resposta não é esperar a próxima versão do modelo — é codificar a correção. O agente comentou um teste em vez de corrigi-lo? Isso vira uma linha no `AGENTS.md` e um hook que barra o padrão no próximo commit. Cada regra deve ser rastreável a uma falha real já observada — é checklist de piloto, não guia de estilo.
+2. **Sucesso é silencioso, falha é verbosa.** Hooks que rodam typecheck, lint e testes depois de cada edição só devem "falar" quando algo falha — e nesse caso o texto do erro volta pro loop do agente, que se autocorrige. Isso torna o ciclo de correção praticamente gratuito no caso comum e diretamente acionável quando dá errado.
+3. **Separar quem gera de quem avalia.** Modelos avaliando o próprio trabalho tendem a se elogiar mesmo quando a qualidade é medíocre. Um agente avaliador separado — mais cético por desenho — consegue julgar com mais rigor, e o gerador passa a ter algo concreto contra o que iterar.
+4. **Combater a degradação de contexto.** Conforme a janela de contexto enche, o modelo raciocina pior. As técnicas que funcionam na prática são compactação (resumir o histórico), descarregar saídas grandes de ferramentas para o sistema de arquivos, e — para tarefas realmente longas — resets completos de contexto com um arquivo de handoff estruturado, em vez de tentar manter uma única sessão viva para sempre.
+
+## A complexidade que ninguém acerta de primeira
+
+O erro mais comum é achar que harness bom é harness robusto. Não é. O princípio que a própria Anthropic destaca é o oposto: **encontre a solução mais simples possível, e só aumente a complexidade quando for necessário.** Cada componente de um harness codifica uma suposição sobre o que o modelo não consegue fazer sozinho — e essa suposição vale a pena questionar, porque pode estar errada desde o início ou pode ficar obsoleta assim que o modelo melhora.
+
+Isso aconteceu na prática: um harness construído para o Opus 4.5 usava resets de contexto para evitar que o modelo "entrasse em pânico" perto do limite da janela — um comportamento real chamado de "ansiedade de contexto". Quando o Opus 4.6 chegou e praticamente eliminou esse comportamento sozinho, os resets de contexto viraram peso morto e foram removidos. Só que a complexidade não desapareceu — ela se moveu. O teto de capacidade do modelo subiu, e no lugar da ansiedade de contexto surgiram novos desafios que exigem nova estrutura: coordenar múltiplos agentes especializados, avaliar qualidade subjetiva de design, manter coerência em tarefas cada vez mais longas.
+
+Esse é o padrão central: harnesses não encolhem à medida que os modelos melhoram. Eles se deslocam.
+
+## Por que isso é uma continuação direta da conversa sobre fundamentos
+
+Isso conecta diretamente com o que os dados de débito técnico já mostravam: sem entender lógica, arquitetura e os limites reais de um modelo, não dá pra decidir quais suposições um harness deveria codificar — nem perceber quando uma delas ficou obsoleta. Configurar um harness bem exige exatamente o tipo de julgamento que só vem de conhecer o problema de perto: o que automatizar, o que verificar, o que nunca liberar sem supervisão. Sem isso, você não está fazendo harness engineering — está aceitando o comportamento padrão de qualquer ferramenta que instalar, erros incluídos.
+
+## O padrão por trás do padrão
+
+Do MCP à dívida técnica até aqui: a conclusão é sempre a mesma, só que em outra camada. A IA não elimina a necessidade de engenharia — ela desloca onde a engenharia acontece. Antes, engenhar era escrever a lógica linha a linha. Agora, boa parte é desenhar a estrutura que decide o que o modelo pode tocar, o que ele precisa provar antes de seguir em frente, e o que nunca deve fazer sem alguém olhando. O modelo troca de versão a cada poucos meses. O harness — e o julgamento por trás dele — é o que continua sendo seu.
