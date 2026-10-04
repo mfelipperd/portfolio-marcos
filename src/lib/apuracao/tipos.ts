@@ -1,3 +1,5 @@
+import type { EscopoId } from "./cargos";
+
 export type CodigoCargo = "1" | "3" | "5" | "6" | "7";
 
 export interface Candidato {
@@ -15,6 +17,7 @@ export interface Candidato {
 export interface CargoOk {
   cd: CodigoCargo;
   nome: string;
+  local: string; // "Belém", "Pará" ou "Brasil": onde estes votos foram apurados
   idg: string; // versão do arquivo no TSE
   totalizadoEm: string; // "04/10/2026 19:28:11"
   encerrado: boolean;
@@ -49,8 +52,7 @@ export interface CargoErro {
 export type Cargo = CargoOk | CargoErro;
 
 export interface Apuracao {
-  municipio: string;
-  uf: string;
+  escopo: EscopoId;
   fonte: string;
   lidoEm: string; // ISO, hora em que o servidor leu o TSE
   cargos: Cargo[];

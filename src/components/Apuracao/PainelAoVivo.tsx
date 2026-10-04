@@ -2,7 +2,7 @@
 
 import { CARGOS } from "@/lib/apuracao/cargos";
 import { useApuracao } from "@/hooks/useApuracao";
-import { AVISO_ESCOPO, encerrada, maisRecente, quando, resumoGeral } from "@/lib/apuracao/textos";
+import { avisoEscopo, encerrada, maisRecente, quando, resumoGeral } from "@/lib/apuracao/textos";
 import { cargoOk, type Apuracao } from "@/lib/apuracao/tipos";
 import { CargoSecao } from "./CargoSecao";
 
@@ -13,7 +13,7 @@ function aviso(dados: Apuracao, falhou: boolean) {
 
   if (bons.length === 0) return { texto: "Não deu para ler os dados do TSE agora. Nova leitura em 1 minuto.", falha: true };
   if (falhou) return { texto: `Não deu para ler parte dos dados do TSE agora.${hora ? ` Na tela, os mais recentes são de ${hora.replace("às ", "")}.` : ""}`, falha: true };
-  if (encerrada(dados)) return { texto: `Apuração encerrada em Belém${hora ? `, com dados do TSE ${hora}` : ""}.`, falha: false };
+  if (encerrada(dados)) return { texto: `Apuração encerrada${hora ? `, com dados do TSE ${hora}` : ""}.`, falha: false };
   return { texto: `${hora ? `Dados do TSE ${hora}. ` : ""}A página lê de novo a cada minuto.`, falha: false };
 }
 
@@ -38,7 +38,7 @@ export function PainelAoVivo({ inicial }: { inicial: Apuracao }) {
       </div>
 
       <p data-geo="resumo" className="mt-6 max-w-3xl text-base leading-relaxed text-zinc-200">
-        {resumoGeral(dados)} {AVISO_ESCOPO}
+        {resumoGeral(dados)} {avisoEscopo(dados.escopo)}
       </p>
 
       <nav

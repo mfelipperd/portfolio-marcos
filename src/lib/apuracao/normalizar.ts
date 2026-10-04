@@ -20,7 +20,7 @@ export function num(valor: unknown) {
   return Number.isFinite(n) ? n : 0;
 }
 
-export function normalizar(bruto: BrutoTse, cargo: { cd: CodigoCargo; nome: string }): CargoOk {
+export function normalizar(bruto: BrutoTse, cargo: { cd: CodigoCargo; nome: string; local: string }): CargoOk {
   const lista = Array.isArray(bruto.carg) ? bruto.carg : [];
   const carg = lista.find((c) => String(c.cd) === cargo.cd) ?? lista[0] ?? {};
 
@@ -51,6 +51,7 @@ export function normalizar(bruto: BrutoTse, cargo: { cd: CodigoCargo; nome: stri
   return {
     cd: cargo.cd,
     nome: cargo.nome,
+    local: cargo.local,
     idg: String(bruto.idg ?? ""),
     totalizadoEm: [bruto.dt, bruto.ht].filter(Boolean).join(" "),
     encerrado: bruto.and === "f",

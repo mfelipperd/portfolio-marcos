@@ -12,7 +12,7 @@ function andamento(ok: CargoOk | null, falhou: boolean) {
 
   const base = `${fPct(ok.secoes.pct)} das seções totalizadas (${fInt(ok.secoes.totalizadas)} de ${fInt(ok.secoes.total)})`;
   const aviso = falhou ? " A última leitura falhou; esta é a anterior." : "";
-  if (ok.encerrado) return `${base}. Apuração encerrada em Belém.${aviso}`;
+  if (ok.encerrado) return `${base}. Apuração encerrada (${ok.local}).${aviso}`;
 
   const hora = horaCurta(ok.totalizadoEm);
   return `${base}.${hora ? ` Última totalização às ${hora}.` : ""}${aviso}`;
@@ -42,7 +42,9 @@ export function CargoSecao({ def, cargo, aoPedirCompleto }: Props) {
           {def.nome}
         </h2>
         <p className={`mt-1.5 text-sm ${falhou ? "text-[#F08268]" : "text-zinc-400"}`}>{andamento(ok, falhou)}</p>
-        <p className="mt-1 text-xs text-zinc-500">{def.vagas}.</p>
+        <p className="mt-1 text-xs text-zinc-500">
+          {def.vagas}.{ok ? ` Votos apurados: ${ok.local}.` : ""}
+        </p>
       </div>
 
       {ok && (
