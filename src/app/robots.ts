@@ -25,7 +25,7 @@ const ROBOS_DE_IA = [
 
 // O endpoint de dados fica aberto; o resto de /api/ continua fechado (vence a regra mais específica).
 const REGRAS = {
-  allow: ["/", "/api/apuracao-belem"],
+  allow: ["/", "/api/apuracao-para"],
   disallow: ["/api/"],
 };
 

@@ -2,7 +2,7 @@
 
 import { CARGOS } from "@/lib/apuracao/cargos";
 import { useApuracao } from "@/hooks/useApuracao";
-import { avisoEscopo, encerrada, maisRecente, quando, resumoGeral } from "@/lib/apuracao/textos";
+import { AVISO_ESCOPO, encerrada, maisRecente, quando, resumoGeral } from "@/lib/apuracao/textos";
 import { cargoOk, type Apuracao } from "@/lib/apuracao/tipos";
 import { CargoSecao } from "./CargoSecao";
 
@@ -38,7 +38,7 @@ export function PainelAoVivo({ inicial }: { inicial: Apuracao }) {
       </div>
 
       <p data-geo="resumo" className="mt-6 max-w-3xl text-base leading-relaxed text-zinc-200">
-        {resumoGeral(dados)} {avisoEscopo(dados.escopo)}
+        {resumoGeral(dados)} {AVISO_ESCOPO}
       </p>
 
       <nav

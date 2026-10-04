@@ -1,10 +1,11 @@
 import { useDeferredValue, useState } from "react";
 import { PRIMEIROS, type DefCargo } from "@/lib/apuracao/cargos";
 import { fInt, fPct, horaCurta } from "@/lib/apuracao/formato";
-import { fraseDoCargo } from "@/lib/apuracao/textos";
+import { fraseCapital, fraseDoCargo } from "@/lib/apuracao/textos";
 import { cargoOk, type Cargo, type CargoOk } from "@/lib/apuracao/tipos";
 import { ListaCandidatos } from "./ListaCandidatos";
 import { Medidor } from "./Medidor";
+import { CapitalBloco } from "./CapitalBloco";
 import { Resumo } from "./Resumo";
 
 function andamento(ok: CargoOk | null, falhou: boolean) {
@@ -89,6 +90,8 @@ export function CargoSecao({ def, cargo, aoPedirCompleto }: Props) {
           )}
 
           <Resumo cargo={ok} />
+
+          {ok.capital && <CapitalBloco cargo={ok} frase={fraseCapital(ok)} />}
         </>
       )}
     </section>

@@ -1,5 +1,3 @@
-import type { EscopoId } from "./cargos";
-
 export type CodigoCargo = "1" | "3" | "5" | "6" | "7";
 
 export interface Candidato {
@@ -14,10 +12,30 @@ export interface Candidato {
   seq: number;
 }
 
+export interface CandidatoCapital {
+  n: string;
+  nome: string;
+  partido: string;
+  votos: number;
+  pct: number; // % dos votos válidos em Belém, direto do TSE
+  pctGeral: number | null; // % do mesmo candidato no Pará (ou Brasil), para comparar
+}
+
+/** Resultado de Belém para o mesmo cargo. */
+export interface CapitalCargo {
+  totalizadoEm: string;
+  encerrado: boolean;
+  secoes: { total: number; totalizadas: number; pct: number };
+  pctComparecimento: number;
+  totalCandidatos: number;
+  candidatos: CandidatoCapital[]; // só os mais votados em Belém
+}
+
 export interface CargoOk {
   cd: CodigoCargo;
   nome: string;
-  local: string; // "Belém", "Pará" ou "Brasil": onde estes votos foram apurados
+  local: string; // "Pará" ou "Brasil": onde estes votos foram apurados
+  capital?: CapitalCargo; // dado extra: como Belém votou neste cargo
   idg: string; // versão do arquivo no TSE
   totalizadoEm: string; // "04/10/2026 19:28:11"
   encerrado: boolean;
@@ -52,7 +70,6 @@ export interface CargoErro {
 export type Cargo = CargoOk | CargoErro;
 
 export interface Apuracao {
-  escopo: EscopoId;
   fonte: string;
   lidoEm: string; // ISO, hora em que o servidor leu o TSE
   cargos: Cargo[];

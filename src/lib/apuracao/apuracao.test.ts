@@ -1,15 +1,16 @@
 import { describe, expect, it } from "vitest";
 import fixture from "./__fixtures__/deputado-federal-belem.json";
+import { montarCapital, TOP_CAPITAL } from "./capital";
 import { normalizar, num, type BrutoTse } from "./normalizar";
-import { fraseDoCargo, encerrada, faq, jsonLd, jsonLdSeguro, maisRecente } from "./textos";
+import { fraseCapital, fraseDoCargo, encerrada, faq, jsonLd, jsonLdSeguro, maisRecente } from "./textos";
 import { paraISO, ordenavel } from "./formato";
 import { cargoOk, type Apuracao, type CargoOk } from "./tipos";
 
 const bruto = fixture as unknown as BrutoTse;
-const cargo = normalizar(bruto, { cd: "6", nome: "Deputado federal", local: "Belém" });
+const cargo = normalizar(bruto, { cd: "6", nome: "Deputado federal", local: "Pará" });
 
 const apuracao = (cargos: Apuracao["cargos"]): Apuracao => ({
-  escopo: "belem", fonte: "TSE", lidoEm: "2026-10-04T22:30:00.000Z", cargos,
+  fonte: "TSE", lidoEm: "2026-10-04T22:30:00.000Z", cargos,
 });
 
 describe("normalizar", () => {
@@ -77,8 +78,8 @@ describe("textos para IA e buscadores", () => {
     const frase = fraseDoCargo(cargo);
     const lider = cargo.candidatos[0];
     expect(frase).toContain(lider.nome);
-    expect(frase).toContain("é o mais votado em Belém");
-    expect(frase).toContain("99,57% das seções");
+    expect(frase).toContain("é o mais votado no Pará");
+    expect(frase).toContain("99,57% das seções do Pará");
     expect(frase).toContain("às 19:28 de 04/10/2026");
     expect(frase).not.toMatch(/eleit[oa]/i); // "mais votado" não é "eleito"
   });
@@ -106,22 +107,49 @@ describe("textos para IA e buscadores", () => {
   });
 });
 
-describe("escopo Pará", () => {
-  const para = (c: CargoOk, local: string): CargoOk => ({ ...c, local });
+describe("dado extra: como Belém votou", () => {
+  const geral: CargoOk = {
+    ...cargo,
+    local: "Pará",
+    candidatos: [
+      { ...cargo.candidatos[1], pct: 52.4 },
+      { ...cargo.candidatos[0], pct: 30.1 },
+    ],
+  };
 
-  it("a frase usa o lugar de cada cargo: Brasil, Pará ou Belém", () => {
-    expect(fraseDoCargo(para(cargo, "Brasil"))).toContain("é o mais votado no Brasil");
-    expect(fraseDoCargo(para(cargo, "Brasil"))).toContain("seções do Brasil totalizadas");
-    expect(fraseDoCargo(para(cargo, "Pará"))).toContain("é o mais votado no Pará");
-    expect(fraseDoCargo(para(cargo, "Pará"))).toContain("seções de Pará totalizadas");
+  it("junta o % do mesmo candidato no total, pelo número", () => {
+    const cap = montarCapital(cargo, geral);
+    const lider = cap.candidatos[0];
+    expect(cap.candidatos).toHaveLength(TOP_CAPITAL);
+    expect(lider.nome).toBe(cargo.candidatos[0].nome);
+    expect(lider.pctGeral).toBe(30.1);
+    expect(cap.totalCandidatos).toBe(cargo.totalCandidatos);
+    expect(cap.secoes.pct).toBeCloseTo(99.565, 2);
+    // candidato de Belém que não está na lista do total: sem comparação, nunca inventada
+    expect(montarCapital(cargo, { ...geral, candidatos: [] }).candidatos[0].pctGeral).toBeNull();
   });
 
-  it("FAQ e JSON-LD do Pará não dizem que os números são só de Belém", () => {
-    const dados: Apuracao = { ...apuracao([para(cargo, "Pará")]), escopo: "para" };
+  it("a frase compara Belém com o total e cita horário", () => {
+    const comCapital: CargoOk = { ...geral, capital: montarCapital(cargo, geral) };
+    const frase = fraseCapital(comCapital);
+    expect(frase).toContain("Em Belém,");
+    expect(frase).toContain("contra 30,10% no Pará");
+    expect(frase).toContain("às 19:28 de 04/10/2026");
+    expect(fraseCapital(geral)).toBe(""); // sem dado de Belém, sem frase
+  });
+
+  it("a frase de presidente diz Brasil, não Pará", () => {
+    const pres: CargoOk = { ...geral, local: "Brasil", capital: montarCapital(cargo, geral) };
+    expect(fraseCapital(pres)).toContain("no Brasil");
+    expect(fraseDoCargo(pres)).toContain("é o mais votado no Brasil");
+    expect(fraseDoCargo(pres)).toContain("seções do Brasil totalizadas");
+  });
+
+  it("FAQ e JSON-LD citam Belém como dado extra e a URL do Pará", () => {
+    const dados = apuracao([{ ...geral, capital: montarCapital(cargo, geral) }]);
     const texto = JSON.stringify([faq(dados), jsonLd(dados)]);
-    expect(texto).not.toContain("só do município");
-    expect(texto).toContain("Pará");
+    expect(faq(dados).map((f) => f.p)).toContain("Como Belém votou?");
+    expect(texto).toContain("Em Belém,");
     expect(jsonLd(dados)[0].url).toBe("https://www.mfelippe.com.br/apuracao-para");
-    expect(faq(dados)).toHaveLength(7);
   });
 });
