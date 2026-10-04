@@ -27,10 +27,12 @@ export function useApuracao(inicial: Apuracao) {
   const ler = useCallback(async () => {
     controle.current?.abort();
     const ac = new AbortController();
+    const query = new URLSearchParams({ escopo: inicial.escopo });
+    if (!completo) query.set("resumo", "1");
     controle.current = ac;
     setLendo(true);
     try {
-      const r = await fetch(`/api/apuracao-belem${completo ? "" : "?resumo=1"}`, { signal: ac.signal, cache: "no-store" });
+      const r = await fetch(`/api/apuracao-belem?${query}`, { signal: ac.signal, cache: "no-store" });
       if (!r.ok) throw new Error(`API respondeu ${r.status}`);
       const novo = (await r.json()) as Apuracao;
       setDados((antes) => mesclar(antes, novo));
@@ -40,7 +42,7 @@ export function useApuracao(inicial: Apuracao) {
     } finally {
       if (controle.current === ac) setLendo(false);
     }
-  }, [completo]);
+  }, [completo, inicial.escopo]);
 
   // O HTML vem do cache da CDN e pode ter alguns minutos: se estiver velho, relê na hora ao abrir.
   useEffect(() => {

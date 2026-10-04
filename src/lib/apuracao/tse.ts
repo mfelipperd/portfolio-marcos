@@ -1,5 +1,5 @@
 import "server-only";
-import { CARGOS, MUNICIPIO, PRIMEIROS, type DefCargo } from "./cargos";
+import { CARGOS, MUNICIPIO, PRIMEIROS, localDoCargo, type DefCargo, type EscopoId } from "./cargos";
 import { normalizar, type BrutoTse } from "./normalizar";
 import { cargoOk, type Apuracao } from "./tipos";
 
@@ -11,10 +11,13 @@ const UF = MUNICIPIO.uf.toLowerCase();
 export const REVALIDAR = 20;
 
 // As URLs são sempre montadas aqui, nunca vêm do cliente: 404 em excesso bloqueia o IP.
-function urlDoArquivo(cargo: DefCargo) {
+function urlDoArquivo(cargo: DefCargo, escopo: EscopoId) {
   const c = cargo.cd.padStart(4, "0");
   const e = cargo.eleicao.padStart(6, "0");
-  return `${ORIGEM}/${cargo.eleicao}/dados/${UF}/${UF}${MUNICIPIO.codigoTse}-c${c}-e${e}-u.json`;
+  if (escopo === "belem") return `${ORIGEM}/${cargo.eleicao}/dados/${UF}/${UF}${MUNICIPIO.codigoTse}-c${c}-e${e}-u.json`;
+  // Presidente: arquivo do Brasil. Demais cargos: arquivo do estado.
+  const abr = cargo.cd === "1" ? "br" : UF;
+  return `${ORIGEM}/${cargo.eleicao}/dados/${abr}/${abr}-c${c}-e${e}-u.json`;
 }
 
 async function baixar(endereco: string): Promise<BrutoTse> {
@@ -27,12 +30,12 @@ async function baixar(endereco: string): Promise<BrutoTse> {
   return resposta.json();
 }
 
-/** Lê os cinco cargos de Belém. Erro em um cargo não derruba os outros. */
-export async function lerApuracao(): Promise<Apuracao> {
+/** Lê os cinco cargos do escopo pedido. Erro em um cargo não derruba os outros. */
+export async function lerApuracao(escopo: EscopoId): Promise<Apuracao> {
   const cargos = await Promise.all(
     CARGOS.map(async (def) => {
       try {
-        return normalizar(await baixar(urlDoArquivo(def)), def);
+        return normalizar(await baixar(urlDoArquivo(def, escopo)), { ...def, local: localDoCargo(escopo, def.cd) });
       } catch (erro) {
         return { cd: def.cd, nome: def.nome, erro: String((erro as Error).message ?? erro) };
       }
@@ -40,8 +43,7 @@ export async function lerApuracao(): Promise<Apuracao> {
   );
 
   return {
-    municipio: MUNICIPIO.nome,
-    uf: MUNICIPIO.uf,
+    escopo,
     fonte: "TSE",
     lidoEm: new Date().toISOString(),
     cargos,

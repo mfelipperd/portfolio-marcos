@@ -3,13 +3,13 @@ import fixture from "./__fixtures__/deputado-federal-belem.json";
 import { normalizar, num, type BrutoTse } from "./normalizar";
 import { fraseDoCargo, encerrada, faq, jsonLd, jsonLdSeguro, maisRecente } from "./textos";
 import { paraISO, ordenavel } from "./formato";
-import { cargoOk, type Apuracao } from "./tipos";
+import { cargoOk, type Apuracao, type CargoOk } from "./tipos";
 
 const bruto = fixture as unknown as BrutoTse;
-const cargo = normalizar(bruto, { cd: "6", nome: "Deputado federal" });
+const cargo = normalizar(bruto, { cd: "6", nome: "Deputado federal", local: "Belém" });
 
 const apuracao = (cargos: Apuracao["cargos"]): Apuracao => ({
-  municipio: "Belém", uf: "PA", fonte: "TSE", lidoEm: "2026-10-04T22:30:00.000Z", cargos,
+  escopo: "belem", fonte: "TSE", lidoEm: "2026-10-04T22:30:00.000Z", cargos,
 });
 
 describe("normalizar", () => {
@@ -39,7 +39,7 @@ describe("normalizar", () => {
   it("usa o percentual do TSE, sem recalcular", () => {
     const c = normalizar(
       { carg: [{ cd: "6", agr: [{ par: [{ sg: "XX", cand: [{ n: "1", nmu: "A", vap: "10", pvapn: "12,5" }] }] }] }] },
-      { cd: "6", nome: "Deputado federal" }
+      { cd: "6", nome: "Deputado federal", local: "Belém" }
     );
     expect(c.candidatos[0].pct).toBe(12.5);
   });
@@ -47,18 +47,18 @@ describe("normalizar", () => {
   it("preserva a destinação do voto e a situação informadas pelo TSE", () => {
     const c = normalizar(
       { carg: [{ cd: "5", agr: [{ par: [{ sg: "XX", cand: [{ n: "1", nmu: "A", vap: "5", dvt: "Anulado sub judice", e: "s", st: "Eleito" }] }] }] }] },
-      { cd: "5", nome: "Senador" }
+      { cd: "5", nome: "Senador", local: "Pará" }
     );
     expect(c.candidatos[0]).toMatchObject({ destinacao: "Anulado sub judice", eleito: true, situacao: "Eleito" });
   });
 
   it("marca como encerrado só quando and = f", () => {
-    expect(normalizar({ and: "f" }, { cd: "1", nome: "Presidente" }).encerrado).toBe(true);
-    expect(normalizar({ and: "p" }, { cd: "1", nome: "Presidente" }).encerrado).toBe(false);
+    expect(normalizar({ and: "f" }, { cd: "1", nome: "Presidente", local: "Brasil" }).encerrado).toBe(true);
+    expect(normalizar({ and: "p" }, { cd: "1", nome: "Presidente", local: "Brasil" }).encerrado).toBe(false);
   });
 
   it("não quebra com arquivo vazio", () => {
-    const c = normalizar({}, { cd: "1", nome: "Presidente" });
+    const c = normalizar({}, { cd: "1", nome: "Presidente", local: "Brasil" });
     expect(c.candidatos).toEqual([]);
     expect(c.secoes.pct).toBe(0);
   });
@@ -85,7 +85,7 @@ describe("textos para IA e buscadores", () => {
 
   it("gera FAQ e JSON-LD válidos, também sem dados", () => {
     const vazio = apuracao([{ cd: "1", nome: "Presidente", erro: "TSE respondeu 503" }]);
-    expect(faq(vazio)).toHaveLength(6);
+    expect(faq(vazio)).toHaveLength(7);
     for (const dados of [vazio, apuracao([cargo])]) {
       const blocos = jsonLd(dados);
       expect(blocos.map((b) => b["@type"])).toEqual(["WebPage", "Dataset", "FAQPage", "BreadcrumbList"]);
@@ -103,5 +103,25 @@ describe("textos para IA e buscadores", () => {
     expect(encerrada(apuracao([{ ...cargo, encerrado: true }, { cd: "1", nome: "Presidente", erro: "x" }]))).toBe(false);
     expect(maisRecente(apuracao([cargo]))).toBe("04/10/2026 19:28:11");
     expect(cargoOk(cargo)).toBe(true);
+  });
+});
+
+describe("escopo Pará", () => {
+  const para = (c: CargoOk, local: string): CargoOk => ({ ...c, local });
+
+  it("a frase usa o lugar de cada cargo: Brasil, Pará ou Belém", () => {
+    expect(fraseDoCargo(para(cargo, "Brasil"))).toContain("é o mais votado no Brasil");
+    expect(fraseDoCargo(para(cargo, "Brasil"))).toContain("seções do Brasil totalizadas");
+    expect(fraseDoCargo(para(cargo, "Pará"))).toContain("é o mais votado no Pará");
+    expect(fraseDoCargo(para(cargo, "Pará"))).toContain("seções de Pará totalizadas");
+  });
+
+  it("FAQ e JSON-LD do Pará não dizem que os números são só de Belém", () => {
+    const dados: Apuracao = { ...apuracao([para(cargo, "Pará")]), escopo: "para" };
+    const texto = JSON.stringify([faq(dados), jsonLd(dados)]);
+    expect(texto).not.toContain("só do município");
+    expect(texto).toContain("Pará");
+    expect(jsonLd(dados)[0].url).toBe("https://www.mfelippe.com.br/apuracao-para");
+    expect(faq(dados)).toHaveLength(7);
   });
 });

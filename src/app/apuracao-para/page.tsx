@@ -1,12 +1,11 @@
 import { metadataDaPagina, PaginaApuracao } from "@/components/Apuracao/Pagina";
 
-// A página é gerada de novo a cada 20 segundos: o HTML que o Google e as IAs recebem já traz os votos.
 export const revalidate = 20; // literal: o Next não aceita valor importado aqui (mesmo valor de REVALIDAR)
 export const preferredRegion = "gru1";
 export const maxDuration = 15;
 
-export const generateMetadata = () => metadataDaPagina("belem");
+export const generateMetadata = () => metadataDaPagina("para");
 
 export default function Page() {
-  return <PaginaApuracao id="belem" />;
+  return <PaginaApuracao id="para" />;
 }
