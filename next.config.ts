@@ -4,6 +4,12 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  async redirects() {
+    return [
+      { source: "/apuracao-belem", destination: "/apuracao-para", permanent: true },
+      { source: "/api/apuracao-belem", destination: "/api/apuracao-para", permanent: true },
+    ];
+  },
   images: {
     remotePatterns: [{ protocol: "https", hostname: "**" }],
   },
