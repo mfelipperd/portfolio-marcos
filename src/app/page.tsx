@@ -238,6 +238,12 @@ function PortfolioContent() {
             >
               Blog
             </Link>
+            <Link
+              href="/apuracao-belem"
+              className="menu-item text-xs sm:text-base md:text-xl font-medium tracking-wide text-zinc-500 hover:text-white transition-all duration-300"
+            >
+              Apuração 2026
+            </Link>
           </motion.nav>
         </div>
       </motion.header>
