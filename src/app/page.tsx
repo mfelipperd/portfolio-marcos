@@ -28,6 +28,7 @@ function PortfolioContent() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSubToolActive, setIsSubToolActive] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
@@ -206,7 +207,7 @@ function PortfolioContent() {
             }}
             transition={{ type: "spring", stiffness: 120, damping: 20 }}
             className={`cursor-pointer z-50 flex items-center justify-start pointer-events-auto title-container ${!activePage ? 'flashlight-mask' : ''} ${
-              (activePage || isScrolled) ? 'w-20 sm:w-32 md:w-auto' : 'w-auto'
+              (activePage || isScrolled) ? 'w-20 sm:w-32 md:w-[260px]' : 'w-auto'
             }`}
             onClick={() => setActivePage(null)}
             style={{ transformOrigin: "left center" }}
@@ -216,37 +217,87 @@ function PortfolioContent() {
             </h1>
           </motion.div>
 
-          <motion.nav
-            layout
-            className="flex gap-2 sm:gap-4 md:gap-8 shrink-0 pointer-events-auto"
-          >
-            {menuItems
-              .filter(item => item !== activePage)
-              .map((item) => (
-                <span 
-                  key={item} 
-                  onClick={() => setActivePage(item)}
-                  className="menu-item text-xs sm:text-base md:text-xl font-medium tracking-wide text-zinc-500 hover:text-white transition-all duration-300 cursor-pointer"
+          {(() => {
+            const compact = !!(activePage || isScrolled);
+            const itemClass =
+              "menu-item text-xs sm:text-base lg:text-base xl:text-xl font-medium tracking-wide text-zinc-500 hover:text-white transition-all duration-300";
+            return (
+              <>
+                {/* Topo da página (sem rolagem): menu à mostra, quebrando linha no celular. Com rolagem/página aberta: só em telas grandes. */}
+                <motion.nav
+                  layout
+                  aria-label="Principal"
+                  className={`${compact ? "hidden lg:flex" : "flex flex-wrap justify-center"} gap-x-3 gap-y-2 sm:gap-x-4 lg:gap-x-5 xl:gap-x-8 shrink-0 pointer-events-auto`}
                 >
-                  {item}
-                </span>
-              ))
-            }
-            <Link
-              href="/blog"
-              className="menu-item text-xs sm:text-base md:text-xl font-medium tracking-wide text-zinc-500 hover:text-white transition-all duration-300"
-            >
-              Blog
-            </Link>
-            <Link
-              href="/apuracao-para"
-              className="menu-item text-xs sm:text-base md:text-xl font-medium tracking-wide text-zinc-500 hover:text-white transition-all duration-300"
-            >
-              Apuração 2026
-            </Link>
-          </motion.nav>
+                  {menuItems
+                    .filter((item) => item !== activePage)
+                    .map((item) => (
+                      <span key={item} onClick={() => setActivePage(item)} className={`${itemClass} cursor-pointer`}>
+                        {item}
+                      </span>
+                    ))}
+                  <Link href="/blog" className={itemClass}>
+                    Blog
+                  </Link>
+                  <Link href="/apuracao-para" className={itemClass}>
+                    Apuração 2026
+                  </Link>
+                </motion.nav>
+
+                {compact && (
+                  <button
+                    type="button"
+                    className="lg:hidden pointer-events-auto z-50 ml-auto -mr-2 p-2 text-white"
+                    aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+                    aria-expanded={menuOpen}
+                    aria-controls="menu-movel"
+                    onClick={() => setMenuOpen((v) => !v)}
+                  >
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                      {menuOpen ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
+                    </svg>
+                  </button>
+                )}
+              </>
+            );
+          })()}
         </div>
       </motion.header>
+
+      {menuOpen && (activePage || isScrolled) && (
+        <nav
+          id="menu-movel"
+          aria-label="Menu"
+          className="lg:hidden fixed top-16 inset-x-0 z-40 border-b border-white/10 bg-black shadow-2xl shadow-black"
+        >
+          <ul className="m-0 list-none p-2">
+            {menuItems.map((item) => (
+              <li key={item}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActivePage(item);
+                    setMenuOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-3.5 text-lg font-medium ${item === activePage ? "text-white" : "text-zinc-400"}`}
+                >
+                  {item}
+                </button>
+              </li>
+            ))}
+            <li>
+              <Link href="/blog" className="block px-4 py-3.5 text-lg font-medium text-zinc-400">
+                Blog
+              </Link>
+            </li>
+            <li>
+              <Link href="/apuracao-para" className="block px-4 py-3.5 text-lg font-medium text-zinc-400">
+                Apuração 2026
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      )}
 
       <div className={`relative z-10 ${
         activePage 

@@ -3,7 +3,7 @@ export function Medidor({ pct, rotulo }: { pct: number; rotulo: string }) {
 
   return (
     <div
-      className="h-2 w-full bg-white/10"
+      className="h-2 w-full overflow-hidden rounded-full bg-white/10"
       role="progressbar"
       aria-label={rotulo}
       aria-valuemin={0}

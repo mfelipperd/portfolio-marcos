@@ -36,7 +36,11 @@ export function CargoSecao({ def, cargo, aoPedirCompleto }: Props) {
   const faltam = !!ok && ok.candidatos.length < ok.totalCandidatos;
 
   return (
-    <section id={def.id} className="min-w-0" aria-labelledby={`${def.id}-titulo`}>
+    <section
+      id={def.id}
+      className="min-w-0 rounded-2xl border border-white/10 bg-white/[0.03] p-4 backdrop-blur-sm md:p-5"
+      aria-labelledby={`${def.id}-titulo`}
+    >
       <Medidor pct={ok ? ok.secoes.pct : 0} rotulo={`Seções totalizadas para ${def.nome.toLowerCase()}`} />
       <div className="pb-3.5 pt-3">
         <h2 id={`${def.id}-titulo`} className="m-0 text-3xl font-extrabold leading-none tracking-tight">

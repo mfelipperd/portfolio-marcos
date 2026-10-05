@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PainelAoVivo } from "@/components/Apuracao/PainelAoVivo";
+import LightRays from "@/components/LightRays";
+import SiteHeader from "@/components/SiteHeader";
 import { ANO, MUNICIPIO, TURNO } from "@/lib/apuracao/cargos";
 import { fPct } from "@/lib/apuracao/formato";
 import { lerApuracao, resumir } from "@/lib/apuracao/tse";
@@ -13,7 +15,7 @@ export const revalidate = 20; // literal: o Next não aceita valor importado aqu
 export const preferredRegion = "gru1";
 export const maxDuration = 15;
 
-const INTRO = `Votos apurados no Pará para governador, senador, deputado federal e deputado estadual, e no Brasil para presidente, cargo por cargo, com os dados públicos do TSE. É o mesmo recorte que o TSE e o Google mostram. Em cada cargo, um bloco extra mostra como ${MUNICIPIO.nome}, a capital, votou.`;
+const INTRO = `Votos apurados no Pará para governador, senador, deputado federal e deputado estadual, e no Brasil para presidente, cargo por cargo, com os dados públicos do TSE. É o mesmo recorte que o TSE e o Google mostram, com um bloco extra em cada cargo sobre como ${MUNICIPIO.nome}, a capital, votou.`;
 
 export async function generateMetadata(): Promise<Metadata> {
   const dados = await lerApuracao();
@@ -43,12 +45,18 @@ export default async function ApuracaoParaPage() {
   const hora = maisRecente(dados);
 
   return (
-    <main className="relative min-h-screen bg-black text-white">
+    <main className="relative min-h-screen overflow-x-clip bg-black text-white">
+      {/* Mesmo fundo da home */}
+      <div className="fixed inset-0 z-0 opacity-40" aria-hidden="true">
+        <LightRays raysOrigin="top-center" raysColor="#ffffff" raysSpeed={0.6} lightSpread={1.2} rayLength={3} followMouse={true} mouseInfluence={0.4} />
+      </div>
+      <SiteHeader atual="Apuração 2026" />
+
       {jsonLd(dados).map((bloco, i) => (
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdSeguro(bloco) }} />
       ))}
 
-      <div className="mx-auto max-w-[72rem] px-4 pb-20 pt-24 md:px-6 md:pt-28">
+      <div className="relative z-10 mx-auto max-w-[1200px] px-4 pb-20 pt-24 md:px-6 md:pt-28">
         <nav aria-label="Você está em" className="text-xs uppercase tracking-wider text-zinc-500">
           <Link href="/" className="transition-colors hover:text-white">
             Início
